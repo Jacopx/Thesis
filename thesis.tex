@@ -1,0 +1,59 @@
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+% *                             Thesis                                *
+% *                 https://github.com/Jacopx/Thesis                  *
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+\documentclass[dvips,12pt]{rapporto}
+
+\usepackage[english]{babel}
+\usepackage{toptesi}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{listings}
+
+\newenvironment{listato}{\footnotesize}
+                        {\normalsize }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\facolta{Ingegneria dell'Informazione}
+\corsodilaurea{Ingegneria Informatica}
+
+\titolo{Prediction of developing time and cost via NN}
+\relatore{prof. Maurizio Morisio}
+\candidato{Jacopo Nasi}
+
+\begin{document}
+\frontespizio
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ringraziamenti
+\begin{center}
+   Grazie a tutti.
+\end{center}
+
+\include{summary/summary}
+
+\indici
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{chapters/intro}
+\include{chapters/datasets}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\bibliography{biblio}
+\bibliographystyle{QUICKtran}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
