@@ -1,14 +1,19 @@
-% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-% *                             Thesis                                *
-% *                 https://github.com/Jacopx/Thesis                  *
-% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-\documentclass[dvips,12pt]{rapporto}
-
-\usepackage[english]{babel}
-\usepackage{toptesi}
+\documentclass[%
+    corpo=12pt,
+    twoside,
+%    stile=classica,
+    oldstyle,
+    autoretitolo,
+    greek,
+    evenboxes,
+%    tipotesi,
+]{toptesi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{booktabs}
@@ -17,43 +22,114 @@
 \usepackage{bm}
 \usepackage{listings}
 
-\newenvironment{listato}{\footnotesize}
-                        {\normalsize }
+% \hypersetup{%
+%     pdfpagemode={UseOutlines},
+%     bookmarksopen,
+%     pdfstartview={FitH},
+%     colorlinks,
+%     linkcolor={blue},
+%     citecolor={blue},
+%     urlcolor={blue}
+%   }
 
+%%%%%%% Definizioni locali
+\newtheorem{osservazione}{Osservazione}% Standard LaTeX
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\facolta{Ingegneria dell'Informazione}
-\corsodilaurea{Ingegneria Informatica}
-
-\titolo{Prediction of developing time and cost via NN}
-\relatore{prof. Maurizio Morisio}
-\candidato{Jacopo Nasi}
 
 \begin{document}
+
+\ateneo{Politecnico di Torino}
+%
+% Non tutte le università hanno un nome proprio
+%\nomeateneo{Sede di Torre Elettra}
+%
+% \FacoltaDi{Faculty of Computer Engineering}% lo spazio finale correttamente sparisce
+
+\titolo{Time  prediction of software development via machine learning}% per la laurea quinquennale e il dottorato
+\sottotitolo{Artificial intelligence applied to Software Engineering}% per la laurea quinquennale e il dottorato
+%
+%%%%%%% Corso degli studi
+\corsodilaurea{Computer Engineering}% per la laurea
+%\corsodidottorato{Meccanica}% per il dottorato
+
+\renewcommand*\IDlabel{}
+%
+\candidato{Jacopo \textsc{Nasi} [255320]}
+
+%%%%%%% Relatori o supervisori
+\relatore{prof.~Maurizio Morisio}
+
+%%%%%%% Tutore
+\tutoreaziendale{dott.\ Davide Piagneri}
+\NomeTutoreAziendale{Supervisore aziendale\\EisWORLD SRL}
+
+\sedutadilaurea{\textsc{Anno~accademico} 2019-2020}
+
+
+%%%%%%% Logo della sede
+\logosede{polito}
+
+%%%%%%% Per cambiare l'offset per la rilegatura; meno offset
+%%%%%%% c'e', meglio e'
+%\setbindingcorrection{3mm}
+
+\english%  di default e' in vigore \italiano
+
+\iflanguage{english}{%
+	\retrofrontespizio{This work is subject to the Creative Commons Licence}
+	\DottoratoIn{PhD Course in\space}
+	\CorsoDiLaureaIn{Master degree course in\space}
+	\NomeMonografia{Bachelor Degree Final Work}
+	\TesiDiLaurea{Master Degree Thesis}
+	\NomeDissertazione{PhD Dissertation}
+	\InName{in}
+	\CandidateName{Candidates}% or Candidate
+	\AdvisorName{Supervisors}% or Supervisor
+	\TutorName{Tutor}
+	\NomeTutoreAziendale{Internship Tutor}
+	\CycleName{cycle}
+	\NomePrimoTomo{First volume}
+	\NomeSecondoTomo{Second Volume}
+	\NomeTerzoTomo{Third Volume}
+	\NomeQuartoTomo{Fourth Volume}
+	\logosede{polito}% or comma separated list of logos
+}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \frontespizio
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\summary
 
-\ringraziamenti
-\begin{center}
-   Grazie a tutti.
-\end{center}
+La pressione barometrica di Giove viene misurata
+mediante un metodo originale  messo a punto dai candidati, che si basa
+sul rilevamento telescopico della pressione.
 
-\include{summary/summary}
+% \paginavuota % funziona anche senza specificare l'opzione classica
+
+\acknowledgements
+
+I candidati ringraziano vivamente il Granduca di Toscana per i mezzi
+messi loro a disposizione, ed il signor Von Braun, assistente del
+prof.~Albert Einstein, per le informazioni riservate che egli ha
+gentilmente fornito loro, e per le utili discussioni che hanno permesso
+ai candidati di evitare di riscoprire l'acqua calda.
+
 
 \indici
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\include{chapters/intro}
-\include{chapters/datasets}
+\mainmatter
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Prima Parte}
+\chapter{Introduzione generale}
 
-\appendix
+\section{Principi generali}
+Il problema della determinazione della pressione barometrica dell'atmosfera di
+Giove non ha ricevuto finora una soluzione soddisfacente, per l'elementare
+motivo che il pianeta suddetto si trova ad una distanza tale che i mezzi attuali
+non consentono di eseguire una misura diretta. \cite{adams2}
+
 
 \bibliography{biblio}
 \bibliographystyle{QUICKtran}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
