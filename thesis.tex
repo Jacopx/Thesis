@@ -1,3 +1,8 @@
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+% *                             Thesis                                *
+% *                 https://github.com/Jacopx/Thesis                  *
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 \documentclass[%
     corpo=12pt,
     twoside,
@@ -22,15 +27,15 @@
 \usepackage{bm}
 \usepackage{listings}
 
-% \hypersetup{%
-%     pdfpagemode={UseOutlines},
-%     bookmarksopen,
-%     pdfstartview={FitH},
-%     colorlinks,
-%     linkcolor={blue},
-%     citecolor={blue},
-%     urlcolor={blue}
-%   }
+\hypersetup{%
+    pdfpagemode={UseOutlines},
+    bookmarksopen,
+    pdfstartview={FitH},
+    colorlinks,
+    linkcolor={blue},
+    citecolor={blue},
+    urlcolor={blue}
+  }
 
 %%%%%%% Definizioni locali
 \newtheorem{osservazione}{Osservazione}% Standard LaTeX
@@ -46,7 +51,7 @@
 % \FacoltaDi{Faculty of Computer Engineering}% lo spazio finale correttamente sparisce
 
 \titolo{Time  prediction of software development via machine learning}% per la laurea quinquennale e il dottorato
-\sottotitolo{Artificial intelligence applied to Software Engineering}% per la laurea quinquennale e il dottorato
+\sottotitolo{Artificial Intelligence applied to Software Engineering}% per la laurea quinquennale e il dottorato
 %
 %%%%%%% Corso degli studi
 \corsodilaurea{Computer Engineering}% per la laurea
@@ -69,8 +74,7 @@
 %%%%%%% Logo della sede
 \logosede{polito}
 
-%%%%%%% Per cambiare l'offset per la rilegatura; meno offset
-%%%%%%% c'e', meglio e'
+%%%%%%% OFFSET
 %\setbindingcorrection{3mm}
 
 \english%  di default e' in vigore \italiano
@@ -108,27 +112,77 @@ sul rilevamento telescopico della pressione.
 
 \acknowledgements
 
-I candidati ringraziano vivamente il Granduca di Toscana per i mezzi
-messi loro a disposizione, ed il signor Von Braun, assistente del
-prof.~Albert Einstein, per le informazioni riservate che egli ha
-gentilmente fornito loro, e per le utili discussioni che hanno permesso
-ai candidati di evitare di riscoprire l'acqua calda.
-
+Un ringraziamento speciale ai cavalieri di Smirnuff, luce della mia battaglia.
 
 \indici
 
 \mainmatter
 
-\part{Prima Parte}
-\chapter{Introduzione generale}
+% #######################################
+% #            FIRST CHAPTER            #
+% #######################################
 
-\section{Principi generali}
-Il problema della determinazione della pressione barometrica dell'atmosfera di
-Giove non ha ricevuto finora una soluzione soddisfacente, per l'elementare
-motivo che il pianeta suddetto si trova ad una distanza tale che i mezzi attuali
-non consentono di eseguire una misura diretta. \cite{adams2}
+\chapter{Introduction}
+
+\section{General Problem}
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \cite{adams2}
+
+\section{Tools used}
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\cite{dummy3}
+
+% #######################################
+% #           SECOND CHAPTER            #
+% #######################################
+
+\chapter{Datasets}
+\section{SEOSS33}
+\section{San Francisco Bike Sharing}
+\section{San Francisco Fire Department}
 
 
+% #######################################
+% #           THIRD CHAPTER            #
+% #######################################
+
+\chapter{Machine Learning models}
+\section{Random Forest}
+\section{Neural Networks}
+
+
+% #######################################
+% #           FOURTH CHAPTER            #
+% #######################################
+
+\chapter{Forecasting}
+\section{Goal introduction}
+\section{Feature extraction}
+\section{Models detail}
+\section{Forecasting horizons}
+\section{Feature application}
+\section{Application over different projects}
+
+
+% #######################################
+% #           FIFTH CHAPTER            #
+% #######################################
+
+\chapter{Model abstraction}
+\section{CommonDB}
+\section{SFBS and literature comparisons}
+\section{SFFD}
+
+
+% #######################################
+% #           SIXTH CHAPTER             #
+% #######################################
+
+\chapter{Conclusion}
+
+
+
+% #######################################
+% #            BIBLIOGRAPHY             #
+% #######################################
 \bibliography{biblio}
 \bibliographystyle{QUICKtran}
 
