@@ -203,10 +203,11 @@ The structure is simple and is divided among three tables:
 \begin{itemize}
   \item \textbf{status}: A log storing the information of number of bikes and docks available at each minute of the day for each station
   \item \textbf{trips}: Each ride performed with the source and destination station, the starting and arrival time, the duration, the number of the bike used and the type of user subscription.
-  \item \textbf{stations}: Store generical informations about the station, name, address, latitude, longitude and number of docks. 
+  \item \textbf{stations}: Store generical informations about the station, name, address, latitude, longitude and number of docks.
 \end{itemize}
 
 \section{San Francisco Fire Department}
+Another dataset, of the city of San Francisco, available is related to the fire department. The dataset is based on a \href{https://data.sfgov.org/widgets/nuek-vuh3}{big table} where each row is referring to a unit dispatched, \textit{Unit ID} for an operations, more than one unit can be involved in a single operations that can be identified by the field \textit{call number}. Many others features can be found in the remaining fields, operations GPS location, type of allarm, type of operation.
 
 
 % #######################################
@@ -214,7 +215,27 @@ The structure is simple and is divided among three tables:
 % #######################################
 
 \chapter{Machine Learning models}
+
+\section{Introduction}
+Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead.\cite{ml}
+
+The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.
+
+There a lot of different models available, the following chapters will focus on the models used in this project.
+
 \section{Random Forest}
+Random forest (RF) is an ensable algorithms used for classification and regression. The forest is made by lot of different decision tree, its basic unit. The structure of the decision tree is simple, each branch define a direction to follow based on the values of different features, the end of a branch, the leaf, instead is the final predicted value. The behaviour is similar also in case of classification usage. Using lot of different decision tree reduce the habit of overfitting. When all the trees are trained the model can be used, all the features value are evaluated by all the trees, than using some aggregation technique the final predicted value is computed. Figure \ref{fig:rf} shows a simplified schema of the model.\\
+% The step to train a RF are the following ones:
+% \begin{enumerate}
+%   \item
+% \end{enumerate}
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{figure/rf.png}
+  \caption{Random Forest simplified scheme}
+  \label{fig:rf}
+\end{figure}
+
 \section{Neural Networks}
 
 
