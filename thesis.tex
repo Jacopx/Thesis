@@ -224,19 +224,25 @@ The word ML is almost in the public domain now, in the last decades the usage of
 There a lot of different models available, the following chapters will focus on the models used in this project.
 
 \section{Random Forest}
-Random forest (RF) is an ensable algorithms used for classification and regression. The forest is made by lot of different decision tree, its basic unit. The structure of the decision tree is simple, each branch define a direction to follow based on the values of different features, the end of a branch, the leaf, instead is the final predicted value. The behaviour is similar also in case of classification usage. Using lot of different decision tree reduce the habit of overfitting. When all the trees are trained the model can be used, all the features value are evaluated by all the trees, than using some aggregation technique the final predicted value is computed. Figure \ref{fig:rf} shows a simplified schema of the model.\\
-% The step to train a RF are the following ones:
-% \begin{enumerate}
-%   \item
-% \end{enumerate}
-
+Random Forest (RF) is a supervised Learning algorithm which uses ensemble learning method for classification and regression. The forest is made by lot of different decision tree, its basic unit. The structure of the decision tree is simple, each branch define a direction to follow based on the values of different features, the end of a branch, the leaf, instead is the final predicted value. When all the trees are trained the model can be used, all the features value are evaluated by all the trees, than using some aggregation technique the final predicted value is computed. Using lot of different decision tree reduce the habit of overfitting. The behaviour is similar even for classification. Figure \ref{fig:rf} shows a simplified schema of the model.
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{figure/rf.png}
-  \caption{Random Forest simplified scheme}
+  \caption{Random Forest simplified scheme \cite{rf}}
   \label{fig:rf}
 \end{figure}
 
+The main advantages are that is efficent on large databases, can handle a lot of input variables without variable deletion, it generate an unbiased estimate of the generalization error for the build process and it can handle missing data.
+One of the drawback of this technique is the habit to overfit in particular condition, depending on datasets.
+
+
 \section{Neural Networks}
+Neural Networks (NN) are algorithm, for pattern recognition, inspired by the structure of the human brain, with elaboration units (neurons) and connection network (synapses), the structure is simplyfied in figure \ref{fig:nn}.\\
+NN can be used to solve different kind of problems, classification, clustering and regression. Our problem will be solved using the regression task.
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{figure/nn.png}
+  \caption{Structure of a neural network}
+  \label{fig:nn}
+\end{figure}
 
 
 % #######################################
