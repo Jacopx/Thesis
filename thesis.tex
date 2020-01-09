@@ -50,8 +50,9 @@
 %
 % \FacoltaDi{Faculty of Computer Engineering}% lo spazio finale correttamente sparisce
 
-\titolo{Time  prediction of software development via machine learning}% per la laurea quinquennale e il dottorato
-\sottotitolo{Artificial Intelligence applied to Software Engineering}% per la laurea quinquennale e il dottorato
+\titolo{Time  prediction of software development via machine learning}
+\sottotitolo{Artificial Intelligence applied to Software Engineering}
+
 %
 %%%%%%% Corso degli studi
 \corsodilaurea{Computer Engineering}% per la laurea
@@ -119,7 +120,7 @@ Un ringraziamento speciale ai cavalieri di Smirnuff, luce della mia battaglia.
 \mainmatter
 
 % #######################################
-% #            FIRST CHAPTER            #
+% #            Introduction             #
 % #######################################
 
 \chapter{Introduction}
@@ -147,7 +148,8 @@ This work is mainly conducted using software tools, here a list of the tools use
 
 \paragraph{\href{https://scikit-learn.org/stable/}{SciKit-Learn}} Tools and libraries for machine learning.
 
-\paragraph{\href{https://gitlab.com}{GitLab}} Sourcing platform based on Git. Used for the code of the project, available here: \url{https://gitlab.com/EiS-Projects/analytics/temp/thesisProjectJN}.
+\paragraph{\href{https://gitlab.com}{GitLab}} Sourcing platform based on Git. Used for the code of the project, available here:\\
+\url{https://gitlab.com/EiS-Projects/analytics/temp/thesisProjectJN}.
 
 \paragraph{\href{https://github.com}{GitHub}} Sourcing platform based on Git. Used for the thesis and calendar sourcing:
 \begin{itemize}
@@ -162,7 +164,7 @@ This work is mainly conducted using software tools, here a list of the tools use
 \end{itemize}
 
 % #######################################
-% #           SECOND CHAPTER            #
+% #              Datasets               #
 % #######################################
 
 \chapter{Datasets}
@@ -198,7 +200,7 @@ The dataset is composed of 33 different software projects with some common chara
 
 
 \section{San Francisco Bike Sharing}
-The big US city of San Francisco provide a lot of public available dataset related to the service proposed, on of them is about the BS (\textit{Bike Sharing}) system of the Bay Area. Is huge \href{https://www.kaggle.com/datasf/san-francisco}{dataset} holding information about 5 years, for 70 stations, with more than 5000 bikes.
+The big US city of San Francisco provide a lot of public available dataset related to the service proposed, one of them is about the BS (\textit{Bike Sharing}) system of the Bay Area. It's a huge \href{https://www.kaggle.com/datasf/san-francisco}{dataset} holding information about 5 years, for 70 stations, with more than 5000 bikes.
 The structure is simple and is divided among three tables:
 \begin{itemize}
   \item \textbf{status}: A log storing the information of number of bikes and docks available at each minute of the day for each station
@@ -211,7 +213,7 @@ Another dataset, of the city of San Francisco, available is related to the fire 
 
 
 % #######################################
-% #           THIRD CHAPTER            #
+% #          Machine Learning           #
 % #######################################
 
 \chapter{Machine Learning models}
@@ -246,31 +248,48 @@ Regression analysis can be used to forecast one or more label based to other fea
 \end{figure}
 The structure of these networks can be really complicated and a whole thesis can be made upon this topic that, for this reason, will not more discussed.
 
+\section{Recurrent Neural Networks}
+Recurrent Neural Networks (RNN) is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech.\\
+One of the most used type of RNN is the Long-Short Term Memory (LSTM), were developed to solve the problems of exploding and vanishing of gradient typical of normal RNN.
+
+
 % #######################################
-% #           FOURTH CHAPTER            #
+% #             Forecasting             #
 % #######################################
 
 \chapter{Forecasting}
-\section{Goal introduction}
-\section{Feature extraction}
+Forecasting is the process of making predictions of future based on past and present data by trends analysis.
+
+\section{Introduction}
+The forecasting
+
+Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
+
+The software development is identical to a product development process, starts from the ideation and ends with the production itself.
+The goal is to predict the defectiveness in order to efficently allocate the development effort.
+
+\section{Features}
+The main advantage, in data analysis, of machines is that they can compute a lot of different data and finding a lot of patterns and correlation that human can't find. Combine the human attitude of logical correlations and machines capacity of number analysis can drive to a powerful combination that can drastically improve the forecasting ability.
+Each artificial intelligence algorithms require a correct and properly studied data in order to perform a valuable prediction, one of the basic step is the data preparation, providing correct and organized data is fundamental to correctly fit the network over the problem.
+
 \section{Models detail}
-\section{Forecasting horizons}
-\section{Feature application}
-\section{Application over different projects}
+\section{One-Shot Prediction}
+\section{Recurrent forecasting}
+\section{Results}
+
+
+% % #######################################
+% % #         Model abstraction           #
+% % #######################################
+%
+% \chapter{Model abstraction}
+% % \section{CommonDB}
+% \section{SFBS and literature comparisons}
+% \section{SFFD}
 
 
 % #######################################
-% #           FIFTH CHAPTER            #
-% #######################################
-
-\chapter{Model abstraction}
-\section{CommonDB}
-\section{SFBS and literature comparisons}
-\section{SFFD}
-
-
-% #######################################
-% #           SIXTH CHAPTER             #
+% #             Conclusion              #
 % #######################################
 
 \chapter{Conclusion}
