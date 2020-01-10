@@ -199,17 +199,17 @@ The dataset is composed of 33 different software projects with some common chara
 \end{center}
 
 
-\section{San Francisco Bike Sharing}
-The big US city of San Francisco provide a lot of public available dataset related to the service proposed, one of them is about the BS (\textit{Bike Sharing}) system of the Bay Area. It's a huge \href{https://www.kaggle.com/datasf/san-francisco}{dataset} holding information about 5 years, for 70 stations, with more than 5000 bikes.
-The structure is simple and is divided among three tables:
-\begin{itemize}
-  \item \textbf{status}: A log storing the information of number of bikes and docks available at each minute of the day for each station
-  \item \textbf{trips}: Each ride performed with the source and destination station, the starting and arrival time, the duration, the number of the bike used and the type of user subscription.
-  \item \textbf{stations}: Store generical informations about the station, name, address, latitude, longitude and number of docks.
-\end{itemize}
-
-\section{San Francisco Fire Department}
-Another dataset, of the city of San Francisco, available is related to the fire department. The dataset is based on a \href{https://data.sfgov.org/widgets/nuek-vuh3}{big table} where each row is referring to a unit dispatched, \textit{Unit ID} for an operations, more than one unit can be involved in a single operations that can be identified by the field \textit{call number}. Many others features can be found in the remaining fields, operations GPS location, type of allarm, type of operation.
+% \section{San Francisco Bike Sharing}
+% The big US city of San Francisco provide a lot of public available dataset related to the service proposed, one of them is about the BS (\textit{Bike Sharing}) system of the Bay Area. It's a huge \href{https://www.kaggle.com/datasf/san-francisco}{dataset} holding information about 5 years, for 70 stations, with more than 5000 bikes.
+% The structure is simple and is divided among three tables:
+% \begin{itemize}
+%   \item \textbf{status}: A log storing the information of number of bikes and docks available at each minute of the day for each station
+%   \item \textbf{trips}: Each ride performed with the source and destination station, the starting and arrival time, the duration, the number of the bike used and the type of user subscription.
+%   \item \textbf{stations}: Store generical informations about the station, name, address, latitude, longitude and number of docks.
+% \end{itemize}
+%
+% \section{San Francisco Fire Department}
+% Another dataset, of the city of San Francisco, available is related to the fire department. The dataset is based on a \href{https://data.sfgov.org/widgets/nuek-vuh3}{big table} where each row is referring to a unit dispatched, \textit{Unit ID} for an operations, more than one unit can be involved in a single operations that can be identified by the field \textit{call number}. Many others features can be found in the remaining fields, operations GPS location, type of allarm, type of operation.
 
 
 % #######################################
@@ -217,12 +217,8 @@ Another dataset, of the city of San Francisco, available is related to the fire 
 % #######################################
 
 \chapter{Machine Learning models}
-
 \section{Introduction}
-Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead.\cite{ml}
-
-The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.
-
+Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead\cite{ml}. The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
 There a lot of different models available, the following chapters will focus on the models used in this project.
 
 \section{Random Forest}
@@ -248,8 +244,10 @@ Regression analysis can be used to forecast one or more label based to other fea
 \end{figure}
 The structure of these networks can be really complicated and a whole thesis can be made upon this topic that, for this reason, will not more discussed.
 
-\section{Recurrent Neural Networks}
-Recurrent Neural Networks (RNN) is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech.\\
+\paragraph{Recurrent Neural Networks}
+Recurrent Neural Networks (RNN) is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech.
+
+\paragraph{Long-Short Term Memory}
 One of the most used type of RNN is the Long-Short Term Memory (LSTM), were developed to solve the problems of exploding and vanishing of gradient typical of normal RNN.
 
 
@@ -258,13 +256,8 @@ One of the most used type of RNN is the Long-Short Term Memory (LSTM), were deve
 % #######################################
 
 \chapter{Forecasting}
-Forecasting is the process of making predictions of future based on past and present data by trends analysis.
-
 \section{Introduction}
-The forecasting
-
-Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
-
+Forecasting is the process of making predictions of future based on past and present data by trends analysis. Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
 The software development is identical to a product development process, starts from the ideation and ends with the production itself.
 The goal is to predict the defectiveness in order to efficently allocate the development effort.
 
