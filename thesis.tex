@@ -164,23 +164,39 @@ This work is mainly conducted using software tools, here a list of the tools use
 \end{itemize}
 
 % #######################################
+% #            State of art             #
+% #######################################
+\chapter{State of art}
+\section{Literature}
+Speaking about other works.
+
+% #######################################
 % #              Datasets               #
 % #######################################
 
 \chapter{Datasets}
 The following section illustrate the structure of the all the principal datasets used during this thesis project.
 \section{SEOSS33}
-The SEOSS33\cite{SEOSS33} is a \href{https://doi.org/10.7910/DVN/PDDZ4Q}{dataset} collecting bug, issue, reports, commit and lot of other information of 33 open source project, following their progress via sourcing platform. At today there are no other public research conducted over this datasets, this works seems to be first.\\
-Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
-Each project is stored in a SQLITE db file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by an \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
+The SEOSS33\cite{SEOSS33} is a \href{https://doi.org/10.7910/DVN/PDDZ4Q}{dataset} collecting bug, issue, reports, commit and lot of other information of 33 open source project, following their progress via sourcing platform. The dataset is enriched also with time stamps, release versions, component information and developer comments.\\
+At today there are no other public research conducted over this datasets, this works seems to be first.\\
+The data is retrived by the issue tracking system (ITS) and the version control system (VCS), the process is shown in figure \ref{fig:seoss33_retrival}.
 
 \begin{figure}[!h]
-  \includegraphics[width=\linewidth]{figure/seoss33_db_schema.png}
-  \caption{SEOSS33 data model}
-  \label{fig:seoss33_db}
+  \includegraphics[width=\linewidth]{figure/seoss33_retrival.png}
+  \caption{SEOSS33 data retrival}
+  \label{fig:seoss33_retrival}
 \end{figure}
 
-The dataset is composed of 33 different software projects with some common characteristics (reference in  \cite{SEOSS33} chapter 2.1), almost single programming language (Java), usage of versioning software, tracebility of issue and other similiar information. Among these products we have selected five of them, because of size, as shown in table \ref{tab:seoss33_selected}:
+To unify the project specific difference, the typed issue, e.g. \textit{New Feature} or \textit{Bug Report}, are mapped to five issue categories:
+\begin{itemize}
+  \item Bug: A problem which impairs or prevents the functions of the product
+  \item Feature: A new feature of the product
+  \item Improvement: An enhancement to an existing feature
+  \item Task: A task that needs to be done
+  \item Other: Various
+\end{itemize}
+
+The study collects 33 projects that are using Atalassian Jira and git, for popularity reasons. Is also required that the projects in the dataset should be majorly written in one programming language, Java is choosen. Due to machine learning nature, the choosen project must have great number of issue, all project were in development for at least three years. Among these products we have selected five of them, because of size, as shown in table \ref{tab:seoss33_selected}:
 
 \begin{center}
   \captionof{table}{Project data distribution} \label{tab:seoss33_selected}
@@ -198,18 +214,16 @@ The dataset is composed of 33 different software projects with some common chara
   \end{tabular}
 \end{center}
 
+More selection charactheristics can be found in chapter 2.1 \cite{SEOSS33}.\\
 
-% \section{San Francisco Bike Sharing}
-% The big US city of San Francisco provide a lot of public available dataset related to the service proposed, one of them is about the BS (\textit{Bike Sharing}) system of the Bay Area. It's a huge \href{https://www.kaggle.com/datasf/san-francisco}{dataset} holding information about 5 years, for 70 stations, with more than 5000 bikes.
-% The structure is simple and is divided among three tables:
-% \begin{itemize}
-%   \item \textbf{status}: A log storing the information of number of bikes and docks available at each minute of the day for each station
-%   \item \textbf{trips}: Each ride performed with the source and destination station, the starting and arrival time, the duration, the number of the bike used and the type of user subscription.
-%   \item \textbf{stations}: Store generical informations about the station, name, address, latitude, longitude and number of docks.
-% \end{itemize}
-%
-% \section{San Francisco Fire Department}
-% Another dataset, of the city of San Francisco, available is related to the fire department. The dataset is based on a \href{https://data.sfgov.org/widgets/nuek-vuh3}{big table} where each row is referring to a unit dispatched, \textit{Unit ID} for an operations, more than one unit can be involved in a single operations that can be identified by the field \textit{call number}. Many others features can be found in the remaining fields, operations GPS location, type of allarm, type of operation.
+Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
+Each project is stored in a SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by an \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{figure/seoss33_db_schema.png}
+  \caption{SEOSS33 data model}
+  \label{fig:seoss33_db}
+\end{figure}
 
 
 % #######################################
@@ -221,8 +235,10 @@ The dataset is composed of 33 different software projects with some common chara
 Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead\cite{ml}. The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
 There a lot of different models available, the following chapters will focus on the models used in this project.
 
-\section{Random Forest}
-Random Forest (RF) is a supervised Learning algorithm which uses ensemble learning method for classification and regression. The forest is made by lot of different decision tree, its basic unit. The structure of the decision tree is simple, each branch define a direction to follow based on the values of different features, the end of a branch, the leaf, instead is the final predicted value. When all the trees are trained the model can be used, all the features value are evaluated by all the trees, than using some aggregation technique the final predicted value is computed. Using lot of different decision tree reduce the habit of overfitting. The behaviour is similar even for classification. Figure \ref{fig:rf} shows a simplified schema of the model.
+\section{Supervised Learning}
+% MISSING INTRODUCTION
+\paragraph{Random Forest}
+Random Forest (RF) is a supervised learning algorithm which uses ensemble learning method for classification and regression. The forest is made by lot of different decision tree, its basic unit. The structure of the decision tree is simple, each branch define a direction to follow based on the values of different features, the end of a branch, the leaf, instead is the final predicted value. When all the trees are trained the model can be used, all the features value are evaluated by all the trees, than using some aggregation technique the final predicted value is computed. Using lot of different decision tree reduce the habit of overfitting. The behaviour is similar even for classification. Figure \ref{fig:rf} shows a simplified schema of the model.
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{figure/rf.png}
   \caption{Random Forest simplified scheme \cite{rf}}
@@ -232,6 +248,8 @@ Random Forest (RF) is a supervised Learning algorithm which uses ensemble learni
 The main advantages are that is efficent on large databases, can handle a lot of input variables without variable deletion, it generate an unbiased estimate of the generalization error for the build process and it can handle missing data.
 One of the drawback of this technique is the habit to overfit in particular condition, depending on datasets.
 
+\paragraph{Gradient Boosting}
+% MISSING
 
 \section{Neural Networks}
 Neural Networks (NN) are algorithm, for pattern recognition, inspired by the structure of the human brain, with elaboration units (neurons) and connection network (synapses), exposed to enough of the right data, this kind of algorithms is able to establish correlations between present and future events. Figure \ref{fig:nn} shows a simplyfied versiona of a neural network.\\
