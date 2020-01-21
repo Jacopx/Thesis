@@ -215,7 +215,6 @@ The study collects 33 projects that are using Atalassian Jira and git, for popul
 \end{center}
 
 More selection charactheristics can be found in chapter 2.1 \cite{SEOSS33}.\\
-
 Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
 Each project is stored in a SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by an \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
 
@@ -225,14 +224,21 @@ Each project is stored in a SQLITE file, a SQL offline database, the structure i
   \label{fig:seoss33_db}
 \end{figure}
 
+Each table contains different types of data that will be used to generate the data used to forecast.
 
 % #######################################
 % #          Machine Learning           #
 % #######################################
 
-\chapter{Machine Learning models}
+\chapter{Machine Learning}
 \section{Introduction}
 Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead\cite{ml}. The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
+There are two types of systems:
+\begin{itemize}
+  \item Knowledge-based: Acquisition and modeling of common-sense knowledge and expert knowledge (from rules to facts)
+  \item Learning: Extraction of knowledge and rules from example/experience (from facts to rules)
+\end{itemize}
+
 There a lot of different models available, the following chapters will focus on the models used in this project.
 
 \section{Supervised Learning}
