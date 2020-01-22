@@ -105,11 +105,8 @@
 
 \summary
 
-La pressione barometrica di Giove viene misurata
-mediante un metodo originale  messo a punto dai candidati, che si basa
-sul rilevamento telescopico della pressione.
+The software development is fundamental in the new world, how about using artificial intelligence to improve it.
 
-% \paginavuota % funziona anche senza specificare l'opzione classica
 
 \acknowledgements
 
@@ -167,7 +164,7 @@ This work is mainly conducted using software tools, here a list of the tools use
 % #            State of art             #
 % #######################################
 \chapter{State of art}
-\section{Literature}
+\section{Related works}
 Speaking about other works.
 
 % #######################################
@@ -232,30 +229,47 @@ Each table contains different types of data that will be used to generate the da
 
 \chapter{Machine Learning}
 \section{Introduction}
-Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead\cite{ml}. The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
+Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
 There are two types of systems:
 \begin{itemize}
   \item Knowledge-based: Acquisition and modeling of common-sense knowledge and expert knowledge (from rules to facts)
   \item Learning: Extraction of knowledge and rules from example/experience (from facts to rules)
 \end{itemize}
-
+All the machine learning techniques try to develop systems similar to the second definitions. ML algorithms can be divided in three categories: supervised, unsupervised and reinforcement learning. The first will be used to predict class based on previous knowledge, the second tries to labeling data without a priori experience and the third bases its learning on action reward.\\
 There a lot of different models available, the following chapters will focus on the models used in this project.
 
 \section{Supervised Learning}
-% MISSING INTRODUCTION
+Is a powerful technique to process labeled, which is a dataset with that has been classified, to infer a learning algorithm. These dataset is used as basis to predict, and learn how, unlabeled data. There are two types of supervised learning, classification and linear regression. The goal of classification models is to predict categorical class labels of new instances, based on a training set of past observations. The classification can be binary or multi-class. Instead, regression, aim to predict continuos outcome, it tries to find mathematical relationships between variables to predict the target with a reasonable level of approximation. Our project is only focused on regression, classification will not be further discussed.\\
+The following paragraphs will deal with the models used specifically.
+
 \paragraph{Random Forest}
-Random Forest (RF) is a supervised learning algorithm which uses ensemble learning method for classification and regression. The forest is made by lot of different decision tree, its basic unit. The structure of the decision tree is simple, each branch define a direction to follow based on the values of different features, the end of a branch, the leaf, instead is the final predicted value. When all the trees are trained the model can be used, all the features value are evaluated by all the trees, than using some aggregation technique the final predicted value is computed. Using lot of different decision tree reduce the habit of overfitting. The behaviour is similar even for classification. Figure \ref{fig:rf} shows a simplified schema of the model.
+Random Forest (RF) is a supervised learning algorithm which uses ensable learning method for classification and regression. They are built by combining the predictions of several trees, each of which is trained independently and the prediction of the trees are combined through averaging \cite{RF_theory}. A visualization of a RF is shown in figure \ref{fig:rf}.\\
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{figure/rf.png}
   \caption{Random Forest simplified scheme \cite{rf}}
   \label{fig:rf}
 \end{figure}
-
-The main advantages are that is efficent on large databases, can handle a lot of input variables without variable deletion, it generate an unbiased estimate of the generalization error for the build process and it can handle missing data.
-One of the drawback of this technique is the habit to overfit in particular condition, depending on datasets.
+Three parameters are important defining the RF, (1) the methods for splitting the leafs, (2) the type of predictor to use in each leaf, and (3) the method for injecting randomness.
+Splitting of require the selection of shape and a method for evaluating the quality of each candidate. Typical choices are axis aligned splits, where data is routed to sub-tree depending on a threshold. The threshold can be chosen randomly of by a leafs optimization function. After the generation of different candidate splits a choosing criterion must be defined in order to split the leaf. One of the simplest strategy is to choose among the candidates uniformly at random, otherwise is possible to select the candidate split which optimize a purity function (information gain for example) over the leaf that would be created.
+The most common predictors, for each leaf, is the average response over training points which fall in that leaf.
+The injection of randomness can happen in different ways, the size of candidate splits, coefficients for random combinations, etc... In any case the thresholds can be also defined randomly or by optimization over data. Another solution is build tree using bootstrapped or sub-sampled dataset.\\
+The training phase is performed independently by each tree by exploiting an assignement in structure and estimation points to respectively change the shape of the tree and to improve the estimator fit.\\
+Once the forest has been trained it can be used to make predictions for unlabeled data points. In the prediction phase, each single tree, independently make its own prediction than an average of all the trees is computed to make a single outcome value. The contribution of each tree to the final value is the same.
+% To make predictions for a query point $x$, each tree independetly predicts
+% \begin{center}
+%   \begin{equation}
+%     f^{j}_{n}(x) = \frac{1}{N^{e}(A_{n}(x))} \sum_{I_{i}=e}^{Yi \in A_{n}(x)} Y_{i}
+%   \end{equation}
+% \end{center}
+% and the forest averages the prediction of each tree
+% \begin{center}
+%   \begin{equation}
+%     f^{(M)}_{n}(x) = \frac{1}{M} \sum_{j=1}^{M} f^{j}_{n}(x)
+%   \end{equation}
+% \end{center}
 
 \paragraph{Gradient Boosting}
-% MISSING
+Gradient Boosting (GB) machines are a family of powerful machine learning techniques that have shown considerable success in a wide range of pratical application. They are higly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable.
 
 \section{Neural Networks}
 Neural Networks (NN) are algorithm, for pattern recognition, inspired by the structure of the human brain, with elaboration units (neurons) and connection network (synapses), exposed to enough of the right data, this kind of algorithms is able to establish correlations between present and future events. Figure \ref{fig:nn} shows a simplyfied versiona of a neural network.\\
