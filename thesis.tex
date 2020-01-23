@@ -121,7 +121,7 @@ Un ringraziamento speciale ai cavalieri di Smirnuff, luce della mia battaglia.
 % #######################################
 
 \chapter{Introduction}
-
+\label{chap:intro}
 \section{General Problem}
 Forecasting is one of the most critic part of a company, it could drive to easily success as well as drive to failure. A software project is not different from a manufacturing product, its development, infact, require analysis of different kind, from resources needed to costs and time required.\\
 The software development experience shows that the process of analysis is really difficult, due to the nature of the problem, coding is a mind product and the time required to produce it can varying in accord to a lot of different factors.
@@ -172,6 +172,7 @@ Speaking about other works.
 % #######################################
 
 \chapter{Datasets}
+\label{chap:dataset}
 The following section illustrate the structure of the all the principal datasets used during this thesis project.
 \section{SEOSS33}
 The SEOSS33\cite{SEOSS33} is a \href{https://doi.org/10.7910/DVN/PDDZ4Q}{dataset} collecting bug, issue, reports, commit and lot of other information of 33 open source project, following their progress via sourcing platform. The dataset is enriched also with time stamps, release versions, component information and developer comments.\\
@@ -228,6 +229,7 @@ Each table contains different types of data that will be used to generate the da
 % #######################################
 
 \chapter{Machine Learning}
+\label{chap:ml}
 \section{Introduction}
 Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
 There are two types of systems:
@@ -240,7 +242,7 @@ There a lot of different models available, the following chapters will focus on 
 
 \section{Supervised Learning}
 Is a powerful technique to process labeled, which is a dataset with that has been classified, to infer a learning algorithm. These dataset is used as basis to predict, and learn how, unlabeled data. There are two types of supervised learning, classification and linear regression. The goal of classification models is to predict categorical class labels of new instances, based on a training set of past observations. The classification can be binary or multi-class. Instead, regression, aim to predict continuos outcome, it tries to find mathematical relationships between variables to predict the target with a reasonable level of approximation. Our project is only focused on regression, classification will not be further discussed.\\
-The following paragraphs will deal with the models used specifically.
+All the supervised learning method used are based on ensable, the basic idea is to merge multiple, different, hypotesis in order to improved the quality of the prediction, for example the random forest or gradient boosting are ensable of multiple decision trees. The following paragraphs will deal with the models used specifically.
 
 \paragraph{Random Forest}
 Random Forest (RF) is a supervised learning algorithm which uses ensable learning method for classification and regression. They are built by combining the predictions of several trees, each of which is trained independently and the prediction of the trees are combined through averaging \cite{RF_theory}. A visualization of a RF is shown in figure \ref{fig:rf}.\\
@@ -254,8 +256,13 @@ Splitting of require the selection of shape and a method for evaluating the qual
 The most common predictors, for each leaf, is the average response over training points which fall in that leaf.
 The injection of randomness can happen in different ways, the size of candidate splits, coefficients for random combinations, etc... In any case the thresholds can be also defined randomly or by optimization over data. Another solution is build tree using bootstrapped or sub-sampled dataset.\\
 The training phase is performed independently by each tree by exploiting an assignement in structure and estimation points to respectively change the shape of the tree and to improve the estimator fit.\\
-Once the forest has been trained it can be used to make predictions for unlabeled data points. In the prediction phase, each single tree, independently make its own prediction than an average of all the trees is computed to make a single outcome value. The contribution of each tree to the final value is the same.
-% To make predictions for a query point $x$, each tree independetly predicts
+Once the forest has been trained it can be used to make predictions for unlabeled data points. In the prediction phase, each single tree, independently make its own prediction than an average of all the trees is computed to make a single outcome value. The contribution of each tree to the final value is the same.\\
+Out implementation use Random Forest developed by SciKit-Learn v0.21:
+\begin{lstlisting}[language=python, frame=single]
+  from sklearn.ensemble import RandomForestRegressor
+\end{lstlisting}
+The specific parameters will be explained during the \autoref{chap:forecasting} about forecasting.
+% To make predictions for a query point $x$, each tree independently predicts
 % \begin{center}
 %   \begin{equation}
 %     f^{j}_{n}(x) = \frac{1}{N^{e}(A_{n}(x))} \sum_{I_{i}=e}^{Yi \in A_{n}(x)} Y_{i}
@@ -268,8 +275,13 @@ Once the forest has been trained it can be used to make predictions for unlabele
 %   \end{equation}
 % \end{center}
 
-\paragraph{Gradient Boosting}
-Gradient Boosting (GB) machines are a family of powerful machine learning techniques that have shown considerable success in a wide range of pratical application. They are higly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable.
+\paragraph{Gradient Boosting Machines}
+Gradient Boosting Machines (GB) are a family of powerful machine learning techniques that have shown considerable success in a wide range of pratical application. They are higly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable. In GBM the learning phase consecutively fits new models to improve the accuracy of the estimations. Ideally they construct new basic layers,  decision trees of fixed size, to be maximally correlated with the negative gradient of the loss function of the ensable. The loss function should be chosen by the developer, even ad-hoc loss function could be implemented. The attempt is to solve this minimization problem numerically via steepest descent \cite{ensable}.\\
+This high flexibility of GBM makes them really customizable to any kind of task. Given its simplicity a lot of experimentation can be performed over the model.\\
+Our project implement Gradient Boosting Decision Tree (GBDT) developed by SciKit-Learn v0.21:
+\begin{lstlisting}[language=Python, frame=single]
+  from sklearn.ensemble import GradientBoostingRegressor
+\end{lstlisting}
 
 \section{Neural Networks}
 Neural Networks (NN) are algorithm, for pattern recognition, inspired by the structure of the human brain, with elaboration units (neurons) and connection network (synapses), exposed to enough of the right data, this kind of algorithms is able to establish correlations between present and future events. Figure \ref{fig:nn} shows a simplyfied versiona of a neural network.\\
@@ -294,6 +306,7 @@ One of the most used type of RNN is the Long-Short Term Memory (LSTM), were deve
 % #######################################
 
 \chapter{Forecasting}
+\label{chap:forecasting}
 \section{Introduction}
 Forecasting is the process of making predictions of future based on past and present data by trends analysis. Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
 The software development is identical to a product development process, starts from the ideation and ends with the production itself.
