@@ -177,14 +177,7 @@ The following section illustrate the structure of the all the principal datasets
 \section{SEOSS33}
 The SEOSS33\cite{SEOSS33} is a \href{https://doi.org/10.7910/DVN/PDDZ4Q}{dataset} collecting bug, issue, reports, commit and lot of other information of 33 open source project, following their progress via sourcing platform. The dataset is enriched also with time stamps, release versions, component information and developer comments.\\
 At today there are no other public research conducted over this datasets, this works seems to be first.\\
-The data is retrived by the issue tracking system (ITS) and the version control system (VCS), the process is shown in figure \ref{fig:seoss33_retrival}.
-
-\begin{figure}[!h]
-  \includegraphics[width=\linewidth]{figure/seoss33_retrival.png}
-  \caption{SEOSS33 data retrival}
-  \label{fig:seoss33_retrival}
-\end{figure}
-
+The data is retrived by the issue tracking system (ITS) and the version control system (VCS).
 To unify the project specific difference, the typed issue, e.g. \textit{New Feature} or \textit{Bug Report}, are mapped to five issue categories:
 \begin{itemize}
   \item Bug: A problem which impairs or prevents the functions of the product
@@ -240,8 +233,10 @@ There are two types of systems:
 All the machine learning techniques try to develop systems similar to the second definitions. ML algorithms can be divided in three categories: supervised, unsupervised and reinforcement learning. The first will be used to predict class based on previous knowledge, the second tries to labeling data without a priori experience and the third bases its learning on action reward.\\
 There a lot of different models available, the following chapters will focus on the models used in this project.
 
-\section{Supervised Learning}
-Is a powerful technique to process labeled, which is a dataset with that has been classified, to infer a learning algorithm. These dataset is used as basis to predict, and learn how, unlabeled data. There are two types of supervised learning, classification and linear regression. The goal of classification models is to predict categorical class labels of new instances, based on a training set of past observations. The classification can be binary or multi-class. Instead, regression, aim to predict continuos outcome, it tries to find mathematical relationships between variables to predict the target with a reasonable level of approximation. Our project is only focused on regression, classification will not be further discussed.\\
+\paragraph{Supervised Learning}
+is a powerful technique to process labeled, which is a dataset with that has been classified, to infer a learning algorithm. These dataset is used as basis to predict, and learn how, unlabeled data. There are two types of supervised learning, classification and linear regression. The goal of classification models is to predict categorical class labels of new instances, based on a training set of past observations. The classification can be binary or multi-class. Instead, regression, aim to predict continuos outcome, it tries to find mathematical relationships between variables to predict the target with a reasonable level of approximation. Our project is only focused on regression, classification will not be further discussed.
+
+\section{Ensable Methods}
 All the supervised learning method used are based on ensable, the basic idea is to merge multiple, different, hypotesis in order to improved the quality of the prediction, for example the random forest or gradient boosting are ensable of multiple decision trees. The following paragraphs will deal with the models used specifically.
 
 \paragraph{Random Forest}
@@ -261,7 +256,7 @@ Out implementation use Random Forest developed by SciKit-Learn v0.21:
 \begin{lstlisting}[language=python, frame=single]
   from sklearn.ensemble import RandomForestRegressor
 \end{lstlisting}
-The specific parameters will be explained during the \autoref{chap:forecasting} about forecasting.
+The specific parameters of the model will be explained during the \autoref{chap:forecasting} about forecasting.
 % To make predictions for a query point $x$, each tree independently predicts
 % \begin{center}
 %   \begin{equation}
@@ -276,7 +271,7 @@ The specific parameters will be explained during the \autoref{chap:forecasting} 
 % \end{center}
 
 \paragraph{Gradient Boosting Machines}
-Gradient Boosting Machines (GB) are a family of powerful machine learning techniques that have shown considerable success in a wide range of pratical application. They are higly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable. In GBM the learning phase consecutively fits new models to improve the accuracy of the estimations. Ideally they construct new basic layers,  decision trees of fixed size, to be maximally correlated with the negative gradient of the loss function of the ensable. The loss function should be chosen by the developer, even ad-hoc loss function could be implemented. The attempt is to solve this minimization problem numerically via steepest descent \cite{ensable}.\\
+Gradient Boosting Machines (GBM) are a family of powerful machine learning techniques that have shown considerable success in a wide range of pratical application. They are higly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable. In GBM the learning phase consecutively fits new models to improve the accuracy of the estimations. Ideally they construct new basic layers,  decision trees of fixed size, to be maximally correlated with the negative gradient of the loss function of the ensable. The loss function should be chosen by the developer, even ad-hoc loss function could be implemented. The attempt is to solve this minimization problem numerically via steepest descent \cite{ensable}.\\
 This high flexibility of GBM makes them really customizable to any kind of task. Given its simplicity a lot of experimentation can be performed over the model.\\
 Our project implement Gradient Boosting Decision Tree (GBDT) developed by SciKit-Learn v0.21:
 \begin{lstlisting}[language=Python, frame=single]
@@ -284,21 +279,54 @@ Our project implement Gradient Boosting Decision Tree (GBDT) developed by SciKit
 \end{lstlisting}
 
 \section{Neural Networks}
-Neural Networks (NN) are algorithm, for pattern recognition, inspired by the structure of the human brain, with elaboration units (neurons) and connection network (synapses), exposed to enough of the right data, this kind of algorithms is able to establish correlations between present and future events. Figure \ref{fig:nn} shows a simplyfied versiona of a neural network.\\
-NN can be used to solve different kind of problems, classification, clustering and regression. Our problem will be solved using the regressive type.\\
-Regression analysis can be used to forecast one or more label based to other features.
+A Neural Network (NN) is a machine learning approach inspired by the way in which the brain performs a particular learning task, network of simple computational units (neuros) connected by links (synapses). The knowledge about the learning task is given in the form of training examples, the inter neuros connection strengths (weights) are used to store the acquired information. During the learning process the weights are modified in order to model the particular learning task correctly on the examples.\\
+The learning phase can be both supervised or unsupervised. Supervised is used for pattern recognition, regression and similar, is trained using data with both input and desired output. Unsupervised instead is mainly used for clustering and the learning is made using unlabeled training examples. Only supervised one will be evaluated.\\
+There are three main classes of network architectures:
+\begin{itemize}
+  \item Single-layer feed-forward
+  \item Multi-layer feed-forward
+  \item Recurrent
+\end{itemize}
+A standard architecture is composed of three different layers, \textit{input units}, \textit{hidden units} and \textit{output units}, all the layers are linked with the learning algorithms used to train. An example of a complete multi-layer network in \ref{fig:mlff}.
+
 \begin{figure}[!h]
-  \includegraphics[width=\linewidth]{figure/nn.png}
-  \caption{Structure of a neural network}
-  \label{fig:nn}
+  \includegraphics[width=\linewidth]{figure/feed_foward.png}
+  \caption{Multi-layer feed-forward NN}
+  \label{fig:mlff}
 \end{figure}
-The structure of these networks can be really complicated and a whole thesis can be made upon this topic that, for this reason, will not more discussed.
 
-\paragraph{Recurrent Neural Networks}
-Recurrent Neural Networks (RNN) is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech.
+The neuron is the basic processing unit of the network, which received the inputs. Each input is cobined with its internal state and an optional activation function, it  produce an output value that will be passed to the next layers. The weights, defined during the training phase, correspond to the importance of the connection. The different inputs are summed using a weighted sum:
+\begin{center}
+  \begin{equation}
+    u = \sum^{m}_{j=1} w_{j}x_{j}
+  \end{equation}
+\end{center}
+The computed value is than scaled using an activation function $\varphi$ for limiting the amplitude of the output of the neuron by applying the function:
+\begin{center}
+  \begin{equation}
+    y = \varphi(u + b)
+  \end{equation}
+\end{center}
+Where $b$ represent the bias an external parameter of the neuron, $y$ represent than the output value for the next level. An example of the structure can be found in figure \ref{fig:neuron}
 
-\paragraph{Long-Short Term Memory}
-One of the most used type of RNN is the Long-Short Term Memory (LSTM), were developed to solve the problems of exploding and vanishing of gradient typical of normal RNN.
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{figure/neuron.png}
+  \caption{Neruon view}
+  \label{fig:neuron}
+\end{figure}
+
+There are several different functions that can be used to activate the neurons, they are trying to emulate the typical response of a biological neuron and its different activation methods. The most common are: linear, step, sign, relu and sigmoid.\\
+
+
+% \paragraph{Recurrent Neural Networks}
+% Recurrent Neural Networks (RNN) is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech.
+%
+% \paragraph{Long-Short Term Memory}
+% One of the most used type of RNN is the Long-Short Term Memory (LSTM), were developed to solve the problems of exploding and vanishing of gradient typical of normal RNN.
+
+% \section{Evaluation metrics}
+% MISSING
+
 
 
 % #######################################
@@ -316,10 +344,10 @@ The goal is to predict the defectiveness in order to efficently allocate the dev
 The main advantage, in data analysis, of machines is that they can compute a lot of different data and finding a lot of patterns and correlation that human can't find. Combine the human attitude of logical correlations and machines capacity of number analysis can drive to a powerful combination that can drastically improve the forecasting ability.
 Each artificial intelligence algorithms require a correct and properly studied data in order to perform a valuable prediction, one of the basic step is the data preparation, providing correct and organized data is fundamental to correctly fit the network over the problem.
 
-\section{Models detail}
-\section{One-Shot Prediction}
-\section{Recurrent forecasting}
-\section{Results}
+% \section{Models detail}
+% \section{One-Shot Prediction}
+% \section{Recurrent forecasting}
+% \section{Results}
 
 
 % % #######################################
