@@ -23,6 +23,7 @@
 \usepackage{subfigure}
 \usepackage{booktabs}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{bm}
 \usepackage{listings}
@@ -145,8 +146,8 @@ This work is mainly conducted using software tools, here a list of the tools use
 
 \paragraph{\href{https://scikit-learn.org/stable/}{SciKit-Learn}} Tools and libraries for machine learning.
 
-\paragraph{\href{https://gitlab.com}{GitLab}} Sourcing platform based on Git. Used for the code of the project, available here:\\
-\url{https://gitlab.com/EiS-Projects/analytics/temp/thesisProjectJN}.
+\paragraph{\href{https://gitlab.com}{GitLab}} Sourcing platform based on Git. Used for the code of the project.
+% \url{https://gitlab.com/EiS-Projects/analytics/temp/thesisProjectJN}.
 
 \paragraph{\href{https://github.com}{GitHub}} Sourcing platform based on Git. Used for the thesis and calendar sourcing:
 \begin{itemize}
@@ -217,6 +218,10 @@ Each project is stored in a SQLITE file, a SQL offline database, the structure i
 
 Each table contains different types of data that will be used to generate the data used to forecast.
 
+%
+% ADDING PLOT ABOUT DISTRIBUTION
+%
+
 % #######################################
 % #          Machine Learning           #
 % #######################################
@@ -246,7 +251,7 @@ Random Forest (RF) is a supervised learning algorithm which uses ensable learnin
   \caption{Random Forest simplified scheme \cite{rf}}
   \label{fig:rf}
 \end{figure}
-Three parameters are important defining the RF, (1) the methods for splitting the leafs, (2) the type of predictor to use in each leaf, and (3) the method for injecting randomness.
+Three parameters are important to define the RF: (1) the methods for splitting the leafs, (2) the type of predictor to use in each leaf, and (3) the method for injecting randomness.
 Splitting of require the selection of shape and a method for evaluating the quality of each candidate. Typical choices are axis aligned splits, where data is routed to sub-tree depending on a threshold. The threshold can be chosen randomly of by a leafs optimization function. After the generation of different candidate splits a choosing criterion must be defined in order to split the leaf. One of the simplest strategy is to choose among the candidates uniformly at random, otherwise is possible to select the candidate split which optimize a purity function (information gain for example) over the leaf that would be created.
 The most common predictors, for each leaf, is the average response over training points which fall in that leaf.
 The injection of randomness can happen in different ways, the size of candidate splits, coefficients for random combinations, etc... In any case the thresholds can be also defined randomly or by optimization over data. Another solution is build tree using bootstrapped or sub-sampled dataset.\\
@@ -307,15 +312,46 @@ The computed value is than scaled using an activation function $\varphi$ for lim
     y = \varphi(u + b)
   \end{equation}
 \end{center}
-Where $b$ represent the bias an external parameter of the neuron, $y$ represent than the output value for the next level. An example of the structure can be found in figure \ref{fig:neuron}
+Where $b$ represent the bias, an external parameter of the neuron, $y$ represent than the output value for the next level. An example of the structure can be found in figure \ref{fig:neuron}.
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{figure/neuron.png}
-  \caption{Neruon view}
+  \caption{Neuron view}
   \label{fig:neuron}
 \end{figure}
 
-There are several different functions that can be used to activate the neurons, they are trying to emulate the typical response of a biological neuron and its different activation methods. The most common are: linear, step, sign, relu and sigmoid.\\
+There are several different functions that can be used to activate the neurons, they are trying to emulate the typical response of a biological neuron and its different activation methods. The most common are: linear, step, relu and sigmoid.
+Each functions behave in a different way with different peculiarities and critical issues, there are two main type, linear and non-linear.
+
+% \paragraph{Linear}
+
+
+\paragraph{Sigmoid}
+is a non-linear function defined in the following way:
+\begin{center}
+  \begin{equation}
+    f(x) = \frac{1}{1+e^{x}}
+  \end{equation}
+\end{center}
+The advantages are the smooth gradient that prevents out-of-scale output values, the implicit normalization bound from $[0, +1]$ and the cleaning of the forecast. The main drawback is the vanishing of the gradient, for very high or low input value there is no change in the prediction output, the sigmoid is also computationally expensive. The figure \ref{fig:sigmoid} show the curve.
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{figure/sigmoid.png}
+  \caption{Sigmoid curve}
+  \label{fig:sigmoid}
+\end{figure}
+
+
+% \paragraph{Step}
+
+
+\paragraph{ReLU} that stand for Rectified Linear Unit and is defined in the following way:
+\begin{center}
+  \begin{equation}
+    f(x)= max(0, x)
+  \end{equation}
+\end{center}
+
+Although it looks like a linear function, ReLU has a derivative function and allows for backpropagation another advantage is that is computationally efficient. The main problem of this function is its behaviour with value near zero or even negative, the gradient of the function become zero and the network can't perform backpropagation and can't learn.
 
 
 % \paragraph{Recurrent Neural Networks}
