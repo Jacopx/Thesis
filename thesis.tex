@@ -51,7 +51,7 @@
 %
 % \FacoltaDi{Faculty of Computer Engineering}% lo spazio finale correttamente sparisce
 
-\titolo{Time  prediction of software development via machine learning}
+\titolo{Defectiveness prediction in software development via machine learning}
 \sottotitolo{Artificial Intelligence applied to Software Engineering}
 
 %
@@ -106,12 +106,15 @@
 
 \summary
 
-The software development is fundamental in the new world, how about using artificial intelligence to improve it.
+The software development is fundamental in the new world, how about using artificial intelligence to improve it?\\
+The development of a software product is not different from any kind of hardware product development, after the first phase of design the production starts, during this phase the problems emerge systematically and must be managed before the release in production.\\
+Every day each software house perform hundreds of commit during the development, each commit contains a lot of informations is maybe linked to an issue, with structured commit and similar stuffs. Predicting defectiveness in the during the making of the software can drastically improve the process of development, allocating the correct number of developer could reduce the time required and avoid delay and problems before releases.\\
+With proper aggregation and evaluation, neural network can predict with high accuracy the trend of defectiveness, according to a severity, correlated with the different issue, it's easy to calculate the amount of effort required to reduce the problems.
 
 
 \acknowledgements
 
-Un ringraziamento speciale ai cavalieri di Smirnuff, luce della mia battaglia.
+Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battaglia.
 
 \indici
 
@@ -161,12 +164,12 @@ This work is mainly conducted using software tools, here a list of the tools use
   \item DataGrip: \url{https://www.jetbrains.com/datagrip/}
 \end{itemize}
 
-% #######################################
-% #            State of art             #
-% #######################################
-\chapter{State of art}
-\section{Related works}
-Speaking about other works.
+% % #######################################
+% % #            State of art             #
+% % #######################################
+% \chapter{State of art}
+% \section{Related works}
+% Speaking about other works.
 
 % #######################################
 % #              Datasets               #
@@ -187,7 +190,6 @@ To unify the project specific difference, the typed issue, e.g. \textit{New Feat
   \item Task: A task that needs to be done
   \item Other: Various
 \end{itemize}
-
 The study collects 33 projects that are using Atalassian Jira and git, for popularity reasons. Is also required that the projects in the dataset should be majorly written in one programming language, Java is choosen. Due to machine learning nature, the choosen project must have great number of issue, all project were in development for at least three years. Among these products we have selected five of them, because of size, as shown in table \ref{tab:seoss33_selected}:
 
 \begin{center}
@@ -206,6 +208,14 @@ The study collects 33 projects that are using Atalassian Jira and git, for popul
   \end{tabular}
 \end{center}
 
+Figure \ref{fig:prior} show the distribution of each issue category respect all the projects.
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{figure/prior.png}
+  \caption{Count of different priority for each project}
+  \label{fig:prior}
+\end{figure}
+
 More selection characteristics can be found in chapter 2.1 \cite{SEOSS33}.\\
 Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
 Each project is stored in a SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by an \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
@@ -217,10 +227,6 @@ Each project is stored in a SQLITE file, a SQL offline database, the structure i
 \end{figure}
 
 Each table contains different types of data that will be used to generate the data used to forecast.
-
-%
-% ADDING PLOT ABOUT DISTRIBUTION
-%
 
 % #######################################
 % #          Machine Learning           #
@@ -397,9 +403,9 @@ The main characteristics of this technique is that, the gradient, proceeds backw
 \end{enumerate}
 
 
-% \paragraph{Recurrent Neural Networks}
-% Recurrent Neural Networks (RNN) is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech.
-%
+\paragraph{Recurrent Neural Networks}
+Recurrent Neural Networks (RNN) is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech.
+
 % \paragraph{Long-Short Term Memory}
 % One of the most used type of RNN is the Long-Short Term Memory (LSTM), were developed to solve the problems of exploding and vanishing of gradient typical of normal RNN.
 
@@ -408,20 +414,20 @@ The main characteristics of this technique is that, the gradient, proceeds backw
 
 
 
-% #######################################
-% #             Forecasting             #
-% #######################################
+% % #######################################
+% % #             Forecasting             #
+% % #######################################
 
-\chapter{Forecasting}
-\label{chap:forecasting}
-\section{Introduction}
-Forecasting is the process of making predictions of future based on past and present data by trends analysis. Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
-The software development is identical to a product development process, starts from the ideation and ends with the production itself.
-The goal is to predict the defectiveness in order to efficently allocate the development effort.
+% \chapter{Forecasting}
+% \label{chap:forecasting}
+% \section{Introduction}
+% Forecasting is the process of making predictions of future based on past and present data by trends analysis. Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
+% The software development is identical to a product development process, starts from the ideation and ends with the production itself.
+% The goal is to predict the defectiveness in order to efficently allocate the development effort.
 
-\section{Features}
-The main advantage, in data analysis, of machines is that they can compute a lot of different data and finding a lot of patterns and correlation that human can't find. Combine the human attitude of logical correlations and machines capacity of number analysis can drive to a powerful combination that can drastically improve the forecasting ability.
-Each artificial intelligence algorithms require a correct and properly studied data in order to perform a valuable prediction, one of the basic step is the data preparation, providing correct and organized data is fundamental to correctly fit the network over the problem.
+% \section{Features}
+% The main advantage, in data analysis, of machines is that they can compute a lot of different data and finding a lot of patterns and correlation that human can't find. Combine the human attitude of logical correlations and machines capacity of number analysis can drive to a powerful combination that can drastically improve the forecasting ability.
+% Each artificial intelligence algorithms require a correct and properly studied data in order to perform a valuable prediction, one of the basic step is the data preparation, providing correct and organized data is fundamental to correctly fit the network over the problem.
 
 % \section{Models detail}
 % \section{One-Shot Prediction}
@@ -439,11 +445,11 @@ Each artificial intelligence algorithms require a correct and properly studied d
 % \section{SFFD}
 
 
-% #######################################
-% #             Conclusion              #
-% #######################################
+% % #######################################
+% % #             Conclusion              #
+% % #######################################
 
-\chapter{Conclusion}
+% \chapter{Conclusion}
 
 
 
