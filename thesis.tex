@@ -206,7 +206,7 @@ The study collects 33 projects that are using Atalassian Jira and git, for popul
   \end{tabular}
 \end{center}
 
-More selection charactheristics can be found in chapter 2.1 \cite{SEOSS33}.\\
+More selection characteristics can be found in chapter 2.1 \cite{SEOSS33}.\\
 Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
 Each project is stored in a SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by an \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
 
@@ -383,7 +383,18 @@ Although it looks like a linear function, ReLU has a derivative function and all
   \end{minipage}
 \end{figure}
 
-% \paragraph{Backpropagation}
+\paragraph{Delta learning rule} uses the difference between target output and the obtained activation to drive the learning. According to this rules, each time an output is computed, the weight of the neuron is adjusted according to an error function trying to reduce the difference between output and target.
+
+\paragraph{Backpropagation} short for \textit{"backward propagation of errors"}, is an algorithm for supervised learning of artificial neural networks using gradient descent. Given an artificial neural network and an error function, the method calculates the gradient of the error function with respect to the neural network's weights. It is a generalization of the delta rule for perceptrons to multilayer feedforward neural networks. \cite{bp}.\\
+The main characteristics of this technique is that, the gradient, proceeds backward through the network, with the gradient of the final layer calculated before the first. This solution allow an efficient calculation of the gradient for each layer. The algorithm is structured in this form:
+\begin{enumerate}
+  \item Compute the error term for the output units
+  \item From the output layer, repeat until last hidden reached:
+  \begin{enumerate}
+    \item Propagating the error term back to the previous layer
+    \item updating the weights between the two layers
+  \end{enumerate}
+\end{enumerate}
 
 
 % \paragraph{Recurrent Neural Networks}
