@@ -323,8 +323,31 @@ Where $b$ represent the bias, an external parameter of the neuron, $y$ represent
 There are several different functions that can be used to activate the neurons, they are trying to emulate the typical response of a biological neuron and its different activation methods. The most common are: linear, step, relu and sigmoid.
 Each functions behave in a different way with different peculiarities and critical issues, there are two main type, linear and non-linear.
 
-% \paragraph{Linear}
+\paragraph{Step} is a binary, linear and threshold-based activativation function, figure \ref{fig:step}. When the input is above or below a defined threshold, the neuron is activated and pass the exact same input value to the next layer. The main drawback is that not allow multiple-value output.
 
+\paragraph{Linear} is of course a linear activation function that take the form:
+\begin{center}
+  \begin{equation}
+    f(x) = x
+  \end{equation}
+\end{center}
+This function take the input and, by multiply it by the weight of the neuron, it calculate the output. Respect the step function allows multiple-value output, but there are two major problem: is not possible to use backpropagation (treated later) to train the network because the derivative function is constant and is not related to the input. The other problem is that linear function collapse all the layer into once, because the last layer will be a linear combination of the first in any case. Figure \ref{fig:linear} show the curve.
+
+\begin{figure}
+  \centering
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.85\linewidth]{figure/step.png}
+    \caption{Step activation function}
+    \label{fig:step}
+  \end{minipage}%
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figure/linear.png}
+    \caption{Linear activation function}
+    \label{fig:linear}
+  \end{minipage}
+\end{figure}
 
 \paragraph{Sigmoid}
 is a non-linear function defined in the following way:
@@ -334,15 +357,6 @@ is a non-linear function defined in the following way:
   \end{equation}
 \end{center}
 The advantages are the smooth gradient that prevents out-of-scale output values, the implicit normalization bound from $[0, +1]$ and the cleaning of the forecast. The main drawback is the vanishing of the gradient, for very high or low input value there is no change in the prediction output, the sigmoid is also computationally expensive. The figure \ref{fig:sigmoid} show the curve.
-\begin{figure}[!h]
-  \includegraphics[width=\linewidth]{figure/sigmoid.png}
-  \caption{Sigmoid curve}
-  \label{fig:sigmoid}
-\end{figure}
-
-
-% \paragraph{Step}
-
 
 \paragraph{ReLU} that stand for Rectified Linear Unit and is defined in the following way:
 \begin{center}
@@ -352,6 +366,24 @@ The advantages are the smooth gradient that prevents out-of-scale output values,
 \end{center}
 
 Although it looks like a linear function, ReLU has a derivative function and allows for backpropagation another advantage is that is computationally efficient. The main problem of this function is its behaviour with value near zero or even negative, the gradient of the function become zero and the network can't perform backpropagation and can't learn.
+
+\begin{figure}
+  \centering
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figure/sigmoid.png}
+    \caption{Sigmoid curve}
+    \label{fig:sigmoid}
+  \end{minipage}%
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figure/relu.png}
+    \caption{ReLU activation function}
+    \label{fig:relu}
+  \end{minipage}
+\end{figure}
+
+% \paragraph{Backpropagation}
 
 
 % \paragraph{Recurrent Neural Networks}
