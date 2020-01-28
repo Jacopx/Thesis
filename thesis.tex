@@ -210,7 +210,7 @@ The study collects 33 projects that are using Atalassian Jira and git, for popul
 
 Figure \ref{fig:prior} show the distribution of each issue category respect all the projects.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/prior.png}
   \caption{Count of different priority for each project}
   \label{fig:prior}
@@ -220,7 +220,7 @@ More selection characteristics can be found in chapter 2.1 \cite{SEOSS33}.\\
 Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
 Each project is stored in a SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by an \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/seoss33_db_schema.png}
   \caption{SEOSS33 data model}
   \label{fig:seoss33_db}
@@ -251,12 +251,14 @@ is a powerful technique to process labeled, which is a dataset with that has bee
 All the supervised learning method used are based on ensable, the basic idea is to merge multiple, different, hypotesis in order to improved the quality of the prediction, for example the random forest or gradient boosting are ensable of multiple decision trees. The following paragraphs will deal with the models used specifically.
 
 \paragraph{Random Forest}
-Random Forest (RF) is a supervised learning algorithm which uses ensable learning method for classification and regression. They are built by combining the predictions of several trees, each of which is trained independently and the prediction of the trees are combined through averaging \cite{RF_theory}. A visualization of a RF is shown in figure \ref{fig:rf}.\\
-\begin{figure}[!h]
+Random Forest (RF) is a supervised learning algorithm which uses ensable learning method for classification and regression. They are built by combining the predictions of several trees, each of which is trained independently and the prediction of the trees are combined through averaging \cite{RF_theory}. A visualization of a RF is shown in figure \ref{fig:rf}.
+
+\begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/rf.png}
   \caption{Random Forest simplified scheme \cite{rf}}
   \label{fig:rf}
 \end{figure}
+
 Three parameters are important to define the RF: (1) the methods for splitting the leafs, (2) the type of predictor to use in each leaf, and (3) the method for injecting randomness.
 Splitting of require the selection of shape and a method for evaluating the quality of each candidate. Typical choices are axis aligned splits, where data is routed to sub-tree depending on a threshold. The threshold can be chosen randomly of by a leafs optimization function. After the generation of different candidate splits a choosing criterion must be defined in order to split the leaf. One of the simplest strategy is to choose among the candidates uniformly at random, otherwise is possible to select the candidate split which optimize a purity function (information gain for example) over the leaf that would be created.
 The most common predictors, for each leaf, is the average response over training points which fall in that leaf.
@@ -300,7 +302,7 @@ There are three main classes of network architectures:
 \end{itemize}
 A standard architecture is composed of three different layers, \textit{input units}, \textit{hidden units} and \textit{output units}, all the layers are linked with the learning algorithms used to train. An example of a complete multi-layer network in \ref{fig:mlff}.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/feed_foward.png}
   \caption{Multi-layer feed-forward NN}
   \label{fig:mlff}
@@ -320,7 +322,7 @@ The computed value is than scaled using an activation function $\varphi$ for lim
 \end{center}
 Where $b$ represent the bias, an external parameter of the neuron, $y$ represent than the output value for the next level. An example of the structure can be found in figure \ref{fig:neuron}.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/neuron.png}
   \caption{Neuron view}
   \label{fig:neuron}
