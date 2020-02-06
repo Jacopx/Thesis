@@ -410,12 +410,14 @@ This kind of structures is used in a lot of different fields: image classificati
 \paragraph{Long Short Term Memory (LSTM)} normal recurrent neural networks can connect short term event with the present, this feature can be useful in some case, other context could require more long term connection, this special RNN can handle this sort of correlations. Sometimes the recent information is enough to perform the present task, for example, trying to predict the last word of a sentence like: "Sun bright in the \textit{sky}" the previous words are enough to corretly predict the last one, no more context is required. In case of more complex sentences some additional information are needed, for the phrase: "I was born in Italy and I speak \textit{italian}" the context become fundamental to solve the problem. In this kind of problem LSTM can be really helpful.\\
 LSTM are a special kind of RNN, they were introduced by Hochreiter \& Schmidhuber (1997) \cite{lstm} and lately studied and improved. They works really well on a large variety of problems. The special kind of network is explicitly design for long term connections.
 The structure of a RNN is normally a single layer, in case of LSTM the structure is more complicated, is made upon four different layers, as shown in figure \ref{fig:lstm}.
+
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/lstm.png}
-  \caption{Long Short Term Memory layout}
+  \caption{Long Short Term Memory layout \cite{lstm_image}}
   \label{fig:lstm}
 \end{figure}
-% https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
+The first layer filter the input and select what keep and not keep, the second layer will manage what information store in the cell state. The third state is in charge of update the state based on the previous step. The last one decide the output.
 
 
 % \section{Evaluation metrics}
