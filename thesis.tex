@@ -68,7 +68,7 @@
 
 %%%%%%% Tutore
 \tutoreaziendale{dott.\ Davide Piagneri}
-\NomeTutoreAziendale{Supervisore aziendale\\EisWORLD SRL}
+\NomeTutoreAziendale{Supervisore aziendale\\EiSWORLD SRL}
 
 \sedutadilaurea{\textsc{Anno~accademico} 2019-2020}
 
@@ -104,11 +104,9 @@
 
 \frontespizio
 \summary
-
-The software development is fundamental in the new world, how about using artificial intelligence to improve it?\\
-The development of a software product is not different from any kind of hardware product development, after the first phase of design the production starts, during this phase the problems emerge systematically and must be managed before the release in production.\\
-Every day each software house perform hundreds of commit during the development, each commit contains a lot of informations is maybe linked to an issue, with structured commit and similar stuffs. Predicting defectiveness in the during the making of the software can drastically improve the process of development, allocating the correct number of developer could reduce the time required and avoid delay and problems before releases.\\
-With proper aggregation and evaluation, neural network can predict with high accuracy the trend of defectiveness, according to a severity, correlated with the different issue, it's easy to calculate the amount of effort required to reduce the problems.
+Everyday thousands line of code are committed, each of which contains a lot of informations, the file changed, the modifications, comments and even more. A structured and correctly managed sourcing control allow the extraction of useful data that can be analysed using neural networks.\\
+The evaluation of the extracted data require different phases: the first step aim to study the structure of the data in order to correctly understand the data model and allow to use most of the data, next the data must be pre-processed to remove outliers and not useful informations, then more data is extracted, information like developer seniority, bag of words of component edited, linked version and potentially useful informations. The final step is the weekly aggregation by computing the difference between the closed and opened issue, traslating the priority label to a value extracted from the duration distribution of the different classes. Once the data is extracted will be passed to the machine learning models: Random Forest, Gradient Boosting and Neural Networks, to be forecasted with different time horizons. The generated data is then be used in different way: train-test over single extraction, cross version and even cross project.\\
+The execution with the best performance is the cross project one, with a precision greater than 90\% up to 4 weeks and still greater than 70\% up to 20 weeks.
 
 
 \acknowledgements
@@ -126,6 +124,10 @@ Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battag
 \chapter{Introduction}
 \label{chap:intro}
 \section{General Problem}
+The software development is fundamental in the new world, how about using artificial intelligence to improve it?\\
+The development of a software product is not different from any kind of hardware product development, after the first phase of design the production starts, during it problems emerge systematically and must be managed before the release in production.\\
+Every day each a software house perform hundreds of commit, each one contains a lot of informations linked to an issue, with structured commit, driven issue report and other software engineering stuff, the quality of the sourcing improve, allowing data to be used in artificial intelligence analysis. Predicting defectiveness during the making of the software can drastically improve the process of development, allocating the correct number of developer could reduce the time required and avoid delay and problems before releases.
+With a correct preprocessing and evaluated aggregation, neural networks can predict, with high accuracy, the defectiveness trend. These forecast can be further used to improve the software engineering background of the related project.\\
 Forecasting is one of the most critic part of a company, it could drive to easily success as well as drive to failure. A software project is not different from a manufacturing product, its development, infact, require analysis of different kind, from resources needed to costs and time required.\\
 The software development experience shows that the process of analysis is really difficult, due to the nature of the problem, coding is a mind product and the time required to produce it can varying in accord to a lot of different factors.
 
@@ -163,12 +165,12 @@ This work is mainly conducted using software tools, here a list of the tools use
   \item DataGrip: \url{https://www.jetbrains.com/datagrip/}
 \end{itemize}
 
-% % #######################################
-% % #            State of art             #
-% % #######################################
-% \chapter{State of art}
-% \section{Related works}
-% Speaking about other works.
+% #######################################
+% #            State of art             #
+% #######################################
+\chapter{State of art}
+\section{Related works}
+Speaking about other works.
 
 % #######################################
 % #              Datasets               #
@@ -420,9 +422,40 @@ The structure of a RNN is normally a single layer, in case of LSTM the structure
 The first layer filter the input and select what keep and not keep, the second layer will manage what information store in the cell state. The third state is in charge of update the state based on the previous step. The last one decide the output.
 
 
-% \section{Evaluation metrics}
-% MISSING
+\section{Evaluation metrics}
+Every model developed need to be evaluated, there are a lot of different methods that can be used in order to get a metrics about the quality of the system behaviour. The computation of this values is achieved via mathematical expression, for this reason, the results, are not always human readable, some error like mean absolute error, mean relative error and similar can be read and interpreted without any problem. For metrics like R2 or mean squared error the task become more complicated. The following is about the mathematical analysis and description of the different metrics used.\\
+Most of metrics directly derive from the calculation of the simplest error, the \textit{absolute error}, the difference between the target $y$ and the prediction $x$:
+\begin{center}
+  \begin{equation}
+    \epsilon = |y - x|
+  \end{equation}
+\end{center}
+Besides being the easiest to calculate is also the easiest to be understand because show directly the distance respect the desired value.\\
+The first metric based on the previous metric is the \textit{relative error}, that is computed dividing the absolute error by the target value:
+\begin{center}
+  \begin{equation}
+    \eta = \frac{\epsilon}{|x|} = \frac{|y - x|}{|x|}
+  \end{equation}
+\end{center}
+This error rescale the output between [0,1] in order to better understand the error in the estimation.
+For example, in case of a value target value of 530 and a prediciton value of 570 the two error are:
+\begin{center}
+  \begin{equation}
+      \epsilon = |520-570| = 50
+  \end{equation}
+  \begin{equation}
+      \eta = \frac{50}{|520|} = 0.09
+  \end{equation}
+\end{center}
+the difference was 50, but respect the expected output di difference is really low, around 9\%.\\
+The previous errors are the basic ones, the following is the first based on aggregation of multiple errors calculation. The aggregation is fundamental to generate a single number to evaluate the quality of prediction of our model.\\
+The \textit{Mean Absolute Error} (MAE), is probably the easiest to be calculated and understand, is basically computed by calculating the average of all the absolute errors:
 
+\begin{center}
+  \begin{equation}
+    MAE = \frac{\sum_{i=1}^{n}{|y_{i} - x_{i}|}}{n} = \frac{\epsilon}{n}
+  \end{equation}
+\end{center}
 
 
 % #######################################
@@ -449,19 +482,19 @@ The first layer filter the input and select what keep and not keep, the second l
 % % #######################################
 % % #         Model abstraction           #
 % % #######################################
-%
+
 % \chapter{Model abstraction}
 % % \section{CommonDB}
 % \section{SFBS and literature comparisons}
 % \section{SFFD}
 
 
-% % #######################################
-% % #             Conclusion              #
-% % #######################################
+% #######################################
+% #             Conclusion              #
+% #######################################
 
-% \chapter{Conclusion}
-
+\chapter{Conclusion}
+Speaking about conclusion.
 
 
 % #######################################
