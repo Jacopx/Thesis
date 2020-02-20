@@ -104,9 +104,9 @@
 
 \frontespizio
 \summary
-Everyday thousands of commit are pushed, each one contains a lot of informations: files changed, changes, comments, test log and even more. A structured and correctly managed sourcing control allow the extraction of useful data that can be analysed using artifical intelligence.\\
-In order to be able to use the data, some preliminary steps are necessary: the first step aim to study the structure of the data to allow the extraction of more informations, next the data must be pre-processed to remove outliers and not useful informations, with a clean dataset the extraction of combined data begin, information like developer seniority, bag of words of modified components, release version and other potentially useful informations. The final step is the weekly aggregation by computing the difference between the closed and opened issues, translating the priority label to a value extracted from the duration distribution of the different classes. Once extracted the data can be passed through artificial intelligence models: Random Forest, Gradient Boosting and Neural Networks, to be forecasted with different time horizons. The evaluation can be performed in different ways: train-test over single extraction, cross version and even cross project.\\
-The execution with the best performance is the cross project one, with a precision greater than 90\% up to 4 weeks and still greater than 70\% up to 20 weeks.
+Every day thousands of commit are pushed, each one contains a lot of information: files changed, changes, comments, test log and even more. A structured and correctly managed sourcing control allows the extraction of useful data that can be analysed using artificial intelligence.\\
+To be able to use the data, some preliminary steps are necessary: the first step aim to study the structure of the data to allow the extraction of more information, next the data must be pre-processed to remove outliers and not useful features, with a clean dataset the extraction of combined data begin, information like developer seniority, bag of words of modified components, release version and other potentially useful information. The final step is the weekly aggregation by computing the difference between the closed and opened issues, translating the priority label to a value extracted from the duration distribution of the different classes. Once extracted the data can be passed through artificial intelligence models: Random Forest, Gradient Boosting and Neural Networks, to be forecasted with different time horizons. The evaluation can be performed in different ways: train-test over single extraction, cross-version, and even cross-project.\\
+The execution with the best performance is the cross-project one, with a precision greater than 90\% up to 4 weeks and still greater than 70\% up to 20 weeks.
 
 
 \acknowledgements
@@ -126,10 +126,10 @@ Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battag
 \section{General Problem}
 The software development is fundamental in the new world, how about using artificial intelligence to improve it?\\
 The development of a software product is not different from any kind of hardware product development, after the first phase of design the production starts, during it problems emerge systematically and must be managed before the release in production.\\
-Every day each a software house perform hundreds of commit, each one contains a lot of informations linked to an issue, with structured commit, driven issue report and other software engineering stuff, the quality of the sourcing improve, allowing data to be used in artificial intelligence analysis. Predicting defectiveness during the making of the software can drastically improve the process of development, allocating the correct number of developer could reduce the time required and avoid delay and problems before releases.
+Every day each a software house performs hundreds of commit, each one contains a lot of information linked to an issue, with structured commit, driven issue report and other software engineering stuff, the quality of the sourcing improves, allowing data to be used in artificial intelligence analysis. Predicting defectiveness during the making of the software can drastically improve the process of development, allocating the correct number of developers could reduce the time required and avoid delays and problems before releases.
 With a correct preprocessing and evaluated aggregation, neural networks can predict, with high accuracy, the defectiveness trend. These forecast can be further used to improve the software engineering background of the related project.\\
 Forecasting is one of the most critic part of a company, it could drive to easily success as well as drive to failure.
-The software development experience shows that the process of analysis is really difficult, due to the nature of the problem, coding is a mind product and the time required to produce it can varying in accord to a lot of different factors.
+The software development experience shows that the process of analysis is really difficult, due to the nature of the problem, coding is a mind product and the time required to produce it can varying in accordance with a lot of different factors.
 
 \section{Tools used}
 This work is mainly conducted using software tools, here a list of the tools used:
@@ -178,11 +178,11 @@ Speaking about other works.
 
 \chapter{Datasets}
 \label{chap:dataset}
-The following section illustrate the structure of the all the principal datasets used during this thesis project.
+The following section illustrates the structure of all the principal datasets used during this thesis project.
 \section{SEOSS33}
-The SEOSS33\cite{SEOSS33} is a \href{https://doi.org/10.7910/DVN/PDDZ4Q}{dataset} collecting bug, issue, reports, commit and lot of other information of 33 open source project, following their progress via sourcing platform. The dataset is enriched also with time stamps, release versions, component information and developer comments.\\
+The SEOSS33\cite{SEOSS33} is a \href{https://doi.org/10.7910/DVN/PDDZ4Q}{dataset} collecting bug, issue, reports, commit and a lot of other information of 33 open source project, following their progress via sourcing platform. The dataset is enriched also with timestamps, release versions, component information, and developer comments.\\
 At today there are no other public research conducted over this datasets, this works seems to be first.\\
-The data is retrived by the issue tracking system (ITS) and the version control system (VCS).
+The data is retrieved by the issue tracking system (ITS) and the version control system (VCS).
 To unify the project specific difference, the typed issue, e.g. \textit{New Feature} or \textit{Bug Report}, are mapped to five issue categories:
 \begin{itemize}
   \item Bug: A problem which impairs or prevents the functions of the product
@@ -191,7 +191,7 @@ To unify the project specific difference, the typed issue, e.g. \textit{New Feat
   \item Task: A task that needs to be done
   \item Other: Various
 \end{itemize}
-The study collects 33 projects that are using Atalassian Jira and git, for popularity reasons. Is also required that the projects in the dataset should be majorly written in one programming language, Java is choosen. Due to machine learning nature, the choosen project must have great number of issue, all project were in development for at least three years. Among these products we have selected five of them, because of size, as shown in table \ref{tab:seoss33_selected}:
+The study collects 33 projects that are using Atlassian Jira and git, for popularity reasons. It is also required that the projects in the dataset should be majorly written in one programming language, Java is chosen. Due to machine learning nature, the chosen project must have a great number of issues and must be under development for at least three years. Among these products we have selected five of them, because of size, as shown in table \ref{tab:seoss33_selected}:
 
 \begin{center}
   \captionof{table}{Project data distribution} \label{tab:seoss33_selected}
@@ -219,7 +219,7 @@ Figure \ref{fig:prior} show the distribution of each issue category respect all 
 
 More selection characteristics can be found in chapter 2.1 \cite{SEOSS33}.\\
 Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
-Each project is stored in a SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by an \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
+Each project is stored in an SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by a  \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
 
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/seoss33_db_schema.png}
@@ -236,23 +236,23 @@ Each table contains different types of data that will be used to generate the da
 \chapter{Machine Learning}
 \label{chap:ml}
 \section{Introduction}
-Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. The word ML is almost in the public domain now, in the last decades the usage of these kind of algorithms has drammatically raisen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
+Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. The word ML is almost in the public domain now, in the last decades the usage of this kind of algorithm has dramatically risen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
 There are two types of systems:
 \begin{itemize}
   \item Knowledge-based: Acquisition and modeling of common-sense knowledge and expert knowledge (from rules to facts)
   \item Learning: Extraction of knowledge and rules from example/experience (from facts to rules)
 \end{itemize}
-All the machine learning techniques try to develop systems similar to the second definitions. ML algorithms can be divided in three categories: supervised, unsupervised and reinforcement learning. The first will be used to predict class based on previous knowledge, the second tries to labeling data without a priori experience and the third bases its learning on action reward.\\
+All the machine learning techniques try to develop systems similar to the second definition. ML algorithms can be divided into three categories: supervised, unsupervised and reinforcement learning. The first will be used to predict class based on previous knowledge, the second tries to labeling data without a priori experience and the third bases it is learning on action reward.\\
 There a lot of different models available, the following chapters will focus on the models used in this project.
 
 \paragraph{Supervised Learning}
-is a powerful technique to process labeled, which is a dataset with that has been classified, to infer a learning algorithm. These dataset is used as basis to predict, and learn how, unlabeled data. There are two types of supervised learning, classification and linear regression. The goal of classification models is to predict categorical class labels of new instances, based on a training set of past observations. The classification can be binary or multi-class. Instead, regression, aim to predict continuos outcome, it tries to find mathematical relationships between variables to predict the target with a reasonable level of approximation. Our project is only focused on regression, classification will not be further discussed.
+is a powerful technique to process labeled, which is a dataset with that has been classified, to infer a learning algorithm. This dataset is used as a basis to predict and learn how to predict unlabeled data. There are two types of supervised learning, classification, and linear regression. The goal of classification models is to predict categorical class labels of new instances, based on a training set of past observations. The classification can be binary or multi-class. Instead, regression, aim to predict continuous outcome, it tries to find mathematical relationships between variables to predict the target with a reasonable level of approximation. Our project is only focused on regression, classification will not be further discussed.
 
 \section{Ensable Methods}
-All the supervised learning method used are based on ensable, the basic idea is to merge multiple, different, hypotesis in order to improved the quality of the prediction, for example the random forest or gradient boosting are ensable of multiple decision trees. The following paragraphs will deal with the models used specifically.
+All the supervised learning method used are based on ensable, the basic idea is to merge multiple, different, hypothesis to improve the quality of the prediction, for example, the random forest or gradient boosting are ensable of multiple decision trees. The following paragraphs will deal with the models used specifically.
 
 \paragraph{Random Forest}
-Random Forest (RF) is a supervised learning algorithm which uses ensable learning method for classification and regression. They are built by combining the predictions of several trees, each of which is trained independently and the prediction of the trees are combined through averaging \cite{RF_theory}. A visualization of a RF is shown in figure \ref{fig:rf}.
+Random Forest (RF) is a supervised learning algorithm that makes use of ensable learning method for classification and regression. They are built by combining the predictions of several trees, each of which is trained independently and the prediction of the trees are combined through averaging \cite{RF_theory}. A visualization of an RF is shown in figure \ref{fig:rf}.
 
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/rf.png}
@@ -260,13 +260,13 @@ Random Forest (RF) is a supervised learning algorithm which uses ensable learnin
   \label{fig:rf}
 \end{figure}
 
-Three parameters are important to define the RF: (1) the methods for splitting the leafs, (2) the type of predictor to use in each leaf, and (3) the method for injecting randomness.
-Splitting of require the selection of shape and a method for evaluating the quality of each candidate. Typical choices are axis aligned splits, where data is routed to sub-tree depending on a threshold. The threshold can be chosen randomly of by a leafs optimization function. After the generation of different candidate splits a choosing criterion must be defined in order to split the leaf. One of the simplest strategy is to choose among the candidates uniformly at random, otherwise is possible to select the candidate split which optimize a purity function (information gain for example) over the leaf that would be created.
-The most common predictors, for each leaf, is the average response over training points which fall in that leaf.
-The injection of randomness can happen in different ways, the size of candidate splits, coefficients for random combinations, etc\dots In any case the thresholds can be also defined randomly or by optimization over data. Another solution is build tree using bootstrapped or sub-sampled dataset.\\
-The training phase is performed independently by each tree by exploiting an assignement in structure and estimation points to respectively change the shape of the tree and to improve the estimator fit.\\
-Once the forest has been trained it can be used to make predictions for unlabeled data points. In the prediction phase, each single tree, independently make its own prediction than an average of all the trees is computed to make a single outcome value. The contribution of each tree to the final value is the same.\\
-Out implementation use Random Forest developed by SciKit-Learn v0.21:
+Three parameters are important to define the RF: (1) the methods for splitting the leaves, (2) the type of predictor to use in each leaf, and (3) the method for injecting randomness.
+Splitting of requires the selection of shape and a method for evaluating the quality of each candidate. Typical choices are axis-aligned splits, where data is routed to sub-tree depending on a threshold. The threshold can be chosen randomly by a leaf optimization function. After the generation of different candidate splits a choosing criterion must be defined in order to split the leaf. One of the simplest strategies is to choose among the candidates uniformly at random, otherwise, it is possible to select the candidate split which optimizes a purity function (information gain for example) over the leaf that would be created.
+The most common predictors, for each leaf, are the average response over training points that fall in that leaf.
+The injection of randomness can happen in different ways, the size of candidate splits, coefficients for random combinations, etc\dots In any case, the thresholds can be also defined randomly or by optimization over data. Another solution is to build a tree using bootstrapped or sub-sampled dataset.\\
+The training phase is performed independently by each tree by exploiting an assignment in structure and estimation points to respectively change the shape of the tree and to improve the estimator fit.\\
+Once the forest has been trained it can be used to make predictions for unlabeled data points. In the prediction phase, every single tree, independently make its own prediction than an average of all the trees is computed to make a single outcome value. The contribution of each tree to the final value is the same.\\
+Out implementation uses Random Forest developed by SciKit-Learn v0.21:
 \begin{lstlisting}[language=python, frame=single]
   from sklearn.ensemble import RandomForestRegressor
 \end{lstlisting}
@@ -285,16 +285,16 @@ The specific parameters of the model will be explained during the \autoref{chap:
 % \end{center}
 
 \paragraph{Gradient Boosting Machines}
-Gradient Boosting Machines (GBM) are a family of powerful machine learning techniques that have shown considerable success in a wide range of pratical application. They are higly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable. In GBM the learning phase consecutively fits new models to improve the accuracy of the estimations. Ideally they construct new basic layers,  decision trees of fixed size, to be maximally correlated with the negative gradient of the loss function of the ensable. The loss function should be chosen by the developer, even ad-hoc loss function could be implemented. The attempt is to solve this minimization problem numerically via steepest descent \cite{ensable}.\\
-This high flexibility of GBM makes them really customizable to any kind of task. Given its simplicity a lot of experimentation can be performed over the model.\\
+Gradient Boosting Machines (GBM) are a family of powerful machine learning techniques that have shown considerable success in a wide range of practical applications. They are highly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable. In GBM the learning phase consecutively fits new models to improve the accuracy of the estimations. Ideally, they construct new basic layers,  decision trees of fixed size, to be maximally correlated with the negative gradient of the loss function of the ensable. The loss function should be chosen by the developer, even ad-hoc loss function could be implemented. The attempt is to solve this minimization problem numerically via steepest descent \cite{ensable}.\\
+This high flexibility of GBM makes them really customizable to any kind of task. Given its simplicity, a lot of experimentation can be performed over the model.\\
 Our project implement Gradient Boosting Decision Tree (GBDT) developed by SciKit-Learn v0.21:
 \begin{lstlisting}[language=Python, frame=single]
   from sklearn.ensemble import GradientBoostingRegressor
 \end{lstlisting}
 
 \section{Neural Networks}
-A Neural Network (NN) is a machine learning approach inspired by the way in which the brain performs a particular learning task, network of simple computational units (neuros) connected by links (synapses). The knowledge about the learning task is given in the form of training examples, the inter neuros connection strengths (weights) are used to store the acquired information. During the learning process the weights are modified in order to model the particular learning task correctly on the examples.\\
-The learning phase can be both supervised or unsupervised. Supervised is used for pattern recognition, regression and similar, is trained using data with both input and desired output. Unsupervised instead is mainly used for clustering and the learning is made using unlabeled training examples. Only supervised one will be evaluated.\\
+A Neural Network (NN) is a machine learning approach inspired by the way in which the brain performs a particular learning task, network of simple computational units (neurons) connected by links (synapses). The knowledge about the learning task is given in the form of training examples, the inter neurons connection strengths (weights) are used to store the acquired information. During the learning process, the weights are modified in order to model the particular learning task correctly on the examples.\\
+The learning phase can be both supervised or unsupervised. Supervised is used for pattern recognition, regression and similar is trained using data with both input and desired output. Unsupervised instead is mainly used for clustering and the learning is made using unlabeled training examples. Only supervised one will be evaluated.\\
 There are three main classes of network architectures:
 \begin{itemize}
   \item Single-layer feed-forward
@@ -309,7 +309,7 @@ A standard architecture is composed of three different layers, \textit{input uni
   \label{fig:mlff}
 \end{figure}
 
-The neuron is the basic processing unit of the network, which received the inputs. Each input is cobined with its internal state and an optional activation function, it  produce an output value that will be passed to the next layers. The weights, defined during the training phase, correspond to the importance of the connection. The different inputs are summed using a weighted sum:
+The neuron is the basic processing unit of the network, which received the inputs. Each input is combined with its internal state and an optional activation function, it produces an output value that will be passed to the next layers. The weights, defined during the training phase, corresponding to the importance of the connection. The different inputs are summed using a weighted sum:
 \begin{center}
   \begin{equation}
     u = \sum^{m}_{j=1} w_{j}x_{j}
@@ -329,10 +329,10 @@ Where $b$ represent the bias, an external parameter of the neuron, $y$ represent
   \label{fig:neuron}
 \end{figure}
 
-There are several different functions that can be used to activate the neurons, they are trying to emulate the typical response of a biological neuron and its different activation methods. The most common are: linear, step, relu and sigmoid.
-Each functions behave in a different way with different peculiarities and critical issues, there are two main type, linear and non-linear.
+Several different functions can be used to activate the neurons, they are trying to emulate the typical response of a biological neuron and its different activation methods. The most common are: linear, step, relu and sigmoid.
+Each function behaves differently with different peculiarities and critical issues, there are two main types, linear and non-linear.
 
-\paragraph{Step} is a binary, linear and threshold-based activativation function, figure \ref{fig:step}. When the input is above or below a defined threshold, the neuron is activated and pass the exact same input value to the next layer. The main drawback is that not allow multiple-value output.
+\paragraph{Step} is a binary, linear and threshold-based activation function, figure \ref{fig:step}. When the input is above or below a defined threshold, the neuron is activated and pass the same input value to the next layer. The main drawback is that not allow multiple-value output.
 
 \paragraph{Linear} is of course a linear activation function that take the form:
 \begin{center}
@@ -340,7 +340,7 @@ Each functions behave in a different way with different peculiarities and critic
     f(x) = x
   \end{equation}
 \end{center}
-This function take the input and, by multiply it by the weight of the neuron, it calculate the output. Respect the step function allows multiple-value output, but there are two major problem: is not possible to use backpropagation (treated later) to train the network because the derivative function is constant and is not related to the input. The other problem is that linear function collapse all the layer into once, because the last layer will be a linear combination of the first in any case. Figure \ref{fig:linear} show the curve.
+This function takes the input and, by multiplying it by the weight of the neuron, it calculate the output. Respect the step function allows multiple-value output, but there are two major problems: it is not possible to use backpropagation (treated later) to train the network because the derivative function is constant and is not related to the input. The other problem is that linear function collapses all the layers into once because the last layer will be a linear combination of the first in any case. Figure \ref{fig:linear} show the curve.
 
 \begin{figure}
   \centering
@@ -374,7 +374,7 @@ The advantages are the smooth gradient that prevents out-of-scale output values,
   \end{equation}
 \end{center}
 
-Although it looks like a linear function, ReLU has a derivative function and allows for backpropagation another advantage is that is computationally efficient. The main problem of this function is its behaviour with value near zero or even negative, the gradient of the function become zero and the network can't perform backpropagation and can't learn.
+Although it looks like a linear function, ReLU has a derivative function and allows for backpropagation another advantage is that is computationally efficient. The main problem of this function is its behavior with a value near zero or even negative, the gradient of the function becomes zero and the network can't perform backpropagation and can't learn.
 
 \begin{figure}
   \centering
@@ -392,10 +392,10 @@ Although it looks like a linear function, ReLU has a derivative function and all
   \end{minipage}
 \end{figure}
 
-\paragraph{Delta learning rule} uses the difference between target output and the obtained activation to drive the learning. According to this rules, each time an output is computed, the weight of the neuron is adjusted according to an error function trying to reduce the difference between output and target.
+\paragraph{Delta learning rule} uses the difference between target output and the obtained activation to drive the learning. According to these rules, each time an output is computed, the weight of the neuron is adjusted according to an error function trying to reduce the difference between output and target.
 
-\paragraph{Backpropagation} short for \textit{"backward propagation of errors"}, is an algorithm for supervised learning of artificial neural networks using gradient descent. Given an artificial neural network and an error function, the method calculates the gradient of the error function with respect to the neural network's weights. It is a generalization of the delta rule for perceptrons to multilayer feedforward neural networks. \cite{bp}.\\
-The main characteristics of this technique is that, the gradient, proceeds backward through the network, with the gradient of the final layer calculated before the first. This solution allow an efficient calculation of the gradient for each layer. The algorithm is structured in this form:
+\paragraph{Backpropagation} short for \textit{"backward propagation of errors"}, is an algorithm for supervised learning of artificial neural networks using gradient descent. Given an artificial neural network and an error function, the method calculates the gradient of the error function concerning the neural network's weights. It is a generalization of the delta rule for perceptrons to multilayer feedforward neural networks. \cite{bp}.\\
+The main characteristic of this technique is that the gradient, proceeds backward through the network, with the gradient of the final layer calculated before the first. This solution allows an efficient calculation of the gradient for each layer. The algorithm is structured in this form:
 \begin{enumerate}
   \item Compute the error term for the output units
   \item From the output layer, repeat until last hidden reached:
@@ -404,13 +404,13 @@ The main characteristics of this technique is that, the gradient, proceeds backw
     \item Updating the weights between the two layers
   \end{enumerate}
 \end{enumerate}
-The BP suffer the Vanishing Gradient problem, more layers are embedded in the network and more difficult become to train it. Due to the nature of the backpropagation, when an output is generated, the weight of the neuros is fixed according to the rule, each layer back the correction value is smaller, following the derivate of the activation function, in case of slallow network this problem is solved easily, for deep network this can become a real issue. The ReLU activation function manage better this problem. Another solution is the batch normalization, that rescale the input value between $[-1,1]$ in order to keep the input value far from the activation function edges. Exist a kind of network, Long Short Term Memory, developed to mitigate the vanishing gradient problem, will be discussed lately.
+BP suffers the Vanishing Gradient problem, more layers are embedded in the network and more difficult become to train it. Due to the nature of the backpropagation, when an output is generated, the weight of the neurons is fixed according to the rule, each layer back the correction value is smaller, following the derivate of the activation function, in case of shallow network this problem is solved easily, for deep network this can become a real issue. The ReLU activation function manages better this problem. Another solution is the batch normalization, that rescale the input value between $[-1,1]$ in order to keep the input value far from the activation function edges. Exist a kind of network, Long Short Term Memory, developed to mitigate the vanishing gradient problem, will be discussed later.
 
-\paragraph{Recurrent Neural Networks (RNN)}  is a class of NN that keep connections between nodes and a temporal sequence. The main difference, respect NN, is that has feedback connections, this memory allow to keep track of temporal dynamic behaviour, they can process single data point or entire sequence of data, like video or speech. They become useful as their intermediate values can store information about past inputs for a time that is not fixed a priori.\\
-This kind of structures is used in a lot of different fields: image classification, captioning, sentiment analysis, machine traslation, video classification, etc\dots
+\paragraph{Recurrent Neural Networks (RNN)}  is a class of NN that keeps connections between nodes and a temporal sequence. The main difference, respect NN, is that it has feedback connections, this memory allows us to keep track of temporal dynamic behavior, they can process a single data point or the entire sequence of data, like video or speech. They become useful as their intermediate values can store information about past inputs for a time that is not fixed a priori.\\
+This kind of structures is used in a lot of different fields: image classification, captioning, sentiment analysis, machine translation, video classification, etc\dots
 
-\paragraph{Long Short Term Memory (LSTM)} normal recurrent neural networks can connect short term event with the present, this feature can be useful in some case, other context could require more long term connection, this special RNN can handle this sort of correlations. Sometimes the recent information is enough to perform the present task, for example, trying to predict the last word of a sentence like: "Sun bright in the \textit{sky}" the previous words are enough to corretly predict the last one, no more context is required. In case of more complex sentences some additional information are needed, for the phrase: "I was born in Italy and I speak \textit{italian}" the context become fundamental to solve the problem. In this kind of problem LSTM can be really helpful.\\
-LSTM are a special kind of RNN, they were introduced by Hochreiter \& Schmidhuber (1997) \cite{lstm} and lately studied and improved. They works really well on a large variety of problems. The special kind of network is explicitly design for long term connections.
+\paragraph{Long Short Term Memory (LSTM)} normal recurrent neural networks can connect short term event with the present, this feature can be useful in some case, another context could require more long term connection, this special RNN can handle this sort of correlations. Sometimes the recent information is enough to perform the present task, for example, trying to predict the last word of a sentence like "Sun bright in the \textit{sky}" the previous words are enough to correctly predict the last one, no more context is required. In case of more complex sentences some additional information is needed, for the phrase: "I was born in Italy and I speak \textit{italian}" the context becomes fundamental to solve the problem. In this kind of problem LSTM can be really helpful.\\
+LSTM are a special kind of RNN, they were introduced by Hochreiter \& Schmidhuber (1997) \cite{lstm} and later studied and improved. It works really well on a large variety of problems. The special kind of network is explicitly designed for long term connections.
 The structure of a RNN is normally a single layer, in case of LSTM the structure is more complicated, is made upon four different layers, as shown in figure \ref{fig:lstm}.
 
 \begin{figure}[!ht]
@@ -423,7 +423,7 @@ The first layer filter the input and select what keep and not keep, the second l
 
 
 \section{Evaluation metrics}
-Every model developed need to be evaluated, there are a lot of different methods that can be used in order to get a metrics about the quality of the system behaviour. The computation of this values is achieved via mathematical expression, for this reason, the results, are not always human readable, some error like mean absolute error, mean relative error and similar can be read and interpreted without any problem. For metrics like R2 or mean squared error the task become more complicated. The following is about the mathematical analysis and description of the different metrics used.\\
+Every model developed need to be evaluated, there are a lot of different methods that can be used to get metrics about the quality of the system behavior. The computation of these values is achieved via mathematical expression, for this reason, the results, are not always human-readable, some errors like mean absolute error, mean relative error and similar can be read and interpreted without any problem. For metrics like R2 or mean squared error the task becomes more complicated. The following is about the mathematical analysis and description of the different metrics used.\\
 Most of metrics directly derive from the calculation of the simplest error, the \textit{absolute error}, the difference between the target $y$ and the prediction $x$:
 \begin{center}
   \begin{equation}
