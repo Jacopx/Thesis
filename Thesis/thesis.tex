@@ -176,21 +176,13 @@ Parlando di altri lavori su simili tematiche.
 
 \chapter{Dati}
 \label{chap:dataset}
-The following section illustrates the structure of all the principal datasets used during this thesis project.
+Le seguenti sezioni analizzeranno le basi di dati utilizzate in questo progetto.
 \section{SEOSS33}
-The SEOSS33\cite{SEOSS33} is a \href{https://doi.org/10.7910/DVN/PDDZ4Q}{dataset} collecting bug, issue, reports, commit and a lot of other information of 33 open source project, following their progress via sourcing platform. The dataset is enriched also with timestamps, release versions, component information, and developer comments.\\
-At today there are no other public research conducted over this datasets, this works seems to be first.\\
-The data is retrieved by the issue tracking system (ITS) and the version control system (VCS).
-To unify the project specific difference, the typed issue, e.g. \textit{New Feature} or \textit{Bug Report}, are mapped to five issue categories:
-\begin{itemize}
-  \item Bug: A problem which impairs or prevents the functions of the product
-  \item Feature: A new feature of the product
-  \item Improvement: An enhancement to an existing feature
-  \item Task: A task that needs to be done
-  \item Other: Various
-\end{itemize}
-The study collects 33 projects that are using Atlassian Jira and git, for popularity reasons. It is also required that the projects in the dataset should be majorly written in one programming language, Java is chosen. Due to machine learning nature, the chosen project must have a great number of issues and must be under development for at least three years. Among these products we have selected five of them, because of size, as shown in table \ref{tab:seoss33_selected}:
-
+SEOSS33\cite{SEOSS33} è una \href{https://doi.org/10.7910/DVN/PDDZ4Q}{base dati} collezionante errori, issue e tante altre informazioni a proposito di 33 progetti open source. I dati sono stati tutti collezionati estraendo le informazioni dalle piattaforme di controllo del codice sorgente, Version Control System (VCS), come GitHub e dalle piattaforme per la gestione dello sviluppo, Issue Tracking System (ITS), come Jira di Atlassian.\\
+Ad oggi nessun altro progetto di ricerca, su questi dati, è stato effettuato.\\
+Ogni progetto prevede una propria linea durante la fase di sviluppo, tutte le metodologie e linee guida sono alla base degli studi di ingegneria del software. Tuttavia è possibile unificare ed accorpare secondo una categorizzazione standar molte delle differenze specifiche. Lo svilluppo della base dati SEOSS33 mira proprio alla creazione di un serie di dati generalizzati e fruibili attraverso medesime procedure senza la necessità di adattarsi alle specifiche caratteristiche di ogni singolo progetto.\\
+Il mondo open source presenta una quantità pressochè infinita di differenti software, parte del progetto in questione è stata dedicata alla selezione dei software da analizzare per l'inserimento nella base dati condivisa, per questo motivo sono state definite alcune carattestiche che accomunassero i vari progetti in modo da costituire una base: discretamente omogenea a livello di dimensionalità, ma con differenze struttuali utili per successive analisi come quella relativa a questo progetto. Il requisito principiale riguardava il linguaggio di programmazione, considerare progetti sviluppati per la maggior parte in un singolo linguaggio di programmazione permette di ridurre la variabilità interna ad ogni singolo progetto. Vista la natura di analisi attraverso il machine learning, un'altra importante carattestica riguardava il numero di issue, il quale doveva essere sufficientemente elevato. I progetti, oltre a dover essere attualmente in sviluppo, dovevano presentare un età di almeno 3 anni. La definizione di tutti questi parametri a permesso di generare una base dati contenente 33 progetti simili come struttura ma con caratteristiche differenti.\\
+Lo sviluppo del presente progetto di tesi si è concentrato solamente su cinque di questi schemi, sono stati scelti i progetti più grossi e quelli in sviluppo dal maggior tempo, nello specificio i selezionati sono riportati in tabella \ref{tab:seoss33_selected}:
 \begin{center}
   \captionof{table}{Project data distribution} \label{tab:seoss33_selected}
   \begin{tabular}{ |c|c|c| }
@@ -206,6 +198,20 @@ The study collects 33 projects that are using Atlassian Jira and git, for popula
      \hline
   \end{tabular}
 \end{center}
+
+%////////////////////////////////////
+%////////////////////////////////////
+%////////////////////////////////////
+%////////////////////////////////////
+
+To unify the project specific difference, the typed issue, e.g. \textit{New Feature} or \textit{Bug Report}, are mapped to five issue categories:
+\begin{itemize}
+  \item Bug: A problem which impairs or prevents the functions of the product
+  \item Feature: A new feature of the product
+  \item Improvement: An enhancement to an existing feature
+  \item Task: A task that needs to be done
+  \item Other: Various
+\end{itemize}
 
 Figure \ref{fig:prior} show the distribution of each issue category respect all the projects.
 
