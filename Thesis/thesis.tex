@@ -52,12 +52,12 @@
 %
 % \FacoltaDi{Faculty of Computer Engineering}% lo spazio finale correttamente sparisce
 
-\titolo{Defect prediction in software development via machine learning}
+\titolo{Predizione di difettosità nello sviluppo software attraverso machine learning}
 \sottotitolo{Artificial Intelligence applied to Software Engineering}
 
 %
 %%%%%%% Corso degli studi
-\corsodilaurea{Computer Engineering}% per la laurea
+\corsodilaurea{Ingegneria Informatica}% per la laurea
 %\corsodidottorato{Meccanica}% per il dottorato
 
 \renewcommand*\IDlabel{}
@@ -70,7 +70,7 @@
 %%%%%%% Tutore
 \tutoreaziendale{dott.\ Davide \textsc{Piagneri}}
 
-\sedutadilaurea{\textsc{April} 2020}
+\sedutadilaurea{\textsc{Aprile} 2020}
 
 
 %%%%%%% Logo della sede
@@ -79,7 +79,7 @@
 %%%%%%% OFFSET
 %\setbindingcorrection{3mm}
 
-\english%  di default e' in vigore \italiano
+%\english
 
 \iflanguage{english}{%
 	\retrofrontespizio{This work is subject to the Creative Commons Licence}
@@ -104,9 +104,10 @@
 
 \frontespizio
 \summary
-Every day thousands of commit are pushed, each one contains a lot of information: files changed, changes, comments, test log and even more. A structured and correctly managed sourcing control allows the extraction of useful data that can be analysed using artificial intelligence.\\
-To be able to use the data, some preliminary steps are necessary: the first step aim to study the structure of the data to allow the extraction of more information, next the data must be pre-processed to remove outliers and not useful features, with a clean dataset the extraction of combined data begin, information like developer seniority, bag of words of modified components, release version and other potentially useful information. The final step is the weekly aggregation by computing the difference between the closed and opened issues, translating the priority label to a value extracted from the duration distribution of the different classes. Once extracted the data can be passed through artificial intelligence models: Random Forest, Gradient Boosting and Neural Networks, to be forecasted with different time horizons. The evaluation can be performed in different ways: train-test over single extraction, cross-version, and even cross-project.\\
-The execution with the best performance is the cross-project one, with a precision greater than 90\% up to 4 weeks and still greater than 70\% up to 20 weeks.
+Ogni giorno migliaia di commit vengono eseguiti, ognugno di loro contiene molte informazioni: file modificati, modifiche, commenti, registri di test e molto altro. Una strutturata e corretta gestione delle piattaforme di concontrollo sorgente permette l'estrazione di dati utili analizzabili utilizzando modelli statistici di intelligenza artificiale.\\
+Al fine di poter correttamente utilizzare questi dati sono necessari alcuni step preliminari: la prima fase riguarda l'analisi della struttura dati al fine di permettere l'estrazione di tutte le possibili informazioni, successivamente la pre-elaborazione per rimuovere informazioni di inutili e di disturbo, con i dati puliti è possibile procedere con l'estrazione di dati combinati, come la seniority degli sviluppatori, una lista di parole dei componenti modificati, la versione ed altre informazioni di carattere più matematico. L'ultima fase prevede la sostituzione dell'etichetta testuale relativa alla priorità con un valore numerico corrispondende al valor medio della distribuzione della durata di quella etichetta, questo valore prenderà il nome di severity. I dati verranno poi aggregati per settimana.
+Una volta generati i dati verranno utilizzati per allenare tre differenti modelli: Random Forest, Gradient Boosting e Reti Neurali. L'allenamento sarà gestito in tre differenti modalità: la prima allena e predice utilizzando lo stesso filone di dati, la seconda, cross-version, prevede che il modello venga allenato su dati relativi ad alcune versione del progetto per poi effettuare la predizione sulle successive, la terza, cross-project, allena il modello con dati relativi ad un progetto per poi prevedere l'andamento di uno differente.\\
+Tutti le tipologie ottengono dei buoni risultati, il migliore è quello cross-project che riesce ad ottenere una precisione maggiore del 90\% fino a quattro settimane e comunque maggiore del 70\% fino a 20 settimane.
 
 
 \acknowledgements
@@ -121,45 +122,42 @@ Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battag
 % #            Introduction             #
 % #######################################
 
-\chapter{Introduction}
+\chapter{Introduzione}
 \label{chap:intro}
-\section{General Problem}
-The software development is fundamental in the new world, how about using artificial intelligence to improve it?\\
-The development of a software product is not different from any kind of hardware product development, after the first phase of design the production starts, during it problems emerge systematically and must be managed before the release in production.\\
-Every day each a software house performs hundreds of commit, each one contains a lot of information linked to an issue, with structured commit, driven issue report and other software engineering stuff, the quality of the sourcing improves, allowing data to be used in artificial intelligence analysis. Predicting defectiveness during the making of the software can drastically improve the process of development, allocating the correct number of developers could reduce the time required and avoid delays and problems before releases.
-With a correct preprocessing and evaluated aggregation, neural networks can predict, with high accuracy, the defectiveness trend. These forecast can be further used to improve the software engineering background of the related project.\\
-Forecasting is one of the most critic part of a company, it could drive to easily success as well as drive to failure.
-The software development experience shows that the process of analysis is really difficult, due to the nature of the problem, coding is a mind product and the time required to produce it can varying in accordance with a lot of different factors.
+\section{Problema Generale}
+Lo sviluppo software non si presenta molto differente dallo sviluppo di qualsiasi altro prodotto, dopo una fase iniziale di progettazione lo sviluppo del codice può avere inizio, durante esso emergeranno sistematicamente dei problemi che dovranno essere risolti prima della consegna della versione finale.\\
+Ogni progetto software è costituito da diversi commit per giorno, ognugno di essi contiene innumerevoli informazioni le quali possono essere utilizzate per analisi statistiche. La predizione della difettosità può migliorare enormemente il processo di sviluppo, allocando un corretto numero di sviluppatori per risolvere le problematiche e riducendo quindi le tempistiche per la correzione. Anche il machine learning può essere utilizzato per la predizione dei difetti.\\
+La predizione è uno strumento sempre più utilizzato a livello industriale, un corretto utilizzo può generare enormi benifici a livello produttivo, permettendo la riduzione di sprechi, l'ottimizzazione delle vendite e tante altri vantaggi. Lo sviluppo di progetti di natura informatica è sempre di più centrale all'interno della nostra società attuale, anche questo processo potrebbe trarre beneficio dai vantaggi della predizione. L'implementazione di tecniche statistiche viene in supporto, vista la natura intellettuale della programmazione, nello generazione di predizioni utili.
 
-\section{Tools used}
-This work is mainly conducted using software tools, here a list of the tools used:
+\section{Strumenti utilizzati}
+Lo sviluppo di questo progetto a richiesto l'utilizzo di diversi strumenti, di seguito una lista degli stessi:
 
-\paragraph{\href{https://www.python.org/}{Python}} The main programming language of the thesis project. Used for data management, feature extraction, machine learning models and for interfaction with other softwares. The specific version used is the v3.7.0
+\paragraph{\href{https://www.python.org/}{Python}} Il linguaggio di programmazione principale, utilizzato per la gestione dei dati, l'estrazione di informazioni, l'applicazione di algoritmi matematici e l'interazione con altri software. Nello specificio la versione utilizzata è stata la v3.7.0
 
-\paragraph{\href{https://pandas.pydata.org/}{Pandas}} Open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language.
+\paragraph{\href{https://pandas.pydata.org/}{Pandas}} Libreria open source ad alte prestazioni, con semplici strutture e strumenti adatti all'analisi dati attraverso Python.
 
-\paragraph{\href{https://numpy.org/}{NumPy}} Scientific computing with Python.
+\paragraph{\href{https://numpy.org/}{NumPy}} Libreria per il calcolo scientifico attraverso Python.
 
-\paragraph{\href{https://matplotlib.org/}{Matplotlib}} 2D Plotting library for Python.
+\paragraph{\href{https://matplotlib.org/}{Matplotlib}} Libreria per il disegno di grafici 2D in Python.
 
-\paragraph{\href{https://seaborn.pydata.org/}{Seaborn}} Another plotting library for Python.
+\paragraph{\href{https://seaborn.pydata.org/}{Seaborn}} Libreria avanzata per il disegno 2D in Python.
 
-\paragraph{\href{https://www.tensorflow.org/}{Tensorflow}} Platform for machine learning.
+\paragraph{\href{https://www.tensorflow.org/}{Tensorflow}} Piattaforma per machine learning.
 
-\paragraph{\href{https://keras.io/}{Keras}} High level API for neural networks.
+\paragraph{\href{https://keras.io/}{Keras}} API di alto livello per reti neurali.
 
-\paragraph{\href{https://scikit-learn.org/stable/}{SciKit-Learn}} Tools and libraries for machine learning.
+\paragraph{\href{https://scikit-learn.org/stable/}{SciKit-Learn}} Strumenti e librerie per machine learning.
 
-\paragraph{\href{https://gitlab.com}{GitLab}} Sourcing platform based on Git. Used for the code of the project.
+\paragraph{\href{https://gitlab.com}{GitLab}} Piattaforma di sourcing basata su Git. Utilizzata per il codice sorgente del progetto.
 % \url{https://gitlab.com/EiS-Projects/analytics/temp/thesisProjectJN}.
 
-\paragraph{\href{https://github.com}{GitHub}} Sourcing platform based on Git. Used for the thesis and calendar sourcing:
+\paragraph{\href{https://github.com}{GitHub}} Piattaforma di sourcing basata su Git. Utilizzata per il calendario e elaborato testuale:
 \begin{itemize}
-  \item Thesis: \url{https://github.com/Jacopx/Thesis}
-  \item Calendar: \url{https://github.com/Jacopx/ThesisCalendar}
+  \item Tesi: \url{https://github.com/Jacopx/Thesis}
+  \item Calendario: \url{https://github.com/Jacopx/ThesisCalendar}
 \end{itemize}
 
-\paragraph{\href{https://www.jetbrains.com/}{JetBrains IDEs}} Student-free IDE for different language development, product used:
+\paragraph{\href{https://www.jetbrains.com/}{JetBrains IDEs}} IDE per lo sviluppo di diversi linguaggi di programmazione, gratuita per gli studenti:
 \begin{itemize}
   \item PyCharm: \url{https://www.jetbrains.com/pycharm/}
   \item DataGrip: \url{https://www.jetbrains.com/datagrip/}
@@ -168,15 +166,15 @@ This work is mainly conducted using software tools, here a list of the tools use
 % #######################################
 % #            State of art             #
 % #######################################
-\chapter{State of art}
-\section{Related works}
-Speaking about other works.
+\chapter{Stato dell'arte}
+\section{Lavori correlati}
+Parlando di altri lavori su simili tematiche.
 
 % #######################################
 % #              Datasets               #
 % #######################################
 
-\chapter{Datasets}
+\chapter{Dati}
 \label{chap:dataset}
 The following section illustrates the structure of all the principal datasets used during this thesis project.
 \section{SEOSS33}
@@ -235,7 +233,7 @@ Each table contains different types of data that will be used to generate the da
 
 \chapter{Machine Learning}
 \label{chap:ml}
-\section{Introduction}
+\section{Introduzione}
 Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. The word ML is almost in the public domain now, in the last decades the usage of this kind of algorithm has dramatically risen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
 There are two types of systems:
 \begin{itemize}
@@ -292,7 +290,7 @@ Our project implement Gradient Boosting Decision Tree (GBDT) developed by SciKit
   from sklearn.ensemble import GradientBoostingRegressor
 \end{lstlisting}
 
-\section{Neural Networks}
+\section{Reti Neurali}
 A Neural Network (NN) is a machine learning approach inspired by the way in which the brain performs a particular learning task, network of simple computational units (neurons) connected by links (synapses). The knowledge about the learning task is given in the form of training examples, the inter neurons connection strengths (weights) are used to store the acquired information. During the learning process, the weights are modified in order to model the particular learning task correctly on the examples.\\
 The learning phase can be both supervised or unsupervised. Supervised is used for pattern recognition, regression and similar is trained using data with both input and desired output. Unsupervised instead is mainly used for clustering and the learning is made using unlabeled training examples. Only supervised one will be evaluated.\\
 There are three main classes of network architectures:
@@ -422,7 +420,7 @@ The structure of a RNN is normally a single layer, in case of LSTM the structure
 The first layer filter the input and select what keep and not keep, the second layer will manage what information store in the cell state. The third state is in charge of update the state based on the previous step. The last one decide the output.
 
 
-\section{Evaluation metrics}
+\section{Metriche di valutazione}
 Every model developed need to be evaluated, there are a lot of different methods that can be used to get metrics about the quality of the system behavior. The computation of these values is achieved via mathematical expression, for this reason, the results, are not always human-readable, some errors like mean absolute error, mean relative error and similar can be read and interpreted without any problem. For metrics like R2 or mean squared error the task becomes more complicated. The following is about the mathematical analysis and description of the different metrics used.\\
 Most of metrics directly derive from the calculation of the simplest error, the \textit{absolute error}, the difference between the target $y$ and the prediction $x$:
 \begin{center}
@@ -462,7 +460,7 @@ The \textit{Mean Absolute Error} (MAE), is probably the easiest to be calculated
 % #             Forecasting             #
 % #######################################
 
-\chapter{Forecasting}
+\chapter{Predizione}
 \label{chap:forecasting}
 % \section{Introduction}
 % Forecasting is the process of making predictions of future based on past and present data by trends analysis. Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
@@ -493,7 +491,7 @@ The \textit{Mean Absolute Error} (MAE), is probably the easiest to be calculated
 % #             Conclusion              #
 % #######################################
 
-\chapter{Conclusion}
+\chapter{Conclusioni}
 Speaking about conclusion.
 
 
