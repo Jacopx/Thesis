@@ -184,10 +184,10 @@ Ogni progetto prevede una propria linea durante la fase di sviluppo, tutte le me
 Il mondo open source presenta una quantità pressochè infinita di differenti software, parte del progetto in questione è stata dedicata alla selezione dei software da analizzare per l'inserimento nella base dati condivisa, per questo motivo sono state definite alcune carattestiche che accomunassero i vari progetti in modo da costituire una base: discretamente omogenea a livello di dimensionalità, ma con differenze struttuali utili per successive analisi come quella relativa a questo progetto. Il requisito principiale riguardava il linguaggio di programmazione, considerare progetti sviluppati per la maggior parte in un singolo linguaggio di programmazione permette di ridurre la variabilità interna ad ogni singolo progetto. Vista la natura di analisi attraverso il machine learning, un'altra importante carattestica riguardava il numero di issue, il quale doveva essere sufficientemente elevato. I progetti, oltre a dover essere attualmente in sviluppo, dovevano presentare un età di almeno 3 anni. La definizione di tutti questi parametri a permesso di generare una base dati contenente 33 progetti simili come struttura ma con caratteristiche differenti.\\
 Lo sviluppo del presente progetto di tesi si è concentrato solamente su cinque di questi schemi, sono stati scelti i progetti più grossi e quelli in sviluppo dal maggior tempo, nello specificio i selezionati sono riportati in tabella \ref{tab:seoss33_selected}:
 \begin{center}
-  \captionof{table}{Project data distribution} \label{tab:seoss33_selected}
+  \captionof{table}{Distribuzione dati} \label{tab:seoss33_selected}
   \begin{tabular}{ |c|c|c| }
      \hline
-     \textbf{Project} & \textbf{Month} & \textbf{Issue} \\
+     \textbf{Progetto} & \textbf{Mesi} & \textbf{Issue} \\
      \hline
      \hline
      Hadoop & 150 & $39086$ \\
@@ -222,76 +222,66 @@ Tutto il modello si basa sulla sua entità centrale, la issue, ovvero l'attivit�
 
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/seoss33_db_schema.png}
-  \caption{SEOSS33 data model}
+  \caption{Struttura dati di SEOSS33}
   \label{fig:seoss33_db}
 \end{figure}
+
+% NOTE: Possibile aggiunger parte relativa all'interfacciamento con questo DB. Informazioni di distribuzione temporale.
 
 
 % #######################################
 % #          Machine Learning           #
 % #######################################
 
-\chapter{Machine Learning}
+\chapter{Apprendimento Automatico}
 \label{chap:ml}
 \section{Introduzione}
-Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. The word ML is almost in the public domain now, in the last decades the usage of this kind of algorithm has dramatically risen although most of it had already been developed for years. The main reason is the increase in the computational capacity of the systems.\\
-There are two types of systems:
+L'apprendimento automatico, meglio conosciuto come Machine Learning (ML), è una branca dell'intelligenza artificiale basata sullo studio di algoritmi e modelli statistici utilizzabili dai calcolatori per svolgere determinati compiti senza essere esplicitamente istruiti per farlo. Questa settore è ormai diventato di dominio pubblico, solo negli ultimi decenni l'ultilizzo di queste tecniche è cresciuto enormemente nonostante la maggior parte di esse furono teorizzate già molti anni prima. La motivazione principale di questo ritardo è da ricercare nella natura stesso di queste strategie, la capacità computazione diventa rilevante e fondamentale all'applicazione degli stessi, grazie alla crescita di essa è ora possibile sfruttare questi algorirmi anche nei computer di casa.\\
+Tutti gli algoritmi possono essere catalogati in una delle seguenti categorie:
 \begin{itemize}
-  \item Knowledge-based: Acquisition and modeling of common-sense knowledge and expert knowledge (from rules to facts)
-  \item Learning: Extraction of knowledge and rules from example/experience (from facts to rules)
+  \item Knowledge-based: Acquisizione e modellazione di leggi conosciute (dalle regole ai fatti)
+  \item Learning: Estrazione della conoscenza e delle regole attraverso esempi ed esperienza (dai fatti alle regole)
 \end{itemize}
-All the machine learning techniques try to develop systems similar to the second definition. ML algorithms can be divided into three categories: supervised, unsupervised and reinforcement learning. The first will be used to predict class based on previous knowledge, the second tries to labeling data without a priori experience and the third bases it is learning on action reward.\\
-There a lot of different models available, the following chapters will focus on the models used in this project.
+Tutti gli algoritmi in ambito ML fanno parte della seconda categoria. A loro volta questi algoritmi possono essere divisi in tre principali sotto-categorie: apprendimento supervisionato, apprendimento non supervisionato e apprendimento per rinforzo. Nel primo vengono forniti modelli di dati in ingresso e i dati desiderati in uscita e lo scopo è quello di definire una regola che associ i due parametri. Nel modello non superivisionato il modello ha il compito di trovare una struttura ai dati in ingresso, senza che essi siano precedentemente etichettati in alcun modo. L'ultimo invece viene allenato per un compito, senza che gli venga insegnato come fare ma solamente conoscendo il risultato finale delle proprie azioni.\\
+Esisto una varietà enorme di modelli di questa tipologia, i successivi paragrafi tratteranno quelli utilizzati in questo progetto.
 
-\paragraph{Supervised Learning}
-is a powerful technique to process labeled, which is a dataset with that has been classified, to infer a learning algorithm. This dataset is used as a basis to predict and learn how to predict unlabeled data. There are two types of supervised learning, classification, and linear regression. The goal of classification models is to predict categorical class labels of new instances, based on a training set of past observations. The classification can be binary or multi-class. Instead, regression, aim to predict continuous outcome, it tries to find mathematical relationships between variables to predict the target with a reasonable level of approximation. Our project is only focused on regression, classification will not be further discussed.
+\paragraph{Apprendimento Supervisionato}
+è una tecnica che prevede di processamento dei dati in ingresso con associati i valori desiderati in uscita, lo scopo del modello è quindi quello di sviluppare una correzione matematica tra tutte le informazioni che riceve in ingresso ed i valori desiderati in uscita. Un volta terminata la fase di allenamento il modello potrà essere utilizzato per prevedere il valore di uscita dati i valori in ingresso. Questa metodologia può essere applicata nella risoluzione di problemi di due differenti categorie, quelli della classificazione e quelli della regressione lineare. Lo scopo del primo è quello di assegnare una etichetta ai dati per classificarli in diverse categorie, per esempio le transazioni sane o fraudolente di una banca. L'assegnazione può essere binaria, quindi solo due etichette, o multi-etichetta. La regressione invece ha l'obbiettivo di predirre un valore continuo di uscita, cercare di sviluppare una relazione matematica tra tute le variabili in ingresso, cercando di prevedere, con il miglior livello di approssimazione il valore finale. Nel nostro progetto verranno solo impiegati questi ultimi, la classificazione non verrà ulteriormente trattata.
 
-\section{Ensable Methods}
-All the supervised learning method used are based on ensable, the basic idea is to merge multiple, different, hypothesis to improve the quality of the prediction, for example, the random forest or gradient boosting are ensable of multiple decision trees. The following paragraphs will deal with the models used specifically.
+\section{Apprendimento ensamble}
+L'apprendimento di insieme raggruppa unsa serie di tecniche sviluppate al fine di migliorare i risultati dei singoli prendittori. Invece che utilizzare un singolo modello, nella fase di apprendimento, vengono simultaneamente allenate diverse copie dello stesso modelo con parametri differenti, ciò porterà ad una differenziazione delle risultato di previsione. L'aggregazione, attraverso techinche come bagging, boosting o stacking, permetterà di produrre un risultato più accurato e meno dipendente dalla rumorosità dei dati.
 
-\paragraph{Random Forest}
-Random Forest (RF) is a supervised learning algorithm that makes use of ensable learning method for classification and regression. They are built by combining the predictions of several trees, each of which is trained independently and the prediction of the trees are combined through averaging \cite{RF_theory}. A visualization of an RF is shown in figure \ref{fig:rf}.
+\paragraph{Foresta casuale}
+conosciuta anche come Random Forest (RF) è un algoritmo di apprendimento supervisionato, basato sulle metodologie d'insieme, per la classificazione e la regressione. È costituito combinando la predizione di diversi alberi, ognungno allenato separatamente, tramite media \cite{RF_theory}. In figura \ref{fig:rf} una visualizzazione del modello.
 
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/rf.png}
-  \caption{Random Forest simplified scheme \cite{rf}}
+  \caption{Schema semplificato di foresta casuale \cite{rf}}
   \label{fig:rf}
 \end{figure}
 
-Three parameters are important to define the RF: (1) the methods for splitting the leaves, (2) the type of predictor to use in each leaf, and (3) the method for injecting randomness.
-Splitting of requires the selection of shape and a method for evaluating the quality of each candidate. Typical choices are axis-aligned splits, where data is routed to sub-tree depending on a threshold. The threshold can be chosen randomly by a leaf optimization function. After the generation of different candidate splits a choosing criterion must be defined in order to split the leaf. One of the simplest strategies is to choose among the candidates uniformly at random, otherwise, it is possible to select the candidate split which optimizes a purity function (information gain for example) over the leaf that would be created.
-The most common predictors, for each leaf, are the average response over training points that fall in that leaf.
-The injection of randomness can happen in different ways, the size of candidate splits, coefficients for random combinations, etc\dots In any case, the thresholds can be also defined randomly or by optimization over data. Another solution is to build a tree using bootstrapped or sub-sampled dataset.\\
-The training phase is performed independently by each tree by exploiting an assignment in structure and estimation points to respectively change the shape of the tree and to improve the estimator fit.\\
-Once the forest has been trained it can be used to make predictions for unlabeled data points. In the prediction phase, every single tree, independently make its own prediction than an average of all the trees is computed to make a single outcome value. The contribution of each tree to the final value is the same.\\
-Out implementation uses Random Forest developed by SciKit-Learn v0.21:
+La definzione di una foresta richiede tre parametri principali: (1) la metodologia per la divisione in foglie, (2) il tipo di predittore da usare in ciascuna foglia e (3) il metodo per garantire la randomicità.
+La divisione in foglia richiede la selezione della forma e metodologia per la valutazione di ogni candidato. Una tipica scelta è quella chiamata axis-aligned, dove i dati vengono diretti nei vari sotto alberi in base al passaggio o meno di un valore soglia, il quale viene scelto casualmente o dalla funzione di ottimizzazione della foglia. Al fine di dividere una foglia vengono generati diversi candidati e viene definito un criterio per scegliere tra essi. Un primo approccio potrebbe essere quello della selezione causuale uniforme, altrimenti la scelta può essere guidata da una funzione di purezza, cercandone la massimizzazione.\\
+Possono essere utilizzate diverse techniche per generare casualità nella foresta, attraverso la definizione di soglie senza l'utilizzo di funzioni oppure effettuando con l'allenamento di ogni albero su una selezione di dati ristretta in modo da diversificare direttamente il risultato a livello di insieme.\\
+La fase di training viene gestita indipendentemente da ogni alberto attraverso punteggi di struttura e stima, i primi permettono la variazione della forma dello stesso, mentre i secondi guidano le funzioni di ottimizzazione delle singole foglie.\\
+Un volta effettuato l'allenamento della rete è possibile utilizzare il modello per la predizione dei valori. Nella fase di stima, ogni singolo albero, generera indipendemente un proprio valore, la scelta finale avverrà calcolando la media aritmetica di tutti questi valori generati, il contributo è equamente ripartito tra tutti.\\
+La nostra implementazione sfrutta le API per la Random Forest di SciKit-Learn v0.21:
 \begin{lstlisting}[language=python, frame=single]
   from sklearn.ensemble import RandomForestRegressor
 \end{lstlisting}
-The specific parameters of the model will be explained during the \autoref{chap:forecasting} about forecasting.
-% To make predictions for a query point $x$, each tree independently predicts
-% \begin{center}
-%   \begin{equation}
-%     f^{j}_{n}(x) = \frac{1}{N^{e}(A_{n}(x))} \sum_{I_{i}=e}^{Yi \in A_{n}(x)} Y_{i}
-%   \end{equation}
-% \end{center}
-% and the forest averages the prediction of each tree
-% \begin{center}
-%   \begin{equation}
-%     f^{(M)}_{n}(x) = \frac{1}{M} \sum_{j=1}^{M} f^{j}_{n}(x)
-%   \end{equation}
-% \end{center}
+Gli specifici parametri utilizzati verranno illustrati durante il capitolo \ref{chap:forecasting} sulla predizione.
 
-\paragraph{Gradient Boosting Machines}
-Gradient Boosting Machines (GBM) are a family of powerful machine learning techniques that have shown considerable success in a wide range of practical applications. They are highly customizable to the particular needs of the application, line being learned with respect to different loss functions \cite{gbm}. Techniques like RF rely on simple averaging of model in the ensable. The family of boosting methods is based on a different constructive strategy of ensemble formation. Boosting add, sequentially, new models to the ensable. In GBM the learning phase consecutively fits new models to improve the accuracy of the estimations. Ideally, they construct new basic layers,  decision trees of fixed size, to be maximally correlated with the negative gradient of the loss function of the ensable. The loss function should be chosen by the developer, even ad-hoc loss function could be implemented. The attempt is to solve this minimization problem numerically via steepest descent \cite{ensable}.\\
-This high flexibility of GBM makes them really customizable to any kind of task. Given its simplicity, a lot of experimentation can be performed over the model.\\
-Our project implement Gradient Boosting Decision Tree (GBDT) developed by SciKit-Learn v0.21:
+\paragraph{Macchine ad aumento di gradiente}
+conosciute anche come Gradient Boosting Machines (GBM), sono una famiglia di potenti modelli statistici di apprendimento automatico in grado di ottenere ottimi risultati in una grande varietà di applicazioni. Una delle loro principali caratteristiche è la possibilità di personalizzare il modello in base alle caratteristiche dell'applicazione \cite{gbm}. Tecniche come la foresta casuale, appena trattata, sono basate sulla semplice media dei risultati prodotti da ogni singolo componente. La famiglia dei metodi di aumento è basata su una differente strategia di unione dei pezzi per la formazione della modello finale. Il boosting aggiunge, sequenziamente, nuovi parti all'insieme; durante la fase di allenamento vengono via via sviluppati nuovi piccoli modelli da aggiungere al fine di migliorare l'accuratezza nella previsione. Idealmente vengono costruiti nuovi modelli di base, come per esempio l'albero decisionale, per poter massimizzare la correlazione con il gradiente negativo della funzione di perdita (\textit{loss}).\\
+Vista l'alta flessibilità del modello, l'adattamento dello stesso a differenti ambienti non risulta difficoltoso, molte differenti sperimentazioni possono essere fatte.\\
+Nel nostro progetto si è deciso di implementare il modello di Gradient Boosting Decision Tree (GBDT) sempre utilizzando la libreria SciKit-Learn v0.21:
 \begin{lstlisting}[language=Python, frame=single]
   from sklearn.ensemble import GradientBoostingRegressor
 \end{lstlisting}
 
+
 \section{Reti Neurali}
-A Neural Network (NN) is a machine learning approach inspired by the way in which the brain performs a particular learning task, network of simple computational units (neurons) connected by links (synapses). The knowledge about the learning task is given in the form of training examples, the inter neurons connection strengths (weights) are used to store the acquired information. During the learning process, the weights are modified in order to model the particular learning task correctly on the examples.\\
+Le reti neurali, in inglese Neural Networks (NN), sono modelli di apprendimento automatico con diretta ispirazione al cervello umano e come esso procede alla fase di apprensione di un concetto, la rete è costituita dala basilare unità di calcolo, il neurone (neuron), collegata ad altri neuroni attraverso le sinapsi (synapses). La conoscenza è data alla rete, enlla fare di allenamento, attraverso esempi, la forza delle connessione inter neurali è la base per acquisire e mantenere al conoscenza.\\
 The learning phase can be both supervised or unsupervised. Supervised is used for pattern recognition, regression and similar is trained using data with both input and desired output. Unsupervised instead is mainly used for clustering and the learning is made using unlabeled training examples. Only supervised one will be evaluated.\\
 There are three main classes of network architectures:
 \begin{itemize}
@@ -454,6 +444,13 @@ The \textit{Mean Absolute Error} (MAE), is probably the easiest to be calculated
     MAE = \frac{\sum_{i=1}^{n}{|y_{i} - x_{i}|}}{n} = \frac{\epsilon}{n}
   \end{equation}
 \end{center}
+
+% #######################################
+% #           Pre-processing            #
+% #######################################
+
+\chapter{Pre-elaborazione}
+\label{chap:preprocessing}
 
 
 % #######################################
