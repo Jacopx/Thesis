@@ -199,31 +199,26 @@ Lo sviluppo del presente progetto di tesi si è concentrato solamente su cinque 
   \end{tabular}
 \end{center}
 
-%////////////////////////////////////
-%////////////////////////////////////
-%////////////////////////////////////
-%////////////////////////////////////
-
-To unify the project specific difference, the typed issue, e.g. \textit{New Feature} or \textit{Bug Report}, are mapped to five issue categories:
+Al fine di generalizzare le specifiche differenze, le varie issue: \textit{New Feature}, \textit{Bug Report}, ecc... Sono state mappate su cinque categorie:
 \begin{itemize}
-  \item Bug: A problem which impairs or prevents the functions of the product
-  \item Feature: A new feature of the product
-  \item Improvement: An enhancement to an existing feature
-  \item Task: A task that needs to be done
-  \item Other: Various
+  \item Bug: Un problema che previene il funzionamento del prodotto
+  \item Feature: Una nuova funzionalità del prodotto
+  \item Improvement: Un miglioramento di una funzionalità già esistente
+  \item Task: Un compito necessario
+  \item Other: Vario
 \end{itemize}
 
-Figure \ref{fig:prior} show the distribution of each issue category respect all the projects.
+La figure \ref{fig:prior} visualizza la distribuzione, rispetto le varie categorie, del numero di issue per ogni progetto.
 
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/prior.png}
-  \caption{Count of different priority for each project}
+  \caption{Distribuzione issue per progetto}
   \label{fig:prior}
 \end{figure}
 
-More selection characteristics can be found in chapter 2.1 \cite{SEOSS33}.\\
-Is fundamental to understand the structure of this dataset, the majority of the forecasting operation tests are conducted using the data stored by this research.\\
-Each project is stored in an SQLITE file, a SQL offline database, the structure is based on the entity of the \textit{issue}, identified by a  \textit{issue\_id}, the other tables are used to link additional information, like the number of commit, the version referred, comments and others features. The figure \ref{fig:seoss33_db} show the database schema.
+Per poter estrarre ed utilizzare al meglio i dati è necessario conoscere al meglio la struttura contenitore.
+I dati relativi ad ogni software sono salvati in un file SQLITE, un database SQL offline che permette l'accesso sfruttando le potenzialità delle query, senza la necessità di un server vero e proprio. La figura \ref{fig:seoss33_db} riporta lo schema integrale della struttura.\\
+Tutto il modello si basa sulla sua entità centrale, la issue, ovvero l'attività di segnalazione che è stata creata da uno sviluppatore per gestire una problematica. Ognugna di queste issue è caratterizzata dal proprio \textit{issue\_id} il quale ne rappresenta la chiave primaria ed univoca, normalmente è strutturata con il nome del progetto seguito da un numero progressivo. La tabella relativa alle issue contiene ulteriori informazioni direttamente correlate, la tipologia, la priorità, le informazioni temporali di apertura, aggiornamento e chiusura della stessa, un breve riassunto della problematica, lo stato e le informazioni relative allo sviluppatore che l'ha aperta. Direttamentamente collegate, tramite la chiave primaria, vi sono le tabelle contenenti i commenti \textit{issue\_comment}, la versione \textit{issue\_fix\_version}, il componente modificato \textit{issue\_component} ed la tabella \textit{change\_set\_link} la quale collega i vari commit alle issue. Durante l'estrazione delle varie informazioni sono state utilizzate tute le tabelle ad esclusione di \textit{issue\_link} la quale viene utilizzare per correlare le differenti issue tra di loro.
 
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/seoss33_db_schema.png}
@@ -231,7 +226,6 @@ Each project is stored in an SQLITE file, a SQL offline database, the structure 
   \label{fig:seoss33_db}
 \end{figure}
 
-Each table contains different types of data that will be used to generate the data used to forecast.
 
 % #######################################
 % #          Machine Learning           #
