@@ -401,7 +401,24 @@ L'errore medio assoluto (Mean Absolute Error, MAE) è il più semplice di quelli
     MAE = \frac{\sum_{i=1}^{n}{|y_{i} - x_{i}|}}{n} = \frac{\epsilon}{n}
   \end{equation}
 \end{center}
-
+Un altro utile metrica è derivata dall'applicazione dell'errore relativo alle misurazioni multiple, il calcolo dell'errore medio relativo, calcolato come la media di tutti gli errori relativi:
+\begin{center}
+  \begin{equation}
+    REL = \frac{\sum_{i=1}^{n}{\frac{|y - x|}{|x|}}}{n}
+  \end{equation}
+\end{center}
+L'impatto e l'immediatezza di questo valore permetto rapide valutazioni del comportamento generale del sistema. Per rendendere ancora più semplice la precisione del modello è si è deciso di definire il calcolo della precisione come:
+\begin{center}
+  \begin{equation}
+    ACC = 1 - REL
+  \end{equation}
+\end{center}
+L'ultimo errore calcolato è rappresentato da R2, un dato molto più complesso da comprendere. Viene calcolato secondo la seguente formula:
+\begin{center}
+  \begin{equation}
+    1x-2y-3z-4k
+  \end{equation}
+\end{center}
 
 
 % #######################################
