@@ -282,22 +282,20 @@ Nel nostro progetto si è deciso di implementare il modello di Gradient Boosting
 
 \section{Reti Neurali}
 Le reti neurali, in inglese Neural Networks (NN), sono modelli di apprendimento automatico con diretta ispirazione al cervello umano e come esso procede alla fase di apprensione di un concetto, la rete è costituita dala basilare unità di calcolo, il neurone (neuron), collegata ad altri neuroni attraverso le sinapsi (synapses). La conoscenza è data alla rete, enlla fare di allenamento, attraverso esempi, la forza delle connessione inter neurali è la base per acquisire e mantenere al conoscenza.\\
-The learning phase can be both supervised or unsupervised. Supervised is used for pattern recognition, regression and similar is trained using data with both input and desired output. Unsupervised instead is mainly used for clustering and the learning is made using unlabeled training examples. Only supervised one will be evaluated.\\
-There are three main classes of network architectures:
+La fase di apprendimento può essere sia supervisionata che non supervisionata. La modalità supervisionata viene utilizzata per il riconoscimento di schemi (pattern recognition) e regressione e viene effettuata sempre con i dati di input ed i desiderati dati di output. Invece, la modalità non supervisionata, è maggiormente utilizzata per sviluppare modelli adatti al raggruppamento (clustering) e l'allenamento viene effettuato senza il valore desiderato. Il nostro progetto farò uso di reti neurali per la regressione.\\
+Questa tipologia di reti può essere di tre tipologie:
 \begin{itemize}
-  \item Single-layer feed-forward
-  \item Multi-layer feed-forward
-  \item Recurrent
+  \item Singolo livello flusso in avanti
+  \item Multi livello flusso in avanti
+  \item Ricorsiva
 \end{itemize}
-A standard architecture is composed of three different layers, \textit{input units}, \textit{hidden units} and \textit{output units}, all the layers are linked with the learning algorithms used to train. An example of a complete multi-layer network in \ref{fig:mlff}.
-
+L'architettura standard è composta di tre diversi livelli, figura \ref{fig:mlff}, lo strato di ingresso, le unità nascoste e il livello di uscita; tutti questi livelli sono correlati tra loro tramite le connessioni sviluppate durante la fase di apprendimento.
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/feed_foward.png}
   \caption{Multi-layer feed-forward NN}
   \label{fig:mlff}
 \end{figure}
-
-The neuron is the basic processing unit of the network, which received the inputs. Each input is combined with its internal state and an optional activation function, it produces an output value that will be passed to the next layers. The weights, defined during the training phase, corresponding to the importance of the connection. The different inputs are summed using a weighted sum:
+Il neurone è l'unità basilare per il processamento all'interno della rete, si occupa di riceve i dati in ingresso, gestirli e poi passarli ai successivi livelli. Ogni ingresso combina i dati con il proprio stato interno e la funzione di attivazione per poi procedere a passare il valore come ingresso del livello successivo. L'importanta che ognugno di questi valori in ingresso avrà sarà determinata dal peso assegnato alla connessione durante la fase di allenamento della rete stessa. Ogni nodo ha la possibilità di ricevere più in un ingresso, per questo motivo, tutti i valori verranno aggregati in modo da consegnare un solo valore come ingresso del successivo strato, la formula per il calcolo della somma è:
 \begin{center}
   \begin{equation}
     u = \sum^{m}_{j=1} w_{j}x_{j}
