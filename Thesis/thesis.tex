@@ -402,41 +402,39 @@ Le reti a memorie a lungo e corto termine sono una tipologia speciale di reti ri
 
 Il primo livello della rete ha il compito di filtrare i dati in input e selezionare cosa mantenere o meno, il secondo passaggio gestirà quali informazioni mantenere nello stato della cella. Il terzo livello invece ha il compito di aggiornare lo stato del nodo in base agli step precedenti. Lultimo livello si occupa invece della scelta del valore di uscita.
 
-
 \section{Metriche di valutazione}
-Every model developed need to be evaluated, there are a lot of different methods that can be used to get metrics about the quality of the system behavior. The computation of these values is achieved via mathematical expression, for this reason, the results, are not always human-readable, some errors like mean absolute error, mean relative error and similar can be read and interpreted without any problem. For metrics like R2 or mean squared error the task becomes more complicated. The following is about the mathematical analysis and description of the different metrics used.\\
-Most of metrics directly derive from the calculation of the simplest error, the \textit{absolute error}, the difference between the target $y$ and the prediction $x$:
-\begin{center}
-  \begin{equation}
-    \epsilon = |y - x|
-  \end{equation}
-\end{center}
-Besides being the easiest to calculate is also the easiest to be understand because show directly the distance respect the desired value.\\
-The first metric based on the previous metric is the \textit{relative error}, that is computed dividing the absolute error by the target value:
-\begin{center}
-  \begin{equation}
-    \eta = \frac{\epsilon}{|x|} = \frac{|y - x|}{|x|}
-  \end{equation}
-\end{center}
-This error rescale the output between [0,1] in order to better understand the error in the estimation.
-For example, in case of a value target value of 530 and a prediciton value of 570 the two error are:
-\begin{center}
-  \begin{equation}
-      \epsilon = |520-570| = 50
-  \end{equation}
-  \begin{equation}
-      \eta = \frac{50}{|520|} = 0.09
-  \end{equation}
-\end{center}
-the difference was 50, but respect the expected output di difference is really low, around 9\%.\\
-The previous errors are the basic ones, the following is the first based on aggregation of multiple errors calculation. The aggregation is fundamental to generate a single number to evaluate the quality of prediction of our model.\\
-The \textit{Mean Absolute Error} (MAE), is probably the easiest to be calculated and understand, is basically computed by calculating the average of all the absolute errors:
+Ogni modello sviluppato necessità di essere valutato, ci sono innumerevoli modalità per valutare la bontà di un modello, ognuna con proprie caratteristiche. Ovviamente il parere più oggettivo si ottiene sfruttando espressione matematiche, sfortunatamente quest'ultime non sempre sono di facile e rapida comprensione da parte del l'uomo, alcuni errori come quello assoluto, quello relativo possono essere facilmente letti ed interpretati senza alcun tipo di problema; metriche come R2 o l'errore quadratico richiedono una valutazione più approfondita. Dopo attente valutazioni sono state definite alcune metriche che verranno utilizzate nella valutazione dei modelli, di seguito una breve trattazione matematica degli stessi.\\
+% La maggior parte degli errori deriva dal calcolo di errori più semplici, l'errore assoluto viene calcolato computando la differenza tra l'obbiettivo $y$ e la predizione $x$:
+% \begin{center}
+%   \begin{equation}
+%     \epsilon = |y - x|
+%   \end{equation}
+% \end{center}
+% Oltre ad essere uno dei più semplici da calcolare risulta anche uno dei più semplici da comprendere in quanto permette di visualizzare direttamente lo scostamento rispetto al valore desiderato.\\
+% Una prima metrica derivata dall'errore assoluto è l'errore relativo, calcolato dividendo l'errore assoluto per il valore desiderato:
+% \begin{center}
+%   \begin{equation}
+%     \eta = \frac{\epsilon}{|x|} = \frac{|y - x|}{|x|}
+%   \end{equation}
+% \end{center}
+% Questo calcolo riscala direttamente il risultato tra [0, 1], ciò permette una migliore comprensione della differenza. Per esempio, con un valore desiderato di 530 ed un valore stimato di 570 i due errori vengono calcolati come segue:
+% \begin{center}
+%   \begin{equation}
+%       \epsilon = |520-570| = 50
+%   \end{equation}
+%   \begin{equation}
+%       \eta = \frac{50}{|520|} = 0.09
+%   \end{equation}
+% \end{center}
+% la differenza era di 50 un valore che potrebbe essere considerato elevato magari ma, rispetto al valore desiderato, l'errore è in realtà molto basso, circa 9\%. Gli errori presentati fino ad ora fungono da base per molti altri, esse infatti possono essere applicati solamente ad una coppia alla volta, i successivi, quelli realmente implementati invece possono essere applicati su un numero indefinito di valori.\\
+% L'errore medio assoluto (Mean Absolute Error, MAE) è il più semplice di quelli utilizzati ed è calcolato come la media di tutti gli errori assoluti:
+% \begin{center}
+%   \begin{equation}
+%     MAE = \frac{\sum_{i=1}^{n}{|y_{i} - x_{i}|}}{n} = \frac{\epsilon}{n}
+%   \end{equation}
+% \end{center}
 
-\begin{center}
-  \begin{equation}
-    MAE = \frac{\sum_{i=1}^{n}{|y_{i} - x_{i}|}}{n} = \frac{\epsilon}{n}
-  \end{equation}
-\end{center}
+
 
 % #######################################
 % #           Pre-processing            #
