@@ -46,11 +46,6 @@
 \begin{document}
 
 \ateneo{Politecnico di Torino}
-%
-% Non tutte le università hanno un nome proprio
-%\nomeateneo{Sede di Torre Elettra}
-%
-% \FacoltaDi{Faculty of Computer Engineering}% lo spazio finale correttamente sparisce
 
 \titolo{Predizione di difettosità nello sviluppo software attraverso machine learning}
 \sottotitolo{Artificial Intelligence applied to Software Engineering}
@@ -58,7 +53,6 @@
 %
 %%%%%%% Corso degli studi
 \corsodilaurea{Ingegneria Informatica}% per la laurea
-%\corsodidottorato{Meccanica}% per il dottorato
 
 \renewcommand*\IDlabel{}
 %
@@ -76,31 +70,6 @@
 %%%%%%% Logo della sede
 \logosede{polito}
 
-%%%%%%% OFFSET
-%\setbindingcorrection{3mm}
-
-%\english
-
-\iflanguage{english}{%
-	\retrofrontespizio{This work is subject to the Creative Commons Licence}
-	\DottoratoIn{PhD Course in\space}
-	\CorsoDiLaureaIn{Master degree course in\space}
-	\NomeMonografia{Bachelor Degree Final Work}
-	\TesiDiLaurea{Master Degree Thesis}
-	\NomeDissertazione{PhD Dissertation}
-	\InName{in}
-	\CandidateName{Candidates}% or Candidate
-	\AdvisorName{Supervisors}% or Supervisor
-	\TutorName{Tutor}
-	\NomeTutoreAziendale{Internship Tutor}
-	\CycleName{cycle}
-	\NomePrimoTomo{First volume}
-	\NomeSecondoTomo{Second Volume}
-	\NomeTerzoTomo{Third Volume}
-	\NomeQuartoTomo{Fourth Volume}
-	\logosede{polito}% or comma separated list of logos
-}{}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \frontespizio
 \summary
@@ -111,7 +80,6 @@ Tutti le tipologie ottengono dei buoni risultati, il migliore è quello cross-pr
 
 
 \acknowledgements
-
 Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battaglia.
 
 \indici
@@ -404,35 +372,35 @@ Il primo livello della rete ha il compito di filtrare i dati in input e selezion
 
 \section{Metriche di valutazione}
 Ogni modello sviluppato necessità di essere valutato, ci sono innumerevoli modalità per valutare la bontà di un modello, ognuna con proprie caratteristiche. Ovviamente il parere più oggettivo si ottiene sfruttando espressione matematiche, sfortunatamente quest'ultime non sempre sono di facile e rapida comprensione da parte del l'uomo, alcuni errori come quello assoluto, quello relativo possono essere facilmente letti ed interpretati senza alcun tipo di problema; metriche come R2 o l'errore quadratico richiedono una valutazione più approfondita. Dopo attente valutazioni sono state definite alcune metriche che verranno utilizzate nella valutazione dei modelli, di seguito una breve trattazione matematica degli stessi.\\
-% La maggior parte degli errori deriva dal calcolo di errori più semplici, l'errore assoluto viene calcolato computando la differenza tra l'obbiettivo $y$ e la predizione $x$:
-% \begin{center}
-%   \begin{equation}
-%     \epsilon = |y - x|
-%   \end{equation}
-% \end{center}
-% Oltre ad essere uno dei più semplici da calcolare risulta anche uno dei più semplici da comprendere in quanto permette di visualizzare direttamente lo scostamento rispetto al valore desiderato.\\
-% Una prima metrica derivata dall'errore assoluto è l'errore relativo, calcolato dividendo l'errore assoluto per il valore desiderato:
-% \begin{center}
-%   \begin{equation}
-%     \eta = \frac{\epsilon}{|x|} = \frac{|y - x|}{|x|}
-%   \end{equation}
-% \end{center}
-% Questo calcolo riscala direttamente il risultato tra [0, 1], ciò permette una migliore comprensione della differenza. Per esempio, con un valore desiderato di 530 ed un valore stimato di 570 i due errori vengono calcolati come segue:
-% \begin{center}
-%   \begin{equation}
-%       \epsilon = |520-570| = 50
-%   \end{equation}
-%   \begin{equation}
-%       \eta = \frac{50}{|520|} = 0.09
-%   \end{equation}
-% \end{center}
-% la differenza era di 50 un valore che potrebbe essere considerato elevato magari ma, rispetto al valore desiderato, l'errore è in realtà molto basso, circa 9\%. Gli errori presentati fino ad ora fungono da base per molti altri, esse infatti possono essere applicati solamente ad una coppia alla volta, i successivi, quelli realmente implementati invece possono essere applicati su un numero indefinito di valori.\\
-% L'errore medio assoluto (Mean Absolute Error, MAE) è il più semplice di quelli utilizzati ed è calcolato come la media di tutti gli errori assoluti:
-% \begin{center}
-%   \begin{equation}
-%     MAE = \frac{\sum_{i=1}^{n}{|y_{i} - x_{i}|}}{n} = \frac{\epsilon}{n}
-%   \end{equation}
-% \end{center}
+La maggior parte degli errori deriva dal calcolo di errori più semplici, l'errore assoluto viene calcolato computanto la differenza tra l'obbiettivo $y$ ed il risultato ottenuto $x$:
+\begin{center}
+  \begin{equation}
+    \epsilon = |y - x|
+  \end{equation}
+\end{center}
+Oltre ad essere uno dei più semplici da calcolare risulta anche uno dei più semplici da comprendere in quanto permette di visualizzare direttamente lo scostamento rispetto al valore desiderato.\\
+Una prima metrica derivata dall'errore assoluto è l'errore relativo, calcolato dividendo l'errore assoluto per il valore desiderato:
+\begin{center}
+  \begin{equation}
+    \eta = \frac{\epsilon}{|x|} = \frac{|y - x|}{|x|}
+  \end{equation}
+\end{center}
+Questo calcolo riscala direttamente il risultato tra [0, 1], ciò permette una migliore comprensione della differenza. Per esempio, con un valore desiderato di 530 ed un valore stimato di 570 i due errori vengono calcolati come segue:
+\begin{center}
+  \begin{equation}
+      \epsilon = |520-570| = 50
+  \end{equation}
+  \begin{equation}
+      \eta = \frac{50}{|520|} = 0.09
+  \end{equation}
+\end{center}
+la differenza era di 50 un valore che potrebbe essere considerato elevato magari ma, rispetto al valore desiderato, l'errore è in realtà molto basso, circa 9\%. Gli errori presentati fino ad ora fungono da base per molti altri, esse infatti possono essere applicati solamente ad una coppia alla volta, i successivi, quelli realmente implementati invece possono essere applicati su un numero indefinito di valori.\\
+L'errore medio assoluto (Mean Absolute Error, MAE) è il più semplice di quelli utilizzati ed è calcolato come la media di tutti gli errori assoluti:
+\begin{center}
+  \begin{equation}
+    MAE = \frac{\sum_{i=1}^{n}{|y_{i} - x_{i}|}}{n} = \frac{\epsilon}{n}
+  \end{equation}
+\end{center}
 
 
 
