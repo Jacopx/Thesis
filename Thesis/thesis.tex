@@ -292,7 +292,7 @@ Questa tipologia di reti può essere di tre tipologie:
 L'architettura standard è composta di tre diversi livelli, figura \ref{fig:mlff}, lo strato di ingresso, le unità nascoste e il livello di uscita; tutti questi livelli sono correlati tra loro tramite le connessioni sviluppate durante la fase di apprendimento.
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/feed_foward.png}
-  \caption{Multi-layer feed-forward NN}
+  \caption{Rete a flusso avanti multi livello}
   \label{fig:mlff}
 \end{figure}
 Il neurone è l'unità basilare per il processamento all'interno della rete, si occupa di riceve i dati in ingresso, gestirli e poi passarli ai successivi livelli. Ogni ingresso combina i dati con il proprio stato interno e la funzione di attivazione per poi procedere a passare il valore come ingresso del livello successivo. L'importanta che ognugno di questi valori in ingresso avrà sarà determinata dal peso assegnato alla connessione durante la fase di allenamento della rete stessa. Ogni nodo ha la possibilità di ricevere più in un ingresso, per questo motivo, tutti i valori verranno aggregati in modo da consegnare un solo valore come ingresso del successivo strato, la formula per il calcolo della somma è:
@@ -301,79 +301,75 @@ Il neurone è l'unità basilare per il processamento all'interno della rete, si 
     u = \sum^{m}_{j=1} w_{j}x_{j}
   \end{equation}
 \end{center}
-The computed value is than scaled using an activation function $\varphi$ for limiting the amplitude of the output of the neuron by applying the function:
+Il valore calcolato viene scalato tramite una functione di attivazione $\varphi$ al fine di limitarne l'ampiezza:
 \begin{center}
   \begin{equation}
     y = \varphi(u + b)
   \end{equation}
 \end{center}
-Where $b$ represent the bias, an external parameter of the neuron, $y$ represent than the output value for the next level. An example of the structure can be found in figure \ref{fig:neuron}.
-
+La precedente funzione riporta il parametro $b$ il quale rappresenta il bias, un parametro esterno del neurone. $y$ rappresenta invece il valore di uscita dopo la computazione, il quale rappresenta il valore di ingresso del successivo livello gerarchico. Un esempio della struttura in questione si può trovare in figura \ref{fig:neuron}.
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/neuron.png}
-  \caption{Neuron view}
+  \caption{Visualizzazione di neurone}
   \label{fig:neuron}
 \end{figure}
 
-Several different functions can be used to activate the neurons, they are trying to emulate the typical response of a biological neuron and its different activation methods. The most common are: linear, step, relu and sigmoid.
-Each function behaves differently with different peculiarities and critical issues, there are two main types, linear and non-linear.
+Diverse funzioni di attivazione possono essere applicate al neurone, il loro compito è quello di emulare la tipica risposta biologica del sistema nervoso umano e le sue differenti metodologie di attivazione. Nel corso degli anni sono state definite numerose differenti funzioni, più o meno adatte a differenti contesti, con proprie peculiarità, problematiche e carattestiche. Possono essere classificate in due categorie, lineari e non lineari, le più comuni sono: lineare, gradino, relu e sigmoide.
 
-\paragraph{Step} is a binary, linear and threshold-based activation function, figure \ref{fig:step}. When the input is above or below a defined threshold, the neuron is activated and pass the same input value to the next layer. The main drawback is that not allow multiple-value output.
+\paragraph{Gradino} è una delle più comuni funzioni di attivazione, binaria, lineare e basata su soglia, in figura \ref{fig:step} la sua definizione. Quando il valore in ingresso è sopra o sotto la soglia definita, il neurone viene attivano e passa il valore in ingresso al successivo livello. La principale problematica correlata a questa funzione è la sua impossibilità di gestire valori multipli in uscita.
 
-\paragraph{Linear} is of course a linear activation function that take the form:
+\paragraph{Lineare} è una funzione di attivazione lineare della forma:
 \begin{center}
   \begin{equation}
     f(x) = x
   \end{equation}
 \end{center}
-This function takes the input and, by multiplying it by the weight of the neuron, it calculate the output. Respect the step function allows multiple-value output, but there are two major problems: it is not possible to use backpropagation (treated later) to train the network because the derivative function is constant and is not related to the input. The other problem is that linear function collapses all the layers into once because the last layer will be a linear combination of the first in any case. Figure \ref{fig:linear} show the curve.
+La funzione, dato il valore in ingresso e moltiplicandolo per il peso del neurone, calcola il valore di uscita. Rispetto alla funzione gradito possono essere generati output multi valore, presenta comunque due problematiche: non sarà possibile utilizzare la propagazione indietro (trattata successivamente) per allenare la rete, vista la funzione derivata costante; l'altro problema riguarda il collasso di tutto i diversi livelli in uno solo, vista la sua natura lineare, il valore di uscita finale sarà in ogni caso la combinazione lineare tutti i livelli precedenti. La figura \ref{fig:linear} visualizza la curva in questione.
 
 \begin{figure}
   \centering
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.85\linewidth]{figure/step.png}
-    \caption{Step activation function}
+    \caption{Funzione a gradino}
     \label{fig:step}
   \end{minipage}%
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.75\linewidth]{figure/linear.png}
-    \caption{Linear activation function}
+    \caption{Funzione lineare}
     \label{fig:linear}
   \end{minipage}
 \end{figure}
 
-\paragraph{Sigmoid}
-is a non-linear function defined in the following way:
+\paragraph{Sigmoide} è la prima funzione di attivazione non lineare trattata, nello specifico è caratterizzata dalla seguente equazione:
 \begin{center}
   \begin{equation}
     f(x) = \frac{1}{1+e^{x}}
   \end{equation}
 \end{center}
-The advantages are the smooth gradient that prevents out-of-scale output values, the implicit normalization bound from $[0, +1]$ and the cleaning of the forecast. The main drawback is the vanishing of the gradient, for very high or low input value there is no change in the prediction output, the sigmoid is also computationally expensive. The figure \ref{fig:sigmoid} show the curve.
+La peculiare caratteristica di non linearità permette un più morbido gradiente in modo da prevenire valori vuori scala, normalizzando il valore tra $[0, +1]$ si ottengono anche benifici a livello di pulizia dei dati in ingresso utilizzati successivamente per le previsioni. La funzione non si presenta esente da problematiche, la principale riguarda la vanificazione del gradiente, se da un lato permette di smorzare i valori fuori scala, si tramuta in collo di bottiglia in altri casi, in caso di valori in ingresso molto elevati o molto bassi non vi sarà differenziazione nel valore di uscita. Inoltre l'applicazione del calcolo stesso è decisamente più impegnativa a livello computazione. La figure \ref{fig:sigmoid} descrive la curva in questione.
 
-\paragraph{ReLU} that stand for Rectified Linear Unit and is defined in the following way:
+\paragraph{ReLU} il quale acronimo sta per Rectified Linear Unit, unità lineare rettificata, è definita nella seguente maniera:
 \begin{center}
   \begin{equation}
     f(x)= max(0, x)
   \end{equation}
 \end{center}
-
-Although it looks like a linear function, ReLU has a derivative function and allows for backpropagation another advantage is that is computationally efficient. The main problem of this function is its behavior with a value near zero or even negative, the gradient of the function becomes zero and the network can't perform backpropagation and can't learn.
+Nonostante assomigli molto alla funzione di attivazione lineare, presenta una funzione derivate che permette la propagazione inversa e si presenta molto efficiente a livello computazione. Le problematiche si presentano in caso di valori in ingresso prossimi allo zero o addirittura negativi, il gradiente della funzione diventa nullo e la rete non potra effettuare la propagazione inversa e conseguentemente non potrà portare avanti il processo di apprendimento.
 
 \begin{figure}
   \centering
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.8\linewidth]{figure/sigmoid.png}
-    \caption{Sigmoid curve}
+    \caption{Sigmoide}
     \label{fig:sigmoid}
   \end{minipage}%
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.8\linewidth]{figure/relu.png}
-    \caption{ReLU activation function}
+    \caption{ReLU}
     \label{fig:relu}
   \end{minipage}
 \end{figure}
