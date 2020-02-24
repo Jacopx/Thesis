@@ -99,6 +99,10 @@ Lo sviluppo software non si presenta molto differente dallo sviluppo di qualsias
 Ogni progetto software è costituito da diversi commit per giorno, ognugno di essi contiene innumerevoli informazioni le quali possono essere utilizzate per analisi statistiche. La predizione della difettosità può migliorare enormemente il processo di sviluppo, allocando un corretto numero di sviluppatori per risolvere le problematiche e riducendo quindi le tempistiche per la correzione. Anche il machine learning può essere utilizzato per la predizione dei difetti.\\
 La predizione è uno strumento sempre più utilizzato a livello industriale, un corretto utilizzo può generare enormi benifici a livello produttivo, permettendo la riduzione di sprechi, l'ottimizzazione delle vendite e tante altri vantaggi. Lo sviluppo di progetti di natura informatica è sempre di più centrale all'interno della nostra società attuale, anche questo processo potrebbe trarre beneficio dai vantaggi della predizione. L'implementazione di tecniche statistiche viene in supporto, vista la natura intellettuale della programmazione, nello generazione di predizioni utili.
 
+\section{Lavori correlati}
+L'utilizzo del software ha avuto un vertiginoso aumento negli ultimi anni, il modo dell'informatica si è insediato ormai in tutti i settori della nostra società. L'aumento della richiesta di sviluppo software porta senza dubbio ad una crescente necessità di ottimizzazione nello sviluppo, la riduzione dei costi e l'aumento di efficenza nello sviluppo permette alle aziende di ridurre enormemente i costi. L'ingegneria del software si occupa proprio di studiare queste tecniche. Lungo gli anni sono state sviluppate una moltitudine di tecniche per l'analisi della difettosità nello sviluppo software, le prime, come quelle sviluppate da Akiyama per Fujitsu \cite{Akiyama1971AnEO} si basavano su calcoli matematici basati sulle linee di codice (LoC) per supporre il numero di errori, altre tecniche sfruttavano valori direttamente correlati con il linguaggio, come lo studio di Halstead \cite{halstead1977elements}. In generale tutti questi studi cercavano la difettosità all'interno del codice vero e prorio. I primi studi basati sul livello funzionale,sfruttando tecniche statiche di regressione lineare, fuorono condotti da Graves \cite{graves_se}, Rathore e Kumar \cite{santosh_se} hanno sperimentato l'ultilizzo degli alberi decisionali, più recentemente hanno anche trattato altri algortimi d'insieme \cite{rathore}. In maniera molto simile a come verrà trattato in questo elaborato, Chen \cite{Chen} ha valutato sei differenti modelli tra cui l'albero decisionale, applicando tecniche cross-version e cross-project. Anche \cite{super_unsuper} hanno applicato tecniche cross-version e cross-project.\\
+Al momento della stesura di questo elaborato non esiste ulteriore letteratura riguardo al database utilizzato. Alcuni dei modelli che verranno utilizzati sono stati trattati, come citato, non vi è alcuna letteratura sull'applicazione di reti neurali a questa tipologia di problematica.
+
 \section{Strumenti utilizzati}
 Lo sviluppo di questo progetto a richiesto l'utilizzo di diversi strumenti, di seguito una lista degli stessi:
 
@@ -133,12 +137,6 @@ Lo sviluppo di questo progetto a richiesto l'utilizzo di diversi strumenti, di s
   \item DataGrip: \url{https://www.jetbrains.com/datagrip/}
 \end{itemize}
 
-% #######################################
-% #            State of art             #
-% #######################################
-\chapter{Stato dell'arte}
-\section{Lavori correlati}
-Parlando di altri lavori su simili tematiche.
 
 % #######################################
 % #              Datasets               #
@@ -179,13 +177,11 @@ Al fine di generalizzare le specifiche differenze, le varie issue: \textit{New F
 \end{itemize}
 
 La figure \ref{fig:prior} visualizza la distribuzione, rispetto le varie categorie, del numero di issue per ogni progetto.
-
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/prior.png}
   \caption{Distribuzione issue per progetto}
   \label{fig:prior}
 \end{figure}
-
 Per poter estrarre ed utilizzare al meglio i dati è necessario conoscere al meglio la struttura contenitore.
 I dati relativi ad ogni software sono salvati in un file SQLITE, un database SQL offline che permette l'accesso sfruttando le potenzialità delle query, senza la necessità di un server vero e proprio. La figura \ref{fig:seoss33_db} riporta lo schema integrale della struttura.\\
 Tutto il modello si basa sulla sua entità centrale, la issue, ovvero l'attività di segnalazione che è stata creata da uno sviluppatore per gestire una problematica. Ognugna di queste issue è caratterizzata dal proprio \textit{issue\_id} il quale ne rappresenta la chiave primaria ed univoca, normalmente è strutturata con il nome del progetto seguito da un numero progressivo. La tabella relativa alle issue contiene ulteriori informazioni direttamente correlate, la tipologia, la priorità, le informazioni temporali di apertura, aggiornamento e chiusura della stessa, un breve riassunto della problematica, lo stato e le informazioni relative allo sviluppatore che l'ha aperta. Direttamentamente collegate, tramite la chiave primaria, vi sono le tabelle contenenti i commenti \textit{issue\_comment}, la versione \textit{issue\_fix\_version}, il componente modificato \textit{issue\_component} ed la tabella \textit{change\_set\_link} la quale collega i vari commit alle issue. Durante l'estrazione delle varie informazioni sono state utilizzate tute le tabelle ad esclusione di \textit{issue\_link} la quale viene utilizzare per correlare le differenti issue tra di loro.
@@ -197,7 +193,6 @@ Tutto il modello si basa sulla sua entità centrale, la issue, ovvero l'attivit�
 \end{figure}
 
 % NOTE: Possibile aggiunger parte relativa all'interfacciamento con questo DB. Informazioni di distribuzione temporale.
-
 
 % #######################################
 % #          Machine Learning           #
@@ -483,7 +478,7 @@ Ulteriore filtro è stato posto sulla tipologia di problematica riportata, sono 
                 & (df['resolution'] == 'Fixed'))]
     return df
 \end{lstlisting}
-hanno portato una riduzione del circa 60\% del numero di issue, passando quindi da 30.000 a circa 10.000. Questa riduzione non ha portato sbilanciamenti tra gli altri parametri.\\
+hanno portato una riduzione del circa 60\% del numero di issue, passando quindi da 30000 a circa 10000. Questa riduzione non ha portato sbilanciamenti tra gli altri parametri.\\
 Il rilascio di un progetto è normalmente strutturato in versioni, solitamente catalogato tra major e minor, nella preparazione di questi dati si è optato per la divisione in versioni dei singoli file, ciò permetterà successivamente di gestire la fase di allenamento in diverse mdalità, come vedremo nel capitolo \ref{chap:forecasting}. In figura \ref{fig:hadoop_release_split} è possibile visualizzare il conteggio di issue attive, ovvero ancora da risolvere quindi aperte, lungo il periodo di tutte le versioni con la loro differente allocazione temporale lungo tutto il periodo dello sviluppo.\\
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/hadoop_release_split.png}
@@ -639,9 +634,31 @@ Introduzione di questi parametri si è rivelata fondamentale nell'aiuto del mode
 % #             Forecasting             #
 % #######################################
 
-\chapter{Predizione}
+\chapter{Previsione}
 \label{chap:forecasting}
-% \section{Introduction}
+\section{Introduction}
+La previsione è il processo di effettuare predizione sul futuro basandosi su dati del passato e del prensente analizzando gli andamenti. La previsione è una delle funzionalità più desiderate tra gli algoritmi di apprendimento automatico, può facilmente migliorare qualsiasi processo, da quelli finanziari a quelli industriali. Ovviamente non è un obbiettivo semplice, effettuare ottime predizioni richiesta grande analisi, conoscenza e studio del fenomeno.\\
+L'idea della previsione in questo ambito è quella di poter migliora e meglio allocare le risorse umane disponibili per lo sviluppo dei progetti. Assegnare troppe persone ad un task o troppi task ad una persona porterebbe ad una sicura riduzione dell'efficenza nello sviluppo.
+
+\section{Modelli}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 % Forecasting is the process of making predictions of future based on past and present data by trends analysis. Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
 % The software development is identical to a product development process, starts from the ideation and ends with the production itself.
 % The goal is to predict the defectiveness in order to efficently allocate the development effort.
