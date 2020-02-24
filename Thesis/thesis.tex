@@ -470,7 +470,7 @@ La figura \ref{fig:d48h_duration} visualizza le circa 8000 di 39000 issue aperte
 \end{figure}
 Altra grande problematica è costituita da issue che non hanno avuto nessuna data di chiusura, non sempre è possibile risolvere una issue, ma spesso non è un problema di risoluzione quanto un problema di comprensione del problema. I canoni dello sviluppo richiedono che ogni problematica venga risolta prima della consegna della versione definitiva, questo significa che tutte le issue vanno risolte. Per evitare quindi di aggiungere rumore ai nostri dati si è deciso di considerare solamente le problematiche risolte perchè le uniche realmente di valore all'interno del processo di sviluppo. Sono stato considerati quindi solo in casi in cui il campo status è stato marcato con \textit{closed} o \textit{Resolved} e il campo resolution a \textit{fixed}.
 Ulteriore filtro è stato posto sulla tipologia di problematica riportata, sono stati considerati solamente le issue marcate con il type \textit{Bug}, si è analizzato come molte delle altre etichette vengano spesso posticipate portando a tempi di risoluzione veramente poco sensati. Tutti questi filtri, riassunti nel seguente pezzo di codice:
-\begin{lstlisting}[language=Python, frame=single]
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
   def filter2(df_init):
     df = df_init.copy()
     df = df[(df['type'] == 'Bug')]
@@ -491,15 +491,57 @@ Il rilascio di un progetto è normalmente strutturato in versioni, solitamente c
 L'ultimo step fondamentale, distribuito in vari punti a livello di processo, è quello riguardante l'aggregazione dei dati. I dati all'interno della base dati non hanno una organizzazione temporale, l'unità centrale di tutto è la singola issue, chiaramente le informazioni temporali sono presenti, sia di apertura che di chiusura. L'utilizzo dei dati in questa forma era inconcludente, senza distribuzione temporale le fasi di rilascio di nuove versioni o di grossi errori introdotti poterebbero a picchi e false informazioni a livello di dati. Dopo attenta analisi riguardanti durata, tipologia e distribuzione si è optato per l'aggregazione settimana-anno, questa opzione è stata scelta in modo da limitare i problemi dell'analisi giornaliera con conseguente aumento dei dati, senza però perdere tutte le informazioni in caso di aggregazione più elevata come quella mensile. Questa aggregazione ha permesso pure di risolvere il problema della settimana lavorativa, così facendo i giorni feriali non generano problematiche. Mantenere, oltre alla settimana, l'anno permette di avere una distribuzione temporalmente sensata, senza la sovrapposizione di dati ed informazioni. Chiaramente i differenti orizzonti di previsione saranno gestiti a livello settimanale.\\
 
 La funzione implementante tutte le scelte descritte in questo paragrafo è la seguente:
-\begin{lstlisting}[language=Python, frame=single]
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
   def version_forecast_file(dataset)
 \end{lstlisting}
 l'esecuzione di essa permetterà di estrarre file per ogni versione e per ogni finestra temporale definita.
 
 \section{Estrazioni base}
-Il primo step di questa procedura utilizza la query più complessa e si occuperà dell'estrazioni di molti parametri, già parzialmente aggregati che verranno utilizzati successivamente per l'estrazioni di informazioni più complesse.
+Il primo step di questa procedura utilizza la query più complessa e si occuperà dell'estrazioni di molti parametri, già parzialmente aggregati che verranno utilizzati successivamente per l'estrazioni di informazioni più complesse.\\
+La funzione \textit{make\_component\_change\_clean(dataset)} dello script ha il compito, attraverso una serie di query annidate di estrarre alcuni dati utili alla generazione dei file finali. Nello specifico i parametri estratti saranno:
+\begin{itemize}
+  \item Data di modifica
+  \item Componente interessato dalla modifica
+  \item Linee variate (differenza tra aggiunte/rimosse/modificate)
+  \item Numero di commit
+  \item Resolution
+  \item Status
+  \item Effort
+\end{itemize}
+Tutti questi parametri verranno successivamente utilizzati per estrarre informazioni più complesse. Il parametro effort invece, calcolato come:
+\begin{center}
+  \begin{equation}
+    \textrm{effort} = \textrm{authors} * 0.8 + \textrm{commit\_count} * 0.15 + |\textrm{line\_change}| * 0.05
+  \end{equation}
+\end{center}
+è stato estratto ma poi successivamente scartato perchè poco esplicativo del lavoro realmente necessario nella risoluzione della problematica emersa. L'eliminazione di grossi file portava ad un enorme sbalzo nel numero di linee modificate.\\
 
-\section{Estrazioni complesse}
+L'estrazione più grande viene effettuata tramite la query:
+\begin{lstlisting}[language=SQL, frame=single, basicstyle=\small]
+  SELECT * 
+  FROM issue, issue_fix_version
+  WHERE issue.issue_id = issue_fix_version.issue_id 
+          AND fix_version LIKE '{}%' 
+\end{lstlisting}
+questa estrazione verrà poi filtrata secondo le precedenti disposizioni, verrà inoltre utilizzata come base per la creazione del DataFrame temporale, tramite la sua minore e la sua massima data presente. Nonostante l'elevato numero di informazioni, a seguito del filtraggio del dati, non tutte le settimane presentavano variazioni di problematica attive, per questo motivo è stato necessario effettuare una unione tra il DataFrame contenente tutte le issue ed un ulteriore DataFrame generato partendo dalla prima data e arrivando fino all'ultima data contenuta nel DF issue. Così facendo si è potuto ottenere un set con le informazioni distribuite su un lasso di tempo continuo e senza passaggi mancanti, il codice utilizzato è il seguente:
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
+  # GET ALL THE WEEK IN THE TIME SLICE
+  min_date = issue['open_dt'].min().date()
+  max_date = issue['close_dt'].max().date()
+  
+  all_date = pd.date_range(start=min_date, end=max_date,
+                            freq='D')
+  all_date = pd.DataFrame(all_date)
+
+  all_date['w'] = all_date[0].dt.strftime('%Y') 
+                  + '-' 
+                  + all_date[0].dt.strftime('%W')
+
+  all_date = all_date.drop([0], axis=1)
+  all_date = all_date.drop_duplicates(keep='last')
+\end{lstlisting}
+
+\section{Estrazioni complesse} % CALCOLO SEVERITY - BAG OF WORD - SENIORITY
 
 
 % #######################################
