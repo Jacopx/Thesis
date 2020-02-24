@@ -447,6 +447,59 @@ In generale il valore di R2 è compreso tra [0, 1], tanto più il valore è pros
 
 \chapter{Pre-elaborazione}
 \label{chap:preprocessing}
+La fase di pre-elaborazione dei dati è fondamentale nell'applicazione di algoritmi statistici. L'utilizzo di dati non attentamente valutati può generare inutile rumore all'interno del modello sviluppato. Questa fase non si occupa solamente di rimuovere i dati inutili o sporchi, ma si occupa anche di estrarre informazioni derivate, ovvero non direttamente presenti nella base dati, e di aggregarli in maniere efficiente in modo da guidare più correttamente il sistema. 
+
+\section{Pulizia}
+Il primo step di questa importante fase riguarda l'estrazioni dei dati dalla loro sorgente. Come anticipato nel capitolo \ref{chap:dataset} i dati sono salvati all'interno di un file SQLITE, una gestore SQL offline. Ogni singolo progetto: hadoop, cassandra, ecc... È salvato all'interno di uno specifico file con il nome del progetto seguito da .sqlite. La logica di interazione con questa sorgente è basata su SQL e segue tutte le classiche procedure ad esso correlate. Al fine di automatizzare questa procedura verranno sfruttate le librerie open source sviluppate per l'interfacciamento tra Python ed i sistemi SQLITE.\\
+L'estrazione di informazioni e l'aggregazione verranno gestite principalmente all'interno dello script Python, esclusi pochi casi le query applicate saranno sufficientemente semplici. L'elaborazione di tutti questi dati è stata demandata a Pandas, di conseguenza, i risultati di ogni query verranno caricati all'interno di DataFrame di Pandas per una rapida ed efficiente gestione successiva.\\
+Rispetto al repository di GitHub, questa fase, viene gestita dal sotto-progetto DataAnalysis\_Issue, tramite lo script:
+\begin{lstlisting}[language=Python, frame=single]
+  thesisProjectJN/DataAnalysis_Issue/main.py
+\end{lstlisting}
+Prima di poter procedere direttamente con l'estrazione delle informazioni è stata necessaria una analisi dei dati. La natura open source di questi progetti prevede il mantenimento e lo sviluppo da parte della communità pubblica, questo comporta potenzialmente un numero di sviluppatori infinito, chiunque infatti potrebbe partecipare allo sviluppo del progetto. Vista la rilevanza del progetti in questione, lo sviluppo, nonostante sia stato mantenuto open, viene regolarmente sostenuto da società e fondazione che ne fanno utilizzo nei loro software interni, hadoop, per esempio, viene regolarmente mantenuto e sponsorizzato da Google. Questo contributo è chiaramente fondamentale per l'avanzamento del progetto, una disponibilità economica permette di allocare sviluppatori direttamente al progetto, senza che però esso venga privatizzato. I progetti in esame fanno tutti parte di questo caso, la motivazione principale di questa scelta ricade sulla differente gestione dello sviluppo, una costante e regolare progettazione permette di generare una reportistica più precisa e fruibile dai sistemi di statistica. L'origine open di questi progetti porta un ulteriore vantaggio, essendo fruibili da tutti, una maggiore quantità di interessati ne potranno fruire, essendo una comunità specifica, chi farà utilizzo di tale progetti facilmente si impegnerà anche nel segnalare errori e malfunzionamenti dello stesso permettendo una efficiente gestione delle problematiche. Chiaramente la segnalazione di questa anomalie sarà gestita in maniera prefissata con la compilazione di appositi form, griglie di valutazione e tante altre informazioni strutturare le quali andranno a fare della nostra analisi. Tutte queste caratteristiche si rivela di gran supporto alla causa, sfortunatamente però sono anche fonte di problematiche che, in progetti privati, non emergerebbero. Un utente che non si occupa direttamente dello sviluppo di un progetto potrebbe andare a riportare una problematica in modo erroneo, per esempio, ciò che un utilizzatore potrebbe riportare come un errore del sistema in realtà si potrebbe rivelare un errore nell'utilizzo dello dello stesso, tutto ciò andrebbe ad aggiungere disturbo alla nostra analisi. Valutando per esempio la durata in giorni delle issue, riporta in figura \ref{fig:day_duration}, si può facilmente evincere come i valori siano mal distribuiti, il numero di issue aperte e chiuse nel giro di 48 ore è elevatissimo, circa il 20\% del totale, questo per quanto riportato sopra.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/day_duration.png}
+  \caption{Distribuzione della durata in giorni delle issue}
+  \label{fig:day_duration}
+\end{figure}
+La figura \ref{fig:d48h_duration} visualizza le circa 8000 di 39000 issue aperte risolte nelle prime 48 ore dalla loro apertura.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/48h_duration.png}
+  \caption{Distribuzione della durata in ore nelle prime 48h}
+  \label{fig:d48h_duration}
+\end{figure}
+Altra grande problematica è costituita da issue che non hanno avuto nessuna data di chiusura, non sempre è possibile risolvere una issue, ma spesso non è un problema di risoluzione quanto un problema di comprensione del problema. I canoni dello sviluppo richiedono che ogni problematica venga risolta prima della consegna della versione definitiva, questo significa che tutte le issue vanno risolte. Per evitare quindi di aggiungere rumore ai nostri dati si è deciso di considerare solamente le problematiche risolte perchè le uniche realmente di valore all'interno del processo di sviluppo. Sono stato considerati quindi solo in casi in cui il campo status è stato marcato con \textit{closed} o \textit{Resolved} e il campo resolution a \textit{fixed}.
+Ulteriore filtro è stato posto sulla tipologia di problematica riportata, sono stati considerati solamente le issue marcate con il type \textit{Bug}, si è analizzato come molte delle altre etichette vengano spesso posticipate portando a tempi di risoluzione veramente poco sensati. Tutti questi filtri, riassunti nel seguente pezzo di codice:
+\begin{lstlisting}[language=Python, frame=single]
+  def filter2(df_init):
+    df = df_init.copy()
+    df = df[(df['type'] == 'Bug')]
+    df = df[(df['close_dt'].isna() == False)]
+    df = df[((df['status'] == 'Closed') 
+                & (df['resolution'] == 'Fixed')) 
+              | ((df['status'] == 'Resolved') 
+                & (df['resolution'] == 'Fixed'))]
+    return df
+\end{lstlisting}
+hanno portato una riduzione del circa 60\% del numero di issue, passando quindi da 30.000 a circa 10.000. Questa riduzione non ha portato sbilanciamenti tra gli altri parametri.\\
+Il rilascio di un progetto è normalmente strutturato in versioni, solitamente catalogato tra major e minor, nella preparazione di questi dati si è optato per la divisione in versioni dei singoli file, ciò permetterà successivamente di gestire la fase di allenamento in diverse mdalità, come vedremo nel capitolo \ref{chap:forecasting}. In figura \ref{fig:hadoop_release_split} è possibile visualizzare il conteggio di issue attive, ovvero ancora da risolvere quindi aperte, lungo il periodo di tutte le versioni con la loro differente allocazione temporale lungo tutto il periodo dello sviluppo.\\
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/hadoop_release_split.png}
+  \caption{Conteggio del numero di issue attive per ogni versione}
+  \label{fig:hadoop_release_split}
+\end{figure}
+L'ultimo step fondamentale, distribuito in vari punti a livello di processo, è quello riguardante l'aggregazione dei dati. I dati all'interno della base dati non hanno una organizzazione temporale, l'unità centrale di tutto è la singola issue, chiaramente le informazioni temporali sono presenti, sia di apertura che di chiusura. L'utilizzo dei dati in questa forma era inconcludente, senza distribuzione temporale le fasi di rilascio di nuove versioni o di grossi errori introdotti poterebbero a picchi e false informazioni a livello di dati. Dopo attenta analisi riguardanti durata, tipologia e distribuzione si è optato per l'aggregazione settimana-anno, questa opzione è stata scelta in modo da limitare i problemi dell'analisi giornaliera con conseguente aumento dei dati, senza però perdere tutte le informazioni in caso di aggregazione più elevata come quella mensile. Questa aggregazione ha permesso pure di risolvere il problema della settimana lavorativa, così facendo i giorni feriali non generano problematiche. Mantenere, oltre alla settimana, l'anno permette di avere una distribuzione temporalmente sensata, senza la sovrapposizione di dati ed informazioni. Chiaramente i differenti orizzonti di previsione saranno gestiti a livello settimanale.\\
+
+La funzione implementante tutte le scelte descritte in questo paragrafo è la seguente:
+\begin{lstlisting}[language=Python, frame=single]
+  def version_forecast_file(dataset)
+\end{lstlisting}
+l'esecuzione di essa permetterà di estrarre file per ogni versione e per ogni finestra temporale definita.
+
+\section{Estrazioni base}
+Il primo step di questa procedura utilizza la query più complessa e si occuperà dell'estrazioni di molti parametri, già parzialmente aggregati che verranno utilizzati successivamente per l'estrazioni di informazioni più complesse.
+
+\section{Estrazioni complesse}
 
 
 % #######################################
