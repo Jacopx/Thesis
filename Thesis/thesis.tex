@@ -82,7 +82,9 @@ Tutti le tipologie ottengono dei buoni risultati, il migliore è quello cross-pr
 \acknowledgements
 Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battaglia.
 
+\renewcommand{\baselinestretch}{1.1}\normalsize
 \indici
+\renewcommand{\baselinestretch}{1.5}\normalsize
 
 \mainmatter
 
@@ -216,8 +218,8 @@ Esisto una varietà enorme di modelli di questa tipologia, i successivi paragraf
 \paragraph{Apprendimento Supervisionato}
 è una tecnica che prevede di processamento dei dati in ingresso con associati i valori desiderati in uscita, lo scopo del modello è quindi quello di sviluppare una correzione matematica tra tutte le informazioni che riceve in ingresso ed i valori desiderati in uscita. Un volta terminata la fase di allenamento il modello potrà essere utilizzato per prevedere il valore di uscita dati i valori in ingresso. Questa metodologia può essere applicata nella risoluzione di problemi di due differenti categorie, quelli della classificazione e quelli della regressione lineare. Lo scopo del primo è quello di assegnare una etichetta ai dati per classificarli in diverse categorie, per esempio le transazioni sane o fraudolente di una banca. L'assegnazione può essere binaria, quindi solo due etichette, o multi-etichetta. La regressione invece ha l'obbiettivo di predirre un valore continuo di uscita, cercare di sviluppare una relazione matematica tra tute le variabili in ingresso, cercando di prevedere, con il miglior livello di approssimazione il valore finale. Nel nostro progetto verranno solo impiegati questi ultimi, la classificazione non verrà ulteriormente trattata.
 
-\section{Apprendimento ensamble}
-L'apprendimento di insieme raggruppa unsa serie di tecniche sviluppate al fine di migliorare i risultati dei singoli prendittori. Invece che utilizzare un singolo modello, nella fase di apprendimento, vengono simultaneamente allenate diverse copie dello stesso modelo con parametri differenti, ciò porterà ad una differenziazione delle risultato di previsione. L'aggregazione, attraverso techinche come bagging, boosting o stacking, permetterà di produrre un risultato più accurato e meno dipendente dalla rumorosità dei dati.
+\section{Apprendimento d'insieme}
+L'apprendimento d'insieme raggruppa unsa serie di tecniche sviluppate al fine di migliorare i risultati dei singoli prendittori. Invece che utilizzare un singolo modello, nella fase di apprendimento, vengono simultaneamente allenate diverse copie dello stesso modelo con parametri differenti, ciò porterà ad una differenziazione delle risultato di previsione. L'aggregazione, attraverso techinche come bagging, boosting o stacking, permetterà di produrre un risultato più accurato e meno dipendente dalla rumorosità dei dati.
 
 \paragraph{Foresta casuale}
 conosciuta anche come Random Forest (RF) è un algoritmo di apprendimento supervisionato, basato sulle metodologie d'insieme, per la classificazione e la regressione. È costituito combinando la predizione di diversi alberi, ognungno allenato separatamente, tramite media \cite{RF_theory}. In figura \ref{fig:rf} una visualizzazione del modello.
@@ -541,7 +543,96 @@ questa estrazione verrà poi filtrata secondo le precedenti disposizioni, verrà
   all_date = all_date.drop_duplicates(keep='last')
 \end{lstlisting}
 
-\section{Estrazioni complesse} % CALCOLO SEVERITY - BAG OF WORD - SENIORITY
+\section{Estrazioni complesse}
+Alcune delle informazioni utilizzate dal nostro modello necessitano di un processo di estrazione più complicato, suddiviso sia in una parte a livello DB sia in parte a livello script Python.
+\paragraph{Borsa di parole componenti modificati} alla base dell'apertura di una issue vi è una motivazione, il modulo per riportare queste problematiche è solitamente predefinito in modo da guidare più facilmente lo sviluppatore e permettergli di riprodurre la problematica. Una volta trovata la problematica è buona norma segnalare il componente o comunque circoscrivere la problematica ad una zona e non a tutto il progetto. La base dati utilizzata presenta una tabella, direttamente collegata a quella delle issue, con il nome \textit{issue\_component}. Questa tabella correla la issue direttamente ad un componente del progetto. Una delle feature estratte si basa proprio su questa connessione, si è deciso di aggiungere una serie di informazioni legate ai componenti più utilizzati ed il numero di issue facenti riferimento ad esso per ogni settimana. Queste informazioni sono state ottenute sfruttando le borse di parole, bag of words in inglese, una tecnica molto usata nell'elaborazione del linguaggio naturale. La tecnica permette di tenere traccia di parole e la loro frequenza respetto un qualsiasi tipo di aggregazione. Nel nostro caso i file verranno strutturati nel seguente modo, oltre a presentare le varie informazioni, vi saranno al più dieci colonne facenti riferimento ai dieci componenti più utilizzati dove, per ogni riga verrà rappresentato il numero di volte in cui quel componente è stato considerato parte della issue per quella settimana. La tabella \ref{tab:bag_word} esemplifica il concetto esposto.
+\begin{center}
+  \captionof{table}{Borsa di parole} \label{tab:bag_word}
+  \begin{tabular}{ |c|c|c|c|c|c|c| }
+     \hline
+     \textbf{week} & \textbf{...} & \textbf{security} & \textbf{fs} & \textbf{hdfs} & \textbf{fs-s3} & \textbf{...} \\
+     \hline
+     \hline
+     04-2017 & ... & 1 & 5 & 0 & 0 & ...\\
+     \hline
+     05-2017 & ... & 0 & 2 & 1 & 1 & ...\\
+     \hline
+     06-2017 & ... & 3 & 0 & 0 & 8 & ...\\
+     \hline
+     07-2017 & ... & 2 & 0 & 1 & 6 & ...\\
+     \hline
+  \end{tabular}
+\end{center}
+Il processo di estrazione di queste informazioni è stato effettuato utilizzando una funzionalità della libreria di Sci-Kit, CountVectorize, il processo svolto come segue:
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
+  def word_recognition(df_cols):
+    additional = frozenset()
+    stop_words = text.ENGLISH_STOP_WORDS.union(additional)
+    vect = CountVectorizer(lowercase=True, 
+                            preprocessor=None, 
+                            analyzer='word', 
+                            stop_words=frozenset(stop_words),
+                            max_features=max_features)
+    X = vect.fit_transform(df_cols)
+    return pd.DataFrame(X.todense(), 
+                          columns=vect.get_feature_names())
+\end{lstlisting}
+si occupa di rimuovere, nel caso in cui siano prensenti, tutte le stop word ovvero quelle parole che vogliamo filtrare prima che vengano trattate dal sistema, esisto molti dizionari già presenti, è possibile personalizzarli. Successivamente calcolerà la frequenza di ogni parola e tramite apposite trasformazioni sarà possibile ottenere le colonne come visualizzato in tabella.\\
+L'inserimento di tutte queste informazioni tuttavia non ha introdotto grandi vantaggi in termini di risultati addirittura, in alcuni casi, si è rivelata negativa. In qualsiasi caso è stata una opzione interessante da valutare, la sorgente dei problemi poteva proabilmente essere collegata alla difficolta di risoluzione degli stessi, proabilmente in progetti più piccoli questo parametro può rivelarsi più importante.
+
+\paragraph{Seniority} facilmente traducibile come esperienza dello sviluppatore, è una informazione aggregata che ha lo scopo di definire l'esperienza, relativa al progetto, di uno specifico sviluppatore. Per ogni issue risolta corrisponde uno o più commit, ogni commit ovviamente viene eseguito da uno sviluppatore, ogni sviluppatore ha iniziato ad occuparsi del progetto a partire da una specifica data, nel nostro caso si è scelta la data del primo commit. Combinando opportunamente queste informazioni tra di loro è stato possibile definire questo valore nominato seniority. L'idea alla base è che ogni sviluppatore, mano a mano che si occupa del progetto, oltre a maturare una certa esperienza personale, matura anche una esperienza specifica del progetto, conseguentemente dovrebbe essere per lui più semplice individuare e risolvere i problemi. La feature creata correla il momento temporale dello sviluppo con la seniority a quel tempo di quel preciso sviluppatore. Chiaramente questo processo è sensato fintanto che il contributo da parte dello sviluppatore è costante, i contributori del mondo open source vengono quindi facilmente trascurati in questo conteggio.\\
+Una volta estratti tutti i dati necessari e calcolata la seniority vera e propria viene aggregata per settimana prima di essere unita al resto delle informazioni già esistenti. La computazione vera e propri è semplice ed, somma in maniera pesata il numero di giorni dal primo commit al numero di commit effettuati.\\
+L'aggiunta di questo parametro non ha portato molte variazioni durante la previsione.
+
+\paragraph{Severity} il presente elaborato cerca di sviluppare un modello statistico in grado di prevedere l'andamento di un fenomeno nel tempo. Il fenomeno in esame dovrebbe descrivere l'andamento della difettosità. Occorrere chiararire questo concetto, il termine difettosità, scelto per la sua brevità, non è un semplice valore rappresentante il mero conteggio delle problematiche attive in uno specifico momento dello sviluppo, rappresenta molto di più quasi come se fosse una sorta di sforzo necessario al fine di riuscire correttamente a risolvere la problematica. Per poter meglio comprendere la questione è necessario capire come viene calcolata.\\
+Ogni issue è caratterizzata da una etichetta di \textit{priority}, come già accennato nel capito \ref{chap:dataset}, queste cinque etichette: \textit{critical}, \textit{major}, \textit{blocker}, \textit{minor} e \textit{trivial} dovrebbero rappresentare la priorità, assegnata dallo sviluppatore che sta gestendo la richiesta. Inizialmente si era optato per definire questi valori a tavolino senza nessuna valutazione, i valori, ordinati per priorità erano rispettivamente:
+\begin{center}
+  \captionof{table}{Valori numeri priorità} \label{tab:priority}
+  \begin{tabular}{ |c|c|c|c|c| }
+     \hline
+     \textbf{Critical} & \textbf{Major} & \textbf{Blocker} & \textbf{Minor} & \textbf{Trivial} \\
+     \hline
+     \hline
+     50.0 & 10.0 & 2.00 & 1.00 & 0.50 \\
+     \hline
+  \end{tabular}
+\end{center}
+Le performance del modello erano comunque elevate. La ricerca a livello di letteratura non ha avuto grande riscontro, queste etichette, se ben molto comuni non sono standard quindi non sempre vengono utilizzate in questo modo. Oltretutto questa base dati non presenta nessuna ricerca correlata, ad oggi, quindi non vi sono nemmeno valori di confronto.\\
+Una più attenta, seppur semplice, valutazione ha permesso di notare come non vi fosse una grandissima correlazione tra tempo di risoluzione e priorità della issue, si è deciso quindi di optare per una differente traduzione della etichetta. Si è deciso di scegliere il valore dinamicamente per ogni progetto, usando il valore medio della distribuzione, per ogni etichetta, del tempo di risoluzione della issue. Prendendo in esame il progetto \textit{hadoop}, le distribuzioni di ciascuna etichetta sono visualizzate in figura \ref{fig:duration_distr}, nel titolo viene anche visualizzato il valor medio della distribuzione.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/duration_distr.png}
+  \caption{Distribuzione durata per etichetta di priorità}
+  \label{fig:duration_distr}
+\end{figure}
+Normalizzando il valore medio di ciascuna etichetta rispetto a tutte le altre è possibile ottenere il rapporto reciproco, questo valore verrà poi applicato per tradurre le etichette testuali. Utilizzando questo valore si ottiene una sorta di sforzo medio necessario alla risoluzione di problematiche di quella priorità. La distribuzione è stata calcolata su un dataset leggermente ristretto, sono state filtrate tutte le issue con un tempo di risoluzione inferiore ai 60 minuti (1h) o con un tempo maggiore di 6 mesi (4320h).
+Con la nuova formulazione i valori di traduzione diventerebbero:
+\begin{center}
+  \captionof{table}{Valori numeri priorità con distribuzione} \label{tab:priority_distr}
+  \begin{tabular}{ |c|c|c|c|c| }
+     \hline
+     \textbf{Critical} & \textbf{Major} & \textbf{Blocker} & \textbf{Minor} & \textbf{Trivial} \\
+     \hline
+     \hline
+     26.0 & 24.0 & 20.0 & 11.0 & 20.0 \\
+     \hline
+  \end{tabular}
+\end{center}
+Ovviamente ogni progetto avrà valori differenti. La sostituzione delle etichette non ha richiesto particolari implementazioni ed è stata svolta a livello di script Python. L'utilizzo di questa modalità di traduzione ha portato ad un miglioramento nelle prestazioni del modello.\\
+Questo parametro appena calcolato svolgerà la funzione di target, il valore quindi da predirre, rispetto ai file generati. Volendo valutare la predizione su differenti orizzonti temporali, nello specifico: 1, 2, 4, 6, 8, 10, 12, 16, 20, 30, 40 e 52 settimane. Per ogni settimana verrà calcolato la severity delle nuove issue aperte, moltiplicando il numero di issue per ogni categoria di priorità, per il valore definito dall'analisi, stesso calcolo viene fatto per le issue in chiusura, calcolando quindi la differenza tra questi due valori verrà definita la severity delle issue attive in quella settimana. Questo parametro diventerà il valore oggetto della predizione. Per generare i diversi lassi temporali verrà semplicemente applicato uno scambio di riga uguale al numero di settimane su cui sviluppare la predizione.\\
+In concomitanza di questa informazione verrà aggiunta quella del conteggio di issue attive.
+
+
+\paragraph{Trend matematici} una qualiasi previsione è fortemente dipendente dal comportamento del fenomeno nei momenti antecedenti alla valutazione. Esistono innumerevoli formulazioni matematiche per descrivere l'andamento di una curva. Nel nostro caso sono stati estratti alcuni parametri per informare la rete riguardo all'andamento tenuto. Chiaramente questi valori sono direttamente correlati al target ovvero il valore che intendiamo prevedere nel nostro sistema, la severity, e si riferisco ad essa:
+\begin{itemize}
+  \item \textit{exp\_avg}: media di tutti i valori precedenti a quel momento
+  \item \textit{mov\_avg2}: media delle due settimane antecedenti a quella in esame
+  \item \textit{mov\_avg4}: media delle quattro settimane antecedenti a quella in esame
+  \item \textit{1before:} valore della settimana precedente
+  \item \textit{2before:} valore di due settimane prima
+  \item \textit{4before:} valore di quattro settimane prima
+\end{itemize}
+Il calcolo di questi valori è stato effettuato sfruttando le funzionalità contenute in Pandas, sfruttando principalmente i metodi: \textit{df.expanding()}, \textit{df.rolling()} e \textit{df.shift()}
+Introduzione di questi parametri si è rivelata fondamentale nell'aiuto del modello, la relazione logica è facilmente comprensibile, la rimozione di questi parametri porta al crollo quasi totale del modello.
 
 
 % #######################################
@@ -563,16 +654,6 @@ questa estrazione verrà poi filtrata secondo le precedenti disposizioni, verrà
 % \section{One-Shot Prediction}
 % \section{Recurrent forecasting}
 % \section{Results}
-
-
-% % #######################################
-% % #         Model abstraction           #
-% % #######################################
-
-% \chapter{Model abstraction}
-% % \section{CommonDB}
-% \section{SFBS and literature comparisons}
-% \section{SFFD}
 
 
 % #######################################
