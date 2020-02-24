@@ -48,7 +48,7 @@
 \ateneo{Politecnico di Torino}
 
 \titolo{Predizione di difettosità nello sviluppo software attraverso machine learning}
-\sottotitolo{Artificial Intelligence applied to Software Engineering}
+\sottotitolo{Apprendimento automatico applicato all'ingegneria del software}
 
 %
 %%%%%%% Corso degli studi
@@ -413,13 +413,33 @@ L'impatto e l'immediatezza di questo valore permetto rapide valutazioni del comp
     ACC = 1 - REL
   \end{equation}
 \end{center}
-L'ultimo errore calcolato è rappresentato da R2, un dato molto più complesso da comprendere. Viene calcolato secondo la seguente formula:
+L'ultimo errore calcolato è rappresentato da R2, conosciuto anche come coefficiente di determinazione, un dato molto più complesso da comprendere, utilizzato nella valutazione della bontà della curva nella regressione lineare, calcola una proporzione tra la variabilità dei dati e la precisione del modello statistico applicato, più nello specifico calcola la frazione della varianza della variabile dipendente espressa dalla regressione.\\
+La formulazione del coefficiente è la seguente:
 \begin{center}
   \begin{equation}
-    1x-2y-3z-4k
+    R^2 = \frac{ESS}{TSS} = 1 - \frac{RSS}{TSS}
   \end{equation}
 \end{center}
-
+dove, con $y_i$ i dati osservati, $\bar{y}$ la loro media e $\hat{y_i}$ i dati ottenuti dal modello:
+\begin{center}
+  \begin{equation}
+    ESS = \sum_{i=1}^{n}(\hat{y_i} - \bar{y})^2
+  \end{equation}
+\end{center}
+rappresenta la devianza spiegata dal modello. Mentre:
+\begin{center}
+  \begin{equation}
+    TSS = \sum_{i=1}^{n}(y_i - \bar{y})^2
+  \end{equation}
+\end{center}
+è la devianza totale, e:
+\begin{center}
+  \begin{equation}
+    RSS = \sum_{i=1}^{n}e_i^2 = \sum_{i=1}^{n}(y_i - \hat{y_i})^2
+  \end{equation}
+\end{center}
+la varianza residua.\\
+In generale il valore di R2 è compreso tra [0, 1], tanto più il valore è prossimo a 1, tanto meglio il modello segue i dati e viceversa se tende a zero.
 
 % #######################################
 % #           Pre-processing            #
