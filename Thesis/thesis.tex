@@ -75,9 +75,8 @@
 \summary
 Ogni giorno migliaia di commit vengono eseguiti, ognugno di loro contiene molte informazioni: file modificati, modifiche, commenti, registri di test e molto altro. Una strutturata e corretta gestione delle piattaforme di concontrollo sorgente permette l'estrazione di dati utili analizzabili utilizzando modelli statistici di intelligenza artificiale.\\
 Al fine di poter correttamente utilizzare questi dati sono necessari alcuni step preliminari: la prima fase riguarda l'analisi della struttura dati al fine di permettere l'estrazione di tutte le possibili informazioni, successivamente la pre-elaborazione per rimuovere informazioni di inutili e di disturbo, con i dati puliti è possibile procedere con l'estrazione di dati combinati, come la seniority degli sviluppatori, una lista di parole dei componenti modificati, la versione ed altre informazioni di carattere più matematico. L'ultima fase prevede la sostituzione dell'etichetta testuale relativa alla priorità con un valore numerico corrispondende al valor medio della distribuzione della durata di quella etichetta, questo valore prenderà il nome di severity. I dati verranno poi aggregati per settimana.
-Una volta generati i dati verranno utilizzati per allenare tre differenti modelli: Random Forest, Gradient Boosting e Reti Neurali. L'allenamento sarà gestito in tre differenti modalità: la prima allena e predice utilizzando lo stesso filone di dati, la seconda, cross-version, prevede che il modello venga allenato su dati relativi ad alcune versione del progetto per poi effettuare la predizione sulle successive, la terza, cross-project, allena il modello con dati relativi ad un progetto per poi prevedere l'andamento di uno differente.\\
+Una volta generati i dati verranno utilizzati per allenare tre differenti modelli: foresta casuale, aumento di gradiente e rete neurale. L'allenamento sarà gestito in tre differenti modalità: la prima allena e predice utilizzando lo stesso filone di dati, la seconda, cross-version, prevede che il modello venga allenato su dati relativi ad alcune versione del progetto per poi effettuare la predizione sulle successive, la terza, cross-project, allena il modello con dati relativi ad un progetto per poi prevedere l'andamento di uno differente.\\
 Tutti le tipologie ottengono dei buoni risultati, il migliore è quello cross-project che riesce ad ottenere una precisione maggiore del 90\% fino a quattro settimane e comunque maggiore del 70\% fino a 20 settimane.
-
 
 \acknowledgements
 Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battaglia.
@@ -100,7 +99,7 @@ Ogni progetto software è costituito da diversi commit per giorno, ognugno di es
 La predizione è uno strumento sempre più utilizzato a livello industriale, un corretto utilizzo può generare enormi benifici a livello produttivo, permettendo la riduzione di sprechi, l'ottimizzazione delle vendite e tante altri vantaggi. Lo sviluppo di progetti di natura informatica è sempre di più centrale all'interno della nostra società attuale, anche questo processo potrebbe trarre beneficio dai vantaggi della predizione. L'implementazione di tecniche statistiche viene in supporto, vista la natura intellettuale della programmazione, nello generazione di predizioni utili.
 
 \section{Lavori correlati}
-L'utilizzo del software ha avuto un vertiginoso aumento negli ultimi anni, il modo dell'informatica si è insediato ormai in tutti i settori della nostra società. L'aumento della richiesta di sviluppo software porta senza dubbio ad una crescente necessità di ottimizzazione nello sviluppo, la riduzione dei costi e l'aumento di efficenza nello sviluppo permette alle aziende di ridurre enormemente i costi. L'ingegneria del software si occupa proprio di studiare queste tecniche. Lungo gli anni sono state sviluppate una moltitudine di tecniche per l'analisi della difettosità nello sviluppo software, le prime, come quelle sviluppate da Akiyama per Fujitsu \cite{Akiyama1971AnEO} si basavano su calcoli matematici basati sulle linee di codice (LoC) per supporre il numero di errori, altre tecniche sfruttavano valori direttamente correlati con il linguaggio, come lo studio di Halstead \cite{halstead1977elements}. In generale tutti questi studi cercavano la difettosità all'interno del codice vero e prorio. I primi studi basati sul livello funzionale,sfruttando tecniche statiche di regressione lineare, fuorono condotti da Graves \cite{graves_se}, Rathore e Kumar \cite{santosh_se} hanno sperimentato l'ultilizzo degli alberi decisionali, più recentemente hanno anche trattato altri algortimi d'insieme \cite{rathore}. In maniera molto simile a come verrà trattato in questo elaborato, Chen \cite{Chen} ha valutato sei differenti modelli tra cui l'albero decisionale, applicando tecniche cross-version e cross-project. Anche \cite{super_unsuper} hanno applicato tecniche cross-version e cross-project.\\
+L'utilizzo del software ha avuto un vertiginoso aumento negli ultimi anni, il modo dell'informatica si è insediato ormai in tutti i settori della nostra società. L'aumento della richiesta di sviluppo software porta senza dubbio ad una crescente necessità di ottimizzazione nello sviluppo, la riduzione dei costi e l'aumento di efficenza nello sviluppo permette alle aziende di ridurre enormemente i costi. L'ingegneria del software si occupa proprio di studiare queste tecniche. Lungo gli anni sono state sviluppate una moltitudine di tecniche per l'analisi della difettosità nello sviluppo software, le prime, come quelle sviluppate da Akiyama per Fujitsu \cite{Akiyama1971AnEO} si basavano su calcoli matematici basati sulle linee di codice (LoC) per supporre il numero di errori, altre tecniche sfruttavano valori direttamente correlati con il linguaggio, come lo studio di Halstead \cite{halstead1977elements}. In generale tutti questi studi cercavano la difettosità all'interno del codice vero e prorio. I primi studi basati sul livello funzionale,sfruttando tecniche statiche di regressione lineare, fuorono condotti da Graves \cite{graves_se}, Rathore e Kumar \cite{santosh_se} hanno sperimentato l'ultilizzo degli alberi decisionali, più recentemente hanno anche trattato altri algortimi d'insieme \cite{rathore}. In maniera molto simile a come verrà trattato in questo elaborato, Chen \cite{Chen} ha valutato sei differenti modelli tra cui l'albero decisionale, applicando tecniche cross-version e cross-project. Anche \cite{super_unsuper} hanno applicato le medisime tecniche\\
 Al momento della stesura di questo elaborato non esiste ulteriore letteratura riguardo al database utilizzato. Alcuni dei modelli che verranno utilizzati sono stati trattati, come citato, non vi è alcuna letteratura sull'applicazione di reti neurali a questa tipologia di problematica.
 
 \section{Strumenti utilizzati}
@@ -608,7 +607,7 @@ Con la nuova formulazione i valori di traduzione diventerebbero:
      \textbf{Critical} & \textbf{Major} & \textbf{Blocker} & \textbf{Minor} & \textbf{Trivial} \\
      \hline
      \hline
-     26.0 & 24.0 & 20.0 & 11.0 & 20.0 \\
+     26.0 & 24.0 & 20.0 & 20.0 & 11.0 \\
      \hline
   \end{tabular}
 \end{center}
@@ -638,47 +637,187 @@ Introduzione di questi parametri si è rivelata fondamentale nell'aiuto del mode
 \label{chap:forecasting}
 \section{Introduction}
 La previsione è il processo di effettuare predizione sul futuro basandosi su dati del passato e del prensente analizzando gli andamenti. La previsione è una delle funzionalità più desiderate tra gli algoritmi di apprendimento automatico, può facilmente migliorare qualsiasi processo, da quelli finanziari a quelli industriali. Ovviamente non è un obbiettivo semplice, effettuare ottime predizioni richiesta grande analisi, conoscenza e studio del fenomeno.\\
-L'idea della previsione in questo ambito è quella di poter migliora e meglio allocare le risorse umane disponibili per lo sviluppo dei progetti. Assegnare troppe persone ad un task o troppi task ad una persona porterebbe ad una sicura riduzione dell'efficenza nello sviluppo.
+L'idea della previsione in questo ambito è quella di poter migliora e meglio allocare le risorse umane disponibili per lo sviluppo dei progetti. Assegnare troppe persone ad un task o troppi task ad una persona porterebbe ad una sicura riduzione dell'efficenza nello sviluppo.\\
+Tutta questa fase di predizione fa riferimento al sotto progetto:
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
+  thesisProjectJN/ForecastAnalysis/
+\end{lstlisting}
+il file \textit{main.py} ha lo scopo di gestire l'avvio, nel file \textit{forecast.py} sono invece contenute le parti di codice relative agli specifici scenari.
 
 \section{Modelli}
+Nel capitolo \ref{chap:ml} sono stati trattati dal punto di vista tecnico matematico i modelli utilizzati nello svolgimento di questo progetto, ogungo di essi prensenta però parametri ed opzioni specifiche per il fenomeno che andranno a descrivere.\\
+Il primo modello in esame è la foresta casuale, come valutato da \cite{santosh_se} \cite{Chen} \cite{super_unsuper} questo algoritmo si presta bene al fenomeno in questione. Il modello specifico è quello definito dalla libreria di SciKit, gli unici parametri personalizzati sono: il numero di alberi decisionali da implmentare, nel nostro caso, dopo alcuni tentativi di è deciso di scegliere 600 ed il numero di jobs, uno dei vantaggi degli algoritmi d'insieme è la possibilità di effettuare la fase di allenamento parallelizzandola, così facendo il tempo richiesto per tale fase si riduce enormemente.
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
+  from sklearn.ensemble import RandomForestRegressor
+  ...
+  ########### MODEL DEFINITIONS ###########
+  predictor = 600
+  n_jobs = 8
+  model = RandomForestRegressor(n_estimators=predictor, 
+                                  random_state=random, 
+                                  verbose=verbose, 
+                                  n_jobs=n_jobs)
+\end{lstlisting}
+
+Anche il modello ad aumento di gradiente è predefinito dalla libreria di SciKit:
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
+  from sklearn.ensemble import GradientBoostingRegressor
+  ...
+  ########### MODEL DEFINITIONS ###########
+  predictor = 600
+  model = GradientBoostingRegressor(n_estimators=predictor,
+                                    random_state=random, 
+                                    verbose=0)
+\end{lstlisting}
+il numero di stimatori è il medesimo di quello a foresta casuale. Nonostante sia un algoritmo d'insieme GBR non può applicare parallelizzazione, ogni step è sequenziale, la motivazione è meglio illustrata nel capitolo \ref{chap:ml}.\\
+La rete neurale è molto più complessa, esistono molti modelli già definiti per l'analisi di fenomeni specifici, riconoscimento immagini, analisi sentimentale, ecc... Nell'esame della nostra problematica non è emersa letteratura riguardo l'applicazione di reti neurali, per questa motivazione è stata definita una rete abbastanza superificale, composta da 4 livelli sequenziali densi. Nello specifico è stata definita come segue:
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
+  def personal_model(shape):
+    model = Sequential()
+    model.add(Dense(shape, input_dim=shape, 
+                    kernel_initializer='normal', 
+                    activation='relu'))
+    model.add(Dense(int(shape/2), activation='linear'))
+    model.add(Dense(int(shape/4), activation='linear'))
+    model.add(Dense(1, activation='linear'))
+    model.compile(loss='mae', optimizer='adam', 
+                    metrics=['msle'])
+
+    return model
+\end{lstlisting}
+è stato valutando l'inserimento di diversi livelli, è stato per esempio valuto il dropout, ovvero un livello che casualmente spegnesse alcuni neuroni al fine di aumentare la randomicità del sistema ma, vista la contenuta quantità di dati, non ha portato alcun vantaggio al sistema.\\
+Parlando di predizione temporale verrebbe chiaramente in mente di valutare l'opzione LSTM, nel nostro caso invece l'applicazione di tale struttura non porta vantaggi. L'obbiettivo infatti non è quello di dare una previsione per tempistiche indefinite effettuando quindi una previsione e applicando la successiva sul valore di uscita della precedente, ma la nostra previsione è puntuale, definito un istante $t_0$ andremo ad efettuare la nostra previsione a $t_0 + \textrm{weekly\_horizon}$, la previsione successiva avrà l'aggiornamento della situazione e non dovrà basarsi sui dati precedentemente predetti ma lo fara sui dati attuali di un preciso momento. Per questo motivo appena illustrato l'utilizzo di LSTM si è rivelato inconcludente e con pessimi risultati, il sistema in esame infatti ottime ottimi risultati quando la finestra di previsione varia.
 
 
+\section{Metodologia}
+L'applicazione di modelli statistici di apprendimento automatico si articola in due fasi principali: allenamento e predizione.\\
+La prima fase di formazione prevede che il modello venga allenato utilizzando grandi quantità di dati in modo da renderlo indipendente e preparato per la successiva fase nella quale verrà impegnato per la predizione.\\
+La procedura di allenamento non è assolutamente banale, il modello non è in grado di capire a priori quali siano i punti cardine del nostro fenomeno, per questo motivo è importante offrirgli dei dati puliti, controllati e valutati. Una cattiva impronta nella fasi iniziali potrebbe facilemente portare a pessime prestazioni nella fase di predizione.\\
+Sono state scelte tre differenti modalità di allenamento, prendendo esempio da \cite{Chen} e \cite{super_unsuper}: singolo scenario, cross-version e cross-project.
 
+\paragraph{Singolo scenario} è l'applicazione rispetto, al nostro fenomeno, della classica procedura di training-predict ovvero che un singolo file o blocco di dati viene dato alla rete per effettuare sia la fase di allenamento, sia la fase di test. Solitamente i dati vengono divisi in due blocchi, appunto allenamento e test, con percentuali 70\% e 30\%, o 75\% e 25\%. La divisione può avvenire in diversi modi, sia casuale quindi scambio i dati a livello temporale, sia a blocco mantenendo quindi l'ordine originale. Essendovi un reale vincolo logico tra questi dati non è stato possibile applicare la prima modalità, rompere il flusso naturale del fenomeno avrebbe chiaramente forviato l'apprendimento.\\
+In questo specifico caso la divisione applicata è stata 70\% e 30\%. Il procedimento di divisione è stato affidato a SciKit, una volta letto il file in ingresso e separata la colonna del valore da predirre è stato sufficiente applicare quanto segue:
+% \vspace{10em}
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
+  
+  labels = np.array(features['n'])
+  mean = np.mean(labels)
+  features = features.drop('n', axis=1) 
+  
+  feature_list = list(features.columns) 
+  features = np.array(features)
+  
+  train_features, test_features, train_labels, test_labels = \
+      train_test_split(features, labels, 
+                        test_size=test_size, 
+                        random_state=random, 
+                        shuffle=False)
+\end{lstlisting}
+Un volta effettuata la divisione nei due set è possibile procedere con la definizione del modello di apprendimento automatico da utilizzare, con il modello pronto è possibile procedere alla fase di allenamento vera e propria, questa fase viene gestita tutta dalla libreria di Keras. Questa fase può avere una durata anche notevole, nel nostro caso la quantità di informazioni non è esagerata quindi il processo di formazione dura qualche minuto. Una volta terminata questa fase il modello è allenato e pronto ad essere utilizzato per la previsione. In questo caso la predizione verrà fatta sulla porzione di dati non utilizzata nella fase di allenamento, il 30\%. Verranno presi in esame due casi: il file con la versione 2 di hadoop ed il file con la versione 2 di hbase.\\
+L'applicazione dei tre modelli ha portato a questi risultati lungo le le diverse settimane:
+\begin{center}
+  \captionof{table}{Esecuzione singolo scenario: hadoop} \label{tab:single_scen_hadoop}
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
+     \hline
+     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+     \hline
+     \hline
+     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+  \end{tabular}
+\end{center}
+Il grafico in figura \ref{fig:single_scenario_error} visualizza la tabella precedente.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/place_holder.png}
+  \caption{Andamento errori singolo scenario}
+  \label{fig:single_scenario_error}
+\end{figure}
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/hadoop_rf_4w.png}
+  \caption{hadoop RF a 4 settimane}
+  \label{fig:hadoop_rf_4w}
+\end{figure}
 
+L'applicazione di questa metodologia non porta a grandissimi risultati, per nessun tipo di modello in esame. La motivazione di ciò è facilmente ricorducibile alla modalità di applicazione della metodologia. Come si può vedere dal grafico in figura \ref{fig:hadoop_rf_4w}, l'allenamento viene effettuato solamente sulla parte crescente della curva, di conseguenza nessuno dei modelli in esame viene allenato a prevedere una discesa del fenomeno.\\
+I risultati non sono differenti se applicati un differente progetto, infatti:
+\begin{center}
+  \captionof{table}{Esecuzione singolo scenario: hbase} \label{tab:single_scen_hbase}
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
+     \hline
+     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+     \hline
+     \hline
+     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+  \end{tabular}
+\end{center}
+Il grafico riporta un previsione della rete neurale applicata ad hbase con previsione di 4 settimane.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/hbase_nn_4w.png}
+  \caption{hbase NN a 4 settimane}
+  \label{fig:hbase_nn_4w}
+\end{figure}
+L'esempio con hbase dimostra quanto spiegato sopra, nella parte di dati usati per l'allenamento sono casualmente presenti alcune discese di severity, questo permette ai vari modelli di adattarsi anche alla fase finale di sviluppo dove la chiusura delle problematiche è molto più rapida.
 
+\paragraph{Cross-version} L'applicazione della strategia appena trattata implicava una problematica logica, il modello difficilmente poteva studiare fasi di discesa della severity, di conseguenza non poteva apprenderne il comportamento, motivo per cui i risultati si presentavano pessimi. L'idea della modalità cross-version mira proprio a risolvere questa problematica. La possibilità di allenare la rete su diverse versioni di sviluppo dello stesso progetto permette di imparare sia il comportamente generico della comunità ad esso legata, sia le diverse fasi di avvio e conclusione di un rilascio.\\
+Ogni progetto in esame ha una differente storia di sviluppo, di conseguenza un numero diverso di issue e settimane di sviluppo, per questo motivo si è deciso di sviluppare un sistema flessibile che permettesse all'utilizzatore di effettuare il training su un numero non specificato di versioni differenti. Oltre il differente numero di rilasci, un ipotetico utilizzatore, potrebbe voler trascurare una versione nel training di questo modello; solitamente le prime versioni di un progetto, nel caso di quelli open source, sono molto scarne, poco seguite e non molto strutturate, via via che il progetto guadagna interesse la comunità si espande, portando così ad una crescita di tutte le componenti ad esso legate. Una visualizzazione di questa situazioni si ha in figura \ref{fig:cassandra_vers}, dove la prima versione è notevolmente meno strutturata delle successive.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/cassandra_vers.png}
+  \caption{Distribuzione issue per versione in Cassandra}
+  \label{fig:cassandra_vers}
+\end{figure}
+Applicando quindi la fase di formazione, per esempio, alle prime tre versioni permetterà al modello di conoscere bene l'andamento del fenomeno per la quarta versione.\\
+La successiva tabella visualizza i punteggi, lungo le differenti finestre temporali, rispetto ai 3 differenti modelli, applicando il training sulle versione v0, v1, v2 e prevedendo la versione v3 del progetto Cassandra:
+\begin{center}
+  \captionof{table}{Esecuzione cross-version: Cassandra} \label{tab:cross_version_cassandra}
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
+     \hline
+     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+     \hline
+     \hline
+     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+  \end{tabular}
+\end{center}
+Per mantenere un filo comune alle tre modalità anche qui valuteremo la metodologia sul caso hadoop. Essendo il progetto ancora più grosso ed effettuando l'allenamento sulle versioni v0, v1 e v2, predicendo la v3 i risultati sono i seguenti:
+\begin{center}
+  \captionof{table}{Esecuzione cross-version: hadoop} \label{tab:cross_version_hadoop}
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
+     \hline
+     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+     \hline
+     \hline
+     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+  \end{tabular}
+\end{center}
+I risultati rimangono abbastanza elevati lungo tutte le settimane e la caduta di precisione è nettamente inferiore rispetto a quella del modello a scenario singolo. Nello spefico si può notare come la rete neurale abbia risultati migliori rispetto agli altri due algortimi testati.
 
-
-
-
-
-
-
-
-
-
-
-
-
-% Forecasting is the process of making predictions of future based on past and present data by trends analysis. Forecasting is one of the most desired machine learning functionality, it could be used to improve each kind of process, from finacials to production ones. Of course this task is not easy to achieve, a lot of resources and studies are needed to accomplish it.
-% The software development is identical to a product development process, starts from the ideation and ends with the production itself.
-% The goal is to predict the defectiveness in order to efficently allocate the development effort.
-
-% \section{Features}
-% The main advantage, in data analysis, of machines is that they can compute a lot of different data and finding a lot of patterns and correlation that human can't find. Combine the human attitude of logical correlations and machines capacity of number analysis can drive to a powerful combination that can drastically improve the forecasting ability.
-% Each artificial intelligence algorithms require a correct and properly studied data in order to perform a valuable prediction, one of the basic step is the data preparation, providing correct and organized data is fundamental to correctly fit the network over the problem.
-
-% \section{Models detail}
-% \section{One-Shot Prediction}
-% \section{Recurrent forecasting}
-% \section{Results}
-
+\paragraph{Cross-project} l'ultima metodologia valutata è quella tra progetti. Potrebbe sembrare insensato mettere a confronto diversi progetti e la loro storia di sviluppo, ogni comunità ha le proprie modalità di rapporto, sviluppo e tanto altro, difficilmente queste differenti situazioni potrebbe avere andamenti comuni. In realtà, come si dimostrerà successivamente, questa soluzione sarà quella con i migliori risultati, la possbilità di visualizzare situazioni differenti lo rende più flessibile ed adattabile ai vari contesti, inoltre, la sorgente dei dati, SEOSS33, aveva proprio lo scopo di riuscire a generalizzare il più possibile diversi progetti open, in modo da rendere confrontabili i risultati.\\
+Il primo tentativo verrà effettuato con hadoop...
 
 % #######################################
 % #             Conclusion              #
 % #######################################
 
 \chapter{Conclusioni}
-Speaking about conclusion.
+Conclusioni dell'elaborato.
 
 
 % #######################################
