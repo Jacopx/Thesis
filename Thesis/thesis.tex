@@ -73,10 +73,11 @@
 
 \frontespizio
 \summary
-Ogni giorno migliaia di commit vengono eseguiti, ognugno di loro contiene molte informazioni: file modificati, modifiche, commenti, registri di test e molto altro. Una strutturata e corretta gestione delle piattaforme di concontrollo sorgente permette l'estrazione di dati utili analizzabili utilizzando modelli statistici di intelligenza artificiale.\\
-Al fine di poter correttamente utilizzare questi dati sono necessari alcuni step preliminari: la prima fase riguarda l'analisi della struttura dati al fine di permettere l'estrazione di tutte le possibili informazioni, successivamente la pre-elaborazione per rimuovere informazioni di inutili e di disturbo, con i dati puliti è possibile procedere con l'estrazione di dati combinati, come la seniority degli sviluppatori, una lista di parole dei componenti modificati, la versione ed altre informazioni di carattere più matematico. L'ultima fase prevede la sostituzione dell'etichetta testuale relativa alla priorità con un valore numerico corrispondende al valor medio della distribuzione della durata di quella etichetta, questo valore prenderà il nome di severity. I dati verranno poi aggregati per settimana.
+Ogni giorno migliaia di commit vengono eseguiti, ognuno di loro contiene molte informazioni: file modificati, modifiche, commenti, registri di test e molto altro. Una strutturata e corretta gestione delle piattaforme di controllo sorgente permette l'estrazione di dati utili analizzabili utilizzando modelli statistici di intelligenza artificiale.\\
+Al fine di poter correttamente utilizzare questi dati sono necessari alcuni step preliminari: la prima fase riguarda l'analisi della struttura dati al fine di permettere l'estrazione di tutte le possibili informazioni, successivamente la pre-elaborazione per rimuovere informazioni di inutili e di disturbo, con i dati puliti è possibile procedere con l'estrazione di dati combinati, come la seniority degli sviluppatori, una lista di parole dei componenti modificati, la versione ed altre informazioni di carattere più matematico. L'ultima fase prevede la sostituzione dell'etichetta testuale relativa alla priorità con un valore numerico corrispondente al valor medio della distribuzione della durata di quella etichetta, questo valore prenderà il nome di severity. I dati verranno poi aggregati per settimana.
 Una volta generati i dati verranno utilizzati per allenare tre differenti modelli: foresta casuale, aumento di gradiente e rete neurale. L'allenamento sarà gestito in tre differenti modalità: la prima allena e predice utilizzando lo stesso filone di dati, la seconda, cross-version, prevede che il modello venga allenato su dati relativi ad alcune versione del progetto per poi effettuare la predizione sulle successive, la terza, cross-project, allena il modello con dati relativi ad un progetto per poi prevedere l'andamento di uno differente.\\
 Tutti le tipologie ottengono dei buoni risultati, il migliore è quello cross-project che riesce ad ottenere una precisione maggiore del 90\% fino a quattro settimane e comunque maggiore del 70\% fino a 20 settimane.
+
 
 \acknowledgements
 Un ringraziamento speciale a Smirnuff ed i suoi cavalieri, luce della mia battaglia.
@@ -635,7 +636,7 @@ Introduzione di questi parametri si è rivelata fondamentale nell'aiuto del mode
 
 \chapter{Previsione}
 \label{chap:forecasting}
-\section{Introduction}
+\section{Introduzione}
 La previsione è il processo di effettuare predizione sul futuro basandosi su dati del passato e del prensente analizzando gli andamenti. La previsione è una delle funzionalità più desiderate tra gli algoritmi di apprendimento automatico, può facilmente migliorare qualsiasi processo, da quelli finanziari a quelli industriali. Ovviamente non è un obbiettivo semplice, effettuare ottime predizioni richiesta grande analisi, conoscenza e studio del fenomeno.\\
 L'idea della previsione in questo ambito è quella di poter migliora e meglio allocare le risorse umane disponibili per lo sviluppo dei progetti. Assegnare troppe persone ad un task o troppi task ad una persona porterebbe ad una sicura riduzione dell'efficenza nello sviluppo.\\
 Tutta questa fase di predizione fa riferimento al sotto progetto:
@@ -696,7 +697,7 @@ La procedura di allenamento non è assolutamente banale, il modello non è in gr
 Sono state scelte tre differenti modalità di allenamento, prendendo esempio da \cite{Chen} e \cite{super_unsuper}: singolo scenario, cross-version e cross-project.
 
 \paragraph{Singolo scenario} è l'applicazione rispetto, al nostro fenomeno, della classica procedura di training-predict ovvero che un singolo file o blocco di dati viene dato alla rete per effettuare sia la fase di allenamento, sia la fase di test. Solitamente i dati vengono divisi in due blocchi, appunto allenamento e test, con percentuali 70\% e 30\%, o 75\% e 25\%. La divisione può avvenire in diversi modi, sia casuale quindi scambio i dati a livello temporale, sia a blocco mantenendo quindi l'ordine originale. Essendovi un reale vincolo logico tra questi dati non è stato possibile applicare la prima modalità, rompere il flusso naturale del fenomeno avrebbe chiaramente forviato l'apprendimento.\\
-In questo specifico caso la divisione applicata è stata 70\% e 30\%. Il procedimento di divisione è stato affidato a SciKit, una volta letto il file in ingresso e separata la colonna del valore da predirre è stato sufficiente applicare quanto segue:
+In questo specifico caso la divisione applicata è stata 75\% e 25\%. Il procedimento di divisione è stato affidato a SciKit, una volta letto il file in ingresso e separata la colonna del valore da predirre è stato sufficiente applicare quanto segue:
 % \vspace{10em}
 \begin{lstlisting}[language=Python, frame=single, basicstyle=\small]
   
@@ -717,16 +718,24 @@ Un volta effettuata la divisione nei due set è possibile procedere con la defin
 L'applicazione dei tre modelli ha portato a questi risultati lungo le le diverse settimane:
 \begin{center}
   \captionof{table}{Esecuzione singolo scenario: hadoop} \label{tab:single_scen_hadoop}
-  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
      \hline
-     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
      \hline
      \hline
-     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     RF & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
      \hline
-     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     RF & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
      \hline
-     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     GB & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     GB & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     \hline
+     NN & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+     \hline
+     NN & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
      \hline
   \end{tabular}
 \end{center}
@@ -746,17 +755,25 @@ L'applicazione di questa metodologia non porta a grandissimi risultati, per ness
 I risultati non sono differenti se applicati un differente progetto, infatti:
 \begin{center}
   \captionof{table}{Esecuzione singolo scenario: hbase} \label{tab:single_scen_hbase}
-  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
-     \hline
-     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
-     \hline
-     \hline
-     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
-     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
-     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
+    \hline
+    \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+    \hline
+    \hline
+    RF & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    RF & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    \hline
+    GB & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    GB & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    \hline
+    NN & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    NN & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
   \end{tabular}
 \end{center}
 Il grafico riporta un previsione della rete neurale applicata ad hbase con previsione di 4 settimane.
@@ -778,33 +795,49 @@ Applicando quindi la fase di formazione, per esempio, alle prime tre versioni pe
 La successiva tabella visualizza i punteggi, lungo le differenti finestre temporali, rispetto ai 3 differenti modelli, applicando il training sulle versione v0, v1, v2 e prevedendo la versione v3 del progetto Cassandra:
 \begin{center}
   \captionof{table}{Esecuzione cross-version: Cassandra} \label{tab:cross_version_cassandra}
-  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
-     \hline
-     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
-     \hline
-     \hline
-     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
-     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
-     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
+    \hline
+    \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+    \hline
+    \hline
+    RF & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    RF & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    \hline
+    GB & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    GB & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    \hline
+    NN & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    NN & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
   \end{tabular}
 \end{center}
 Per mantenere un filo comune alle tre modalità anche qui valuteremo la metodologia sul caso hadoop. Essendo il progetto ancora più grosso ed effettuando l'allenamento sulle versioni v0, v1 e v2, predicendo la v3 i risultati sono i seguenti:
 \begin{center}
   \captionof{table}{Esecuzione cross-version: hadoop} \label{tab:cross_version_hadoop}
-  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
-     \hline
-     \textbf{R2} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
-     \hline
-     \hline
-     RF & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
-     GB & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
-     NN & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-     \hline
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
+    \hline
+    \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+    \hline
+    \hline
+    RF & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    RF & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    \hline
+    GB & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    GB & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    \hline
+    NN & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
+    NN & P & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline
   \end{tabular}
 \end{center}
 I risultati rimangono abbastanza elevati lungo tutte le settimane e la caduta di precisione è nettamente inferiore rispetto a quella del modello a scenario singolo. Nello spefico si può notare come la rete neurale abbia risultati migliori rispetto agli altri due algortimi testati.
