@@ -760,19 +760,19 @@ I risultati non sono differenti se applicati un differente progetto, infatti:
     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
     \hline
     \hline
-    RF & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    RF & R2 & 0.701 & 0.554 & 0.027 & - & - & - & - & - & -\\
     \hline
-    RF & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
-    \hline
-    \hline
-    GB & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-    \hline
-    GB & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    RF & P & 52.5\% & 48.0\% & 28.9\% & - & - & - & - & - & -\\
     \hline
     \hline
-    NN & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    GB & R2 & 0.540 & 0.035 & - & - & - & - & - & - & -\\
     \hline
-    NN & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    GB & P & 39.8\% & 20.0\% & - & - & - & - & - & - & -\\
+    \hline
+    \hline
+    NN & R2 & 0.925 & 0.811 & 0.597 & - & - & - & - & - & -\\
+    \hline
+    NN & P & 76.4\% & 65.7\% & 50.9\% & - & - & - & - & - & -\\
     \hline
   \end{tabular}
 \end{center}
@@ -801,19 +801,19 @@ La successiva tabella visualizza i punteggi, lungo le differenti finestre tempor
     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
     \hline
     \hline
-    RF & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    RF & R2 & 0.964 & 0.945 & 0.846 & 0.743 & - & - & - & - & -\\
     \hline
-    RF & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
-    \hline
-    \hline
-    GB & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-    \hline
-    GB & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    RF & P & 69.7\% & 73.7\% & 66.8\% & 34.3\% & - & - & - & - & -\\
     \hline
     \hline
-    NN & R2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    GB & R2 & 0.961 & 0.924 & 0.842 & 0.716 & - & - & - & - & -\\
     \hline
-    NN & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    GB & P & 46.8\% & 83.4\% & 46.2\% & 9.0\% & - & - & - & - & -\\
+    \hline
+    \hline
+    NN & R2 & 0.988 & 0.975 & 0.961 & 0.591 & 0.875 & 0.620 & 0.423 & 0.648 & -\\
+    \hline
+    NN & P & 88.8\% & 77.6\% & 74.6\% & 33.7\% & 59.0\% & 48.1\% & 21.5\% & 24.9\% & -\\
     \hline
   \end{tabular}
 \end{center}
