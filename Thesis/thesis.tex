@@ -694,7 +694,7 @@ Parlando di predizione temporale verrebbe chiaramente in mente di valutare l'opz
 L'applicazione di modelli statistici di apprendimento automatico si articola in due fasi principali: allenamento e predizione.\\
 La prima fase di formazione prevede che il modello venga allenato utilizzando grandi quantità di dati in modo da renderlo indipendente e preparato per la successiva fase nella quale verrà impegnato per la predizione.\\
 La procedura di allenamento non è assolutamente banale, il modello non è in grado di capire a priori quali siano i punti cardine del nostro fenomeno, per questo motivo è importante offrirgli dei dati puliti, controllati e valutati. Una cattiva impronta nella fasi iniziali potrebbe facilemente portare a pessime prestazioni nella fase di predizione.\\
-Sono state scelte tre differenti modalità di allenamento, prendendo esempio da \cite{Chen} e \cite{super_unsuper}: singolo scenario, cross-version e cross-project.
+Sono state scelte tre differenti modalità di allenamento, prendendo esempio da \cite{Chen} e \cite{super_unsuper}: singolo scenario, cross-version e cross-project. È importante considerare come le previsioni effettuate con i modelli a foresta e ad aumento di gradiente mantengono risultati quasi identici tra le differenti esecuzioni, è infatti sufficiente definire un valore casuale per l'avvio della fase di allenamento. Nel caso invece della rete neurale non è possibile congelare l'inilizzializzazione dei pesi del sistema, per questo motivo sono stati riportati i migliori valori attenuti da ripetute esecuzioni dello stesso ambiente.
 
 \paragraph{Singolo scenario} è l'applicazione rispetto, al nostro fenomeno, della classica procedura di training-predict ovvero che un singolo file o blocco di dati viene dato alla rete per effettuare sia la fase di allenamento, sia la fase di test. Solitamente i dati vengono divisi in due blocchi, appunto allenamento e test, con percentuali 70\% e 30\%, o 75\% e 25\%. La divisione può avvenire in diversi modi, sia casuale quindi scambio i dati a livello temporale, sia a blocco mantenendo quindi l'ordine originale. Essendovi un reale vincolo logico tra questi dati non è stato possibile applicare la prima modalità, rompere il flusso naturale del fenomeno avrebbe chiaramente forviato l'apprendimento.\\
 In questo specifico caso la divisione applicata è stata 75\% e 25\%. Il procedimento di divisione è stato affidato a SciKit, una volta letto il file in ingresso e separata la colonna del valore da predirre è stato sufficiente applicare quanto segue:
@@ -846,14 +846,92 @@ Per mantenere un filo comune alle tre modalità anche qui valuteremo la metodolo
 I vantaggi dell'applicazione di questa strategia di allenamento sono visibili, nella precedente strategia le predizioni si presentavano insignificanti anche dopo poche settimane. Permettere al modello di valutare anche le fasi discendenti dello sviluppo consente un notevole miglioramento della qualità delle previsioni, entro le 4 settimane i risultati superano quasi sempre il valore di 85\%. I risultati rimangono inoltre abbastanza elevati lungo tutte le settimane e la caduta di precisione è nettamente inferiore rispetto a quella del modello a scenario singolo. Nello spefico si può notare come la rete neurale abbia risultati migliori rispetto agli altri due algortimi testati.
 
 \paragraph{Cross-project} l'ultima metodologia valutata è quella tra progetti. Potrebbe sembrare insensato mettere a confronto diversi progetti e la loro storia di sviluppo, ogni comunità ha le proprie modalità di rapporto, sviluppo e tanto altro, difficilmente queste differenti situazioni potrebbero mantenere andamenti similari. In realtà, come si dimostrerà successivamente, questa soluzione sarà quella con i migliori risultati, la possbilità di visualizzare situazioni differenti lo rende più flessibile ed adattabile ai vari contesti, inoltre, la sorgente dei dati, SEOSS33, aveva proprio lo scopo di riuscire a generalizzare il più possibile diversi progetti open, in modo da rendere confrontabili i risultati.\\
-Il primo tentativo verrà effettuato con hadoop...
+L'utilizzo di questa metologia è molto particolare e la sua applicazione nella realtà diventa molto complessa, l'ottenimento di questi ottimi risultati è direttamente correlato alla antecedente valutazione dei dati scelti per la fase di allenamento, si è infatti deciso di selezionare andamenti in modo oculato, che presentassero differenti casistiche, rapide salite e discese, valori proporzionati e altri fattori. In molti casi il modello cross-project potrebbe portare a risultati peggiori rispetto a quello cross-version.\\
+La prima esecuzione riguarda il progetto di hadoop, ambiente comune a tutte e tre le metodologie. I dati utilizzati per questa esecuzione sono:
+\begin{itemize}
+  \item hadoop v2
+  \item cassandra v2
+  \item hbase v1
+\end{itemize}
+mentre hadoop v3 sarà la versione sulla quale verranno effettuate le previsioni. In questo caso si è deciso di mantenere un blocco di dati dello stesso progetto e due di progetti differenti, la motivazione risiede in hadoop stesso, essendo un progetto con numeri decisamente più grandi degli altri, senza poter visualizzare situazioni con numeri simili, i modelli allenati non erano in grado di avvicinarsi ai dati della versione 3. L'esecuzione ha portato i risultati visualizzati in tabella \ref{tab:cross_project_hadoop}.
+\begin{center}
+  \captionof{table}{Esecuzione cross-project: hadoop} \label{tab:cross_project_hadoop}
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
+    \hline
+    \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+    \hline
+    \hline
+    RF & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
+    \hline
+    RF & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
+    \hline
+    \hline
+    GB & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
+    \hline
+    GB & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
+    \hline
+    \hline
+    NN & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0.\\
+    \hline
+    NN & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    \hline
+  \end{tabular}
+  }
+\end{center}
+L'andamento è abbastanza stabile lungo tutte le esecuzioni, i risultati leggermente migliori, ma molto simili a quelli con la metodologia cross-version, questo perchè effettivamente l'unica differenza in gioco è il dato di ingresso. In figura \ref{fig:hadoop_cp_nn_4w} viene riportata una delle previsioni effettuate.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/place_holder.png}
+  \caption{Previsione a 4 settimane cross-project per hadoop v3}
+  \label{fig:hadoop_cp_nn_4w}
+\end{figure}
+
+La seconda esecuzione, quella con i risultati migliori di tutti è applicata sul progetto cassandra, i dati utilizzati per la fase di allenamento del modello sono:
+\begin{itemize}
+  \item hadoop v0
+  \item hbase v1
+  \item hive v2
+\end{itemize}
+i migliori risultati delle varie esecuzioni sono i riportati in tabella \ref{tab:cross_project_hadoop}.
+\begin{center}
+  \captionof{table}{Esecuzione cross-project: hadoop} \label{tab:cross_project_hadoop}
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
+    \hline
+    \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
+    \hline
+    \hline
+    RF & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
+    \hline
+    RF & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
+    \hline
+    \hline
+    GB & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
+    \hline
+    GB & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
+    \hline
+    \hline
+    NN & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0.\\
+    \hline
+    NN & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    \hline
+  \end{tabular}
+  }
+\end{center}
+L'immagine \ref{fig:cassandra_cp_nn_4w} visualizza la previsione effettuata su questa versione.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/place_holder.png}
+  \caption{Previsione a 4 settimane cross-project per cassandra v2}
+  \label{fig:cassandra_cp_nn_4w}
+\end{figure}
+
 
 % #######################################
 % #             Conclusion              #
 % #######################################
 
 \chapter{Conclusioni}
-Conclusioni dell'elaborato.
+Il progetto trattato in questo elaborato prendere in considerazione la previsione di un fenomeno per poter meglio allocare le risorse necessarie allo sviluppo dello stesso, la metodologia utilizzata si basa su algoritmi di intelligenza artificiale e calcolo statistico.\\
 
 
 % #######################################
