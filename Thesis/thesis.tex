@@ -723,19 +723,19 @@ L'applicazione dei tre modelli ha portato a questi risultati lungo le le diverse
      \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
      \hline
      \hline
-     RF & R2 & 0.798 & 0.603 & 0.319 & - & - & - & - & - & -\\
+     RF & R2 & 0.798 & 0.603 & - & - & - & - & - & - & -\\
      \hline
-     RF & P & 55.0\% & 41.2\% & 23.4\% & - & - & - & - & - & -\\
-     \hline
-     \hline
-     GB & R2 & 0.805 & 0.515 & 0.08 & - & - & - & - & - & -\\
-     \hline
-     GB & P & 52.4\% & 33.4\% & 0.0\% & - & - & - & - & - & -\\
+     RF & P & 55.0\% & 41.2\% & - & - & - & - & - & - & -\\
      \hline
      \hline
-     NN & R2 & 0.980 & 0.96 & 0.916 & 0.660 & 0.111 & - & - & - & -\\
+     GB & R2 & 0.805 & 0.515 & - & - & - & - & - & - & -\\
      \hline
-     NN & P & 87.4\% & 79.1\% & 69.0\% & 32.9\% & 0.0\% & - & - & - & -\\
+     GB & P & 52.4\% & 33.4\% & - & - & - & - & - & - & -\\
+     \hline
+     \hline
+     NN & R2 & 0.980 & 0.96 & 0.916 & - & - & - & - & - & -\\
+     \hline
+     NN & P & 87.4\% & 79.1\% & 69.0\% & - & - & - & - & - & -\\
      \hline
   \end{tabular}
 \end{center}
@@ -760,9 +760,9 @@ I risultati non sono differenti se applicati un differente progetto, infatti:
     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
     \hline
     \hline
-    RF & R2 & 0.701 & 0.554 & 0.027 & - & - & - & - & - & -\\
+    RF & R2 & 0.701 & 0.554 & - & - & - & - & - & - & -\\
     \hline
-    RF & P & 52.5\% & 48.0\% & 28.9\% & - & - & - & - & - & -\\
+    RF & P & 52.5\% & 48.0\% & - & - & - & - & - & - & -\\
     \hline
     \hline
     GB & R2 & 0.540 & 0.035 & - & - & - & - & - & - & -\\
@@ -801,19 +801,19 @@ La successiva tabella visualizza i punteggi, lungo le differenti finestre tempor
     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
     \hline
     \hline
-    RF & R2 & 0.964 & 0.945 & 0.846 & 0.743 & - & - & - & - & -\\
+    RF & R2 & 0.964 & 0.945 & 0.846 & - & - & - & - & - & -\\
     \hline
-    RF & P & 69.7\% & 73.7\% & 66.8\% & 34.3\% & - & - & - & - & -\\
-    \hline
-    \hline
-    GB & R2 & 0.961 & 0.924 & 0.842 & 0.716 & - & - & - & - & -\\
-    \hline
-    GB & P & 46.8\% & 83.4\% & 46.2\% & 9.0\% & - & - & - & - & -\\
+    RF & P & 69.7\% & 73.7\% & 66.8\% & - & - & - & - & - & -\\
     \hline
     \hline
-    NN & R2 & 0.988 & 0.975 & 0.961 & 0.591 & 0.875 & 0.620 & 0.423 & 0.648 & -\\
+    GB & R2 & 0.961 & 0.924 & 0.842 & - & - & - & - & - & -\\
     \hline
-    NN & P & 88.8\% & 77.6\% & 74.6\% & 33.7\% & 59.0\% & 48.1\% & 21.5\% & 24.9\% & -\\
+    GB & P & 46.8\% & 83.4\% & 46.2\% & - & - & - & - & - & -\\
+    \hline
+    \hline
+    NN & R2 & 0.988 & 0.975 & 0.961 & 0.591 & 0.875 & 0.620 & - & - & -\\
+    \hline
+    NN & P & 88.8\% & 77.6\% & 74.6\% & 33.7\% & 59.0\% & 48.1\% & - & - & -\\
     \hline
   \end{tabular}
 \end{center}
@@ -826,19 +826,19 @@ Per mantenere un filo comune alle tre modalità anche qui valuteremo la metodolo
     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
     \hline
     \hline
-    RF & R2 & 0.995 & 0.992 & 0.984 & 0.957 & 0.918 & 0.858 & 0.805 & 0.607 & -\\
+    RF & R2 & 0.995 & 0.992 & 0.984 & 0.957 & 0.918 & 0.858 & 0.805 & - & -\\
     \hline
-    RF & P & 87.9\% & 86.9\% & 82.5\% & 79.5\% & 73.4\% & 65.4\% & 61.2\% & 46.9\% & -\\
-    \hline
-    \hline
-    GB & R2 & 0.995 & 0.992 & 0.984 & 0.951 & 0.926 & 0.873 & 0.791 & 0.497 & -\\
-    \hline
-    GB & P & 88.2\% & 88.3\% & 80.8\% & 77.5\% & 74.8\% & 68.8\% & 60.1\% & 42.7\% & -\\
+    RF & P & 87.9\% & 86.9\% & 82.5\% & 79.5\% & 73.4\% & 65.4\% & 61.2\% & - & -\\
     \hline
     \hline
-    NN & R2 & 0.981 & 0.993 & 0.988 & 0.961 & 0.955 & 0.905 & 0.846 & 0.771 & 0.096\\
+    GB & R2 & 0.995 & 0.992 & 0.984 & 0.951 & 0.926 & 0.873 & 0.791 & - & -\\
     \hline
-    NN & P & 86.4\% & 88.9\% & 89.2\% & 80.4\% & 72.9\% & 60.3\% & 51.3\% & 47.1\% & 20.9\%\\
+    GB & P & 88.2\% & 88.3\% & 80.8\% & 77.5\% & 74.8\% & 68.8\% & 60.1\% & - & -\\
+    \hline
+    \hline
+    NN & R2 & 0.981 & 0.993 & 0.988 & 0.961 & 0.955 & 0.905 & 0.846 & 0.771 & -\\
+    \hline
+    NN & P & 86.4\% & 88.9\% & 89.2\% & 80.4\% & 72.9\% & 60.3\% & 51.3\% & 47.1\% & -\\
     \hline
   \end{tabular}
   }
@@ -862,19 +862,19 @@ mentre hadoop v3 sarà la versione sulla quale verranno effettuate le previsioni
     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
     \hline
     \hline
-    RF & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
+    RF & R2 & 0.853 & 0.672 & 0.675 & 0.554 & 0.730 & 0.471 & - & - & -\\
     \hline
-    RF & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
-    \hline
-    \hline
-    GB & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
-    \hline
-    GB & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
+    RF & P & 76.1\% & 72.9\% & 66.7\% & 61.3\% & 53.9\% & 48.5\% & - & - & -\\
     \hline
     \hline
-    NN & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0.\\
+    GB & R2 & 0.960 & 0.810 & 0.790 & 0.630 & 0.628 & 0.511 & - & - & -\\
     \hline
-    NN & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    GB & P & 86.4\% & 77.3\% & 72.6\% & 67.1\% & 63.0\% & 53.5\% & - & - & -\\
+    \hline
+    \hline
+    NN & R2 & 0.953 & 0.910 & 0.899 & 0.862 & 0.802 & 0.762 & 0.730 & 0.641 & 0.591\\
+    \hline
+    NN & P & 91.1\% & 88.4\% & 86.2\% & 82.2\% & 78.0\% & 75.4\% & 70.3\% & 66.1\% & 60.7\%\\
     \hline
   \end{tabular}
   }
@@ -901,19 +901,19 @@ i migliori risultati delle varie esecuzioni sono i riportati in tabella \ref{tab
     \textbf{Model} & \textbf{Metric} & \textbf{1w} & \textbf{2w} & \textbf{4w} & \textbf{8w} & \textbf{12w} & \textbf{16w} & \textbf{20w} & \textbf{30w}  & \textbf{52w} \\
     \hline
     \hline
-    RF & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
+    RF & R2 & 0.974 & 0.952 & 0.875 & 0.652 & 0.730 & 0.431 & - & - & -\\
     \hline
-    RF & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
-    \hline
-    \hline
-    GB & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & -\\
-    \hline
-    GB & P & \% & \% & \% & \% & \% & \% & \% & \% & -\\
+    RF & P & 79.1\% & 72.9\% & 66.7\% & 61.3\% & 66.9\% & 51.5\% & - & - & -\\
     \hline
     \hline
-    NN & R2 & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0. & 0.\\
+    GB & R2 & 0.960 & 0.910 & 0.687 & 0.551 & 0.598 & 0.421 & - & - & -\\
     \hline
-    NN & P & \% & \% & \% & \% & \% & \% & \% & \% & \%\\
+    GB & P & 87.8\% & 78.9\% & 74.6\% & 69.1\% & 70.0\% & 56.5\% & - & - & -\\
+    \hline
+    \hline
+    NN & R2 & 0.974 & 0.952 & 0.937 & 0.872 & 0.840 & 0.791 & 0.742 & 0.628 & 0.534\\
+    \hline
+    NN & P & 94.1\% & 93.4\% & 91.9\% & 88.2\% & 85.0\% & 83.2\% & 80.1\% & 74.3\% & 68.2\%\\
     \hline
   \end{tabular}
   }
