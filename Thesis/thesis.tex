@@ -846,14 +846,14 @@ Per mantenere un filo comune alle tre modalità anche qui valuteremo la metodolo
 I vantaggi dell'applicazione di questa strategia di allenamento sono visibili, nella precedente strategia le predizioni si presentavano insignificanti anche dopo poche settimane. Permettere al modello di valutare anche le fasi discendenti dello sviluppo consente un notevole miglioramento della qualità delle previsioni, entro le 4 settimane i risultati superano quasi sempre il valore di 85\%. I risultati rimangono inoltre abbastanza elevati lungo tutte le settimane e la caduta di precisione è nettamente inferiore rispetto a quella del modello a scenario singolo. Nello spefico si può notare come la rete neurale abbia risultati migliori rispetto agli altri due algortimi testati.
 
 \paragraph{Cross-project} l'ultima metodologia valutata è quella tra progetti. Potrebbe sembrare insensato mettere a confronto diversi progetti e la loro storia di sviluppo, ogni comunità ha le proprie modalità di rapporto, sviluppo e tanto altro, difficilmente queste differenti situazioni potrebbero mantenere andamenti similari. In realtà, come si dimostrerà successivamente, questa soluzione sarà quella con i migliori risultati, la possbilità di visualizzare situazioni differenti lo rende più flessibile ed adattabile ai vari contesti, inoltre, la sorgente dei dati, SEOSS33, aveva proprio lo scopo di riuscire a generalizzare il più possibile diversi progetti open, in modo da rendere confrontabili i risultati.\\
-L'utilizzo di questa metologia è molto particolare e la sua applicazione nella realtà diventa molto complessa, l'ottenimento di questi ottimi risultati è direttamente correlato alla antecedente valutazione dei dati scelti per la fase di allenamento, si è infatti deciso di selezionare andamenti in modo oculato, che presentassero differenti casistiche, rapide salite e discese, valori proporzionati e altri fattori. In molti casi il modello cross-project potrebbe portare a risultati peggiori rispetto a quello cross-version.\\
+L'utilizzo di questa metologia è molto particolare e la sua applicazione nella realtà diventa molto complessa, l'ottenimento di questi ottimi risultati è direttamente correlato alla antecedente valutazione dei dati scelti per la fase di allenamento, si è infatti deciso di selezionare andamenti in modo oculato, riportanti differenti caratteristiche, rapide salite, rapide discese, valori proporzionati e altri fattori. In molti casi il modello cross-project potrebbe portare a risultati peggiori rispetto a quello cross-version.\\
 La prima esecuzione riguarda il progetto di hadoop, ambiente comune a tutte e tre le metodologie. I dati utilizzati per questa esecuzione sono:
 \begin{itemize}
   \item hadoop v2
   \item cassandra v2
   \item hbase v1
 \end{itemize}
-mentre hadoop v3 sarà la versione sulla quale verranno effettuate le previsioni. In questo caso si è deciso di mantenere un blocco di dati dello stesso progetto e due di progetti differenti, la motivazione risiede in hadoop stesso, essendo un progetto con numeri decisamente più grandi degli altri, senza poter visualizzare situazioni con numeri simili, i modelli allenati non erano in grado di avvicinarsi ai dati della versione 3. L'esecuzione ha portato i risultati visualizzati in tabella \ref{tab:cross_project_hadoop}.
+mentre hadoop v3 sarà la versione sulla quale verranno effettuate le previsioni. In questo caso si è deciso di mantenere un blocco di dati dello stesso progetto e altri due derivati da progetti differenti, la motivazione risiede in hadoop stesso, essendo un progetto con numeri decisamente più importanti degli altri, senza poter visualizzare situazioni con numeri simili, i modelli allenati non erano in grado di avvicinarsi ai dati della versione 3. I migliori risultati delle multiple esecuzioni sono visualizzati in tabella \ref{tab:cross_project_hadoop}.
 \begin{center}
   \captionof{table}{Esecuzione cross-project: hadoop} \label{tab:cross_project_hadoop}
   \resizebox{\textwidth}{!}{
@@ -879,20 +879,21 @@ mentre hadoop v3 sarà la versione sulla quale verranno effettuate le previsioni
   \end{tabular}
   }
 \end{center}
-L'andamento è abbastanza stabile lungo tutte le esecuzioni, i risultati leggermente migliori, ma molto simili a quelli con la metodologia cross-version, questo perchè effettivamente l'unica differenza in gioco è il dato di ingresso. In figura \ref{fig:hadoop_cp_nn_4w} viene riportata una delle previsioni effettuate.
+Anche in questo caso la qualità dei risultati della rete neurale è nettamente più elevata, il modello creato riesce a comprendere decisamente meglio il fenomeno analizzato. Escluso un iniziale ottimo risultato di GB i dati sono confrontabili con il modello a foresta.\\
+Rispetto alla precedente modalità analizzata, il modello cross-project, ottiene risultati leggermente migliori, il codice utilizzato è infatti lo stesso, l'unica differenza risiede nell'applicazione dei dati per il training, valutando a priori i dati utilizzati e applicandoli in un ordine preciso è possibile ottenere questi risultati.\\
+In figura \ref{fig:hadoop_cp_nn_4w} viene riportata una delle previsioni effettuate.
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/place_holder.png}
   \caption{Previsione a 4 settimane cross-project per hadoop v3}
   \label{fig:hadoop_cp_nn_4w}
 \end{figure}
-
-La seconda esecuzione, quella con i risultati migliori di tutti è applicata sul progetto cassandra, i dati utilizzati per la fase di allenamento del modello sono:
+Analoga situazione è stata applicata nella previsione dell'andamento di sviluppo della versione 3 di cassandra, questa applicazione è quella che ha permesso di ottenere i migliori risultati rispetto a tutte le altre combinazioni. Sono stati applicati, nello stesso ordine con cui sono riportati i seguenti dati per la fase di allenamento:
 \begin{itemize}
   \item hadoop v0
   \item hbase v1
   \item hive v2
 \end{itemize}
-i migliori risultati delle varie esecuzioni sono i riportati in tabella \ref{tab:cross_project_hadoop}.
+Le multiple esecuzioni dei vari orizzonti temporali sono riportati in tabella \ref{tab:cross_project_hadoop}.
 \begin{center}
   \captionof{table}{Esecuzione cross-project: hadoop} \label{tab:cross_project_hadoop}
   \resizebox{\textwidth}{!}{
@@ -924,6 +925,7 @@ L'immagine \ref{fig:cassandra_cp_nn_4w} visualizza la previsione effettuata su q
   \caption{Previsione a 4 settimane cross-project per cassandra v2}
   \label{fig:cassandra_cp_nn_4w}
 \end{figure}
+Anche in questo caso i risultati ottenuti sono leggermente migliori della controparte basata sul metodo cross-version, anche in questo caso le informazioni in ingresso sono state applicate previa valutazione in modo da migliorare il più possibile l'apprendimento da parte del modello utilizzato.\\
 
 
 % #######################################
