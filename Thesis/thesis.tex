@@ -192,7 +192,26 @@ Tutto il modello si basa sulla sua entità centrale, la issue, ovvero l'attivit�
   \label{fig:seoss33_db}
 \end{figure}
 
-% NOTE: Possibile aggiunger parte relativa all'interfacciamento con questo DB. Informazioni di distribuzione temporale.
+Un delle informazioni più importanti contenute nel base dati in esame è quella relativa alla versione. Lo schema sviluppato correla ogni issue riportata ad una versione di riferimento, questo collegamento è stato ovviamente fatto durante la presa in carico, da parte dello sviluppatore, della problematica da risolvere. Lo sviluppo di una nuova versione non è molto differente dal lancio di un nuovo prodotto fisico, per questo motivo la suddivisione in versioni di tutti i vari progetti si è rivelata fondamentale ed ha permesso di valutare le modalità di cross-version e porject applicate.\\
+La categorizzazione di software in versione può avvenire in moltissime modalità differenti, la più comune rimane quella:
+\begin{center}
+  \begin{equation}
+    \textrm{major}.\textrm{minor}.\textrm{patch}
+  \end{equation}
+\end{center}
+dove il primo numero rappresenta la versione principale, il secondo la sotto-versione ed il terzo la modifica. Normalmente dovrebbe essere mantenuta la stessa nomenclatura lungo tutto lo sviluppo, talvolta però vengono utilizzate etichette differenti. Nel nostro processo, dopo una pulizia inizia di tutte queste etichette anacronistiche, si è deciso di sviluppare alcuni grafici riportanti gli andamenti nel tempo delle varie versioni. Un esempio in figura \ref{fig:cassandra_vers1}.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/cassandra_vers.png}
+  \caption{Distribuzione temporale issue Cassandra}
+  \label{fig:cassandra_vers1}
+\end{figure}
+Come si può notare i vari sviluppi di versione si presentano sovrapposti e spesso contemporanei, potrebbe sembra un contro senso, ma questa pratica è molto comune nel mondo open source. Un ulteriore ed interessante visualizzazione è quella della precedente figura con sovraimpresse i momenti di rilascio, intendendo la pubblicazione nella sezione \"Release\" di pacchetti major-minor relativi a quella versione, in esempio, sempre con il progetto cassandra, la figura \ref{fig:cassandra_rele} 
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/cassandra_rele.png}
+  \caption{Distribuzione temporale con release di Cassandra}
+  \label{fig:cassandra_rele}
+\end{figure}
+L'estrazione di queste informazioni si è resa necessaria per poter valutare sia la distribuzione temporale, sia la distribuzione quantitativa delle diverse versioni in modo da estrarre dati utili per le successive fasi di sviluppo.
 
 % #######################################
 % #          Machine Learning           #
@@ -925,7 +944,9 @@ L'immagine \ref{fig:cassandra_cp_nn_4w} visualizza la previsione effettuata su q
   \caption{Previsione a 4 settimane cross-project per cassandra v2}
   \label{fig:cassandra_cp_nn_4w}
 \end{figure}
-Anche in questo caso i risultati ottenuti sono leggermente migliori della controparte basata sul metodo cross-version, anche in questo caso le informazioni in ingresso sono state applicate previa valutazione in modo da migliorare il più possibile l'apprendimento da parte del modello utilizzato.\\
+Anche in questo caso i risultati ottenuti sono leggermente migliori della controparte basata sul metodo cross-version, anche in questo caso le informazioni in ingresso sono state applicate previa valutazione in modo da migliorare il più possibile l'apprendimento da parte del modello utilizzato.
+
+\subsection{Considerazioni}
 
 
 % #######################################
