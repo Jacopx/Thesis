@@ -762,12 +762,6 @@ L'applicazione dei tre modelli ha portato a questi risultati lungo le le diverse
      \hline
   \end{tabular}
 \end{center}
-Il grafico in figura \ref{fig:single_scenario_error} visualizza la tabella precedente.
-\begin{figure}[!ht]
-  \includegraphics[width=\linewidth]{figure/place_holder.png}
-  \caption{Andamento errori singolo scenario}
-  \label{fig:single_scenario_error}
-\end{figure}
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]{figure/hadoop_rf_4w.png}
   \caption{hadoop RF a 4 settimane}
@@ -856,12 +850,12 @@ Per mantenere un filo comune alle tre modalità anche qui valuteremo la metodolo
     \hline
     GB & R2 & 0.995 & 0.992 & 0.984 & 0.951 & 0.926 & 0.873 & 0.791 & - & -\\
     \hline
-    GB & P & 88.2\% & 88.3\% & 80.8\% & 77.5\% & 74.8\% & 68.8\% & 60.1\% & - & -\\
+    GB & P & 88.2\% & 86.3\% & 80.8\% & 77.5\% & 74.8\% & 68.8\% & 60.1\% & - & -\\
     \hline
     \hline
-    NN & R2 & 0.981 & 0.993 & 0.988 & 0.961 & 0.955 & 0.905 & 0.846 & 0.771 & -\\
+    NN & R2 & 0.981 & 0.962 & 0.974 & 0.961 & 0.955 & 0.905 & 0.846 & 0.771 & -\\
     \hline
-    NN & P & 86.4\% & 88.9\% & 89.2\% & 80.4\% & 72.9\% & 60.3\% & 51.3\% & 47.1\% & -\\
+    NN & P & 89.4\% & 86.9\% & 84.2\% & 80.4\% & 72.9\% & 60.3\% & 51.3\% & 47.1\% & -\\
     \hline
   \end{tabular}
   }
@@ -906,7 +900,7 @@ Anche in questo caso la qualità dei risultati della rete neurale è nettamente 
 Rispetto alla precedente modalità analizzata, il modello cross-project, ottiene risultati leggermente migliori, il codice utilizzato è infatti lo stesso, l'unica differenza risiede nell'applicazione dei dati per il training, valutando a priori i dati utilizzati e applicandoli in un ordine preciso è possibile ottenere questi risultati.\\
 In figura \ref{fig:hadoop_cp_nn_4w} viene riportata una delle previsioni effettuate.
 \begin{figure}[!ht]
-  \includegraphics[width=\linewidth]{figure/place_holder.png}
+  \includegraphics[width=\linewidth]{figure/NN-CP-hadoop-4.png}
   \caption{Previsione a 4 settimane cross-project per hadoop v3}
   \label{fig:hadoop_cp_nn_4w}
 \end{figure}
@@ -916,9 +910,9 @@ Analoga situazione è stata applicata nella previsione dell'andamento di svilupp
   \item hbase v1
   \item hive v2
 \end{itemize}
-Le multiple esecuzioni dei vari orizzonti temporali sono riportati in tabella \ref{tab:cross_project_hadoop}.
+Le multiple esecuzioni dei vari orizzonti temporali sono riportati in tabella \ref{tab:cross_project_cassandra}.
 \begin{center}
-  \captionof{table}{Esecuzione cross-project: hadoop} \label{tab:cross_project_hadoop}
+  \captionof{table}{Esecuzione cross-project: cassandra} \label{tab:cross_project_cassandra}
   \resizebox{\textwidth}{!}{
   \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
     \hline
@@ -944,7 +938,7 @@ Le multiple esecuzioni dei vari orizzonti temporali sono riportati in tabella \r
 \end{center}
 L'immagine \ref{fig:cassandra_cp_nn_4w} visualizza la previsione effettuata su questa versione.
 \begin{figure}[!ht]
-  \includegraphics[width=\linewidth]{figure/place_holder.png}
+  \includegraphics[width=\linewidth]{figure/NN-CP-cassandra-4.png}
   \caption{Previsione a 4 settimane cross-project per cassandra v2}
   \label{fig:cassandra_cp_nn_4w}
 \end{figure}
@@ -957,10 +951,22 @@ Anche in questo caso i risultati ottenuti sono leggermente migliori della contro
 
 \chapter{Conclusioni}
 \section{Metodologie}
-Le tre metodologie di allenamento applicate hanno mostrato le proprie caratteristiche e peculiarità, sicuramente il modello a singolo scenario si è dimostrata la tecnica meno efficiente, l'impossibilità di valutare fasi discendenti e una comune limitata visione di insieme non hanno permesso al modello di estrarre valutazioni efficaci al fine preposto. Il modello cross-version ha subito definito un netto salto di qualità nei risultati, la possibilità di valutare l'esperienza di versione precedenti di sviluppo dello stesso progetto, con relativi discese, picchi ed altri fenomeni, ha permesso l'allenamento di un modello valido ed efficiente nella previsione della nuova versione. L'applicazione del modello cross-project, nonostante sia quello ad aver ottenuto i migliori risultati, è più accademica che reale, differentemente dalla precedente metolodogia dove si è seguita una naturale evoluzione delle versioni per gestire la fase di allenamento e di previsione, nella versione a differenti progetti i dati di allenamento sono stati studiati, analizzati ed applicati con strategia; tutto ciò ha chiaramente permesso di ottenere risultati migliori ma, all'atto pratico, di più difficile applicazione reale. In generale le due ultime modalida hanno generato dati assolutamente comparabili e dimostrato l'efficacia di queste tecniche trasversali.
+Le tre metodologie di allenamento applicate hanno mostrato le proprie caratteristiche e peculiarità, sicuramente il modello a singolo scenario si è dimostrata la tecnica meno efficiente, l'impossibilità di valutare fasi discendenti e una comune limitata visione di insieme non hanno permesso al modello di estrarre valutazioni efficaci al fine preposto. Il modello cross-version ha subito definito un netto salto di qualità nei risultati, la possibilità di valutare l'esperienza di versione precedenti di sviluppo dello stesso progetto, con relativi discese, picchi ed altri fenomeni, ha permesso l'allenamento di un modello valido ed efficiente nella previsione della nuova versione. L'applicazione del modello cross-project, nonostante sia quello ad aver ottenuto i migliori risultati, è più accademica che reale, differentemente dalla precedente metolodogia dove si è seguita una naturale evoluzione delle versioni per gestire la fase di allenamento e di previsione, nella versione a differenti progetti i dati di allenamento sono stati studiati, analizzati ed applicati con strategia; tutto ciò ha chiaramente permesso di ottenere risultati migliori ma, all'atto pratico, di più difficile applicazione reale. In generale le due ultime modalità hanno generato dati assolutamente comparabili e dimostrato l'efficacia di queste tecniche trasversali.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/andamento.png}
+  \caption{Precisione tra differenti modalità}
+  \label{fig:andamento}
+\end{figure}
+Lungo tutte le esecuzioni si è deciso di mantenere un filo di collegamento, nello specifico tutte le metodologie sono state applicate al blocco di dati relativo alla versione 3 del progetto hadoop. L'idea era quella di correlare tra loro le diverse metologie per un confronto matematico, il grafico in figura \ref{fig:andamento} riporta infatti il valore di precisione, con rete neurale, per il progetto hadoop rispetto alle diverse modalità. Come si evince il modello cross-project, oltre ad esprimere i migliori risultati, mostra anche un più stabile andamento lungo i vari orizzonti temporali, l'opzione cross-version si presta bene fino alla settimana 16, dopo di che i risultati crollano. Per quanto riguarda il modello a singolo scenario i limiti diventano subito evidenti.
 
 \section{Modelli}
 I modelli matematici adottati sono stati tre, foresta casuale, incremento di gradiente e rete neurale. Per tutti le diverse metodologie sono stati applicati tutti e tre i modelli. Sin dalla prima esecuzione è facile notare come la rete neurale porti a risultati decisamente migliori. La spiegazione di questo comportamento risiede nella maggior flessibilità del modello il quale riesce meglio ad adattarsi alle differenti situazioni analizzate. Nonostante i migliori risultati, la rete neurale, si è rivelata anche la meno stabile, se le multiple esecuzioni degli altri due modelli generavano risultati comparabili, nel caso del modello neurale i risultati si rivelavano molto distanziati, con risultati talvolta molto inferiori a quelli degli altri due modelli in esame. La motivazione di questo instabile comportamento è da ricercare nella costituzione del modello stesso, l'inizializzazione infatti avviene, per ogni esecuzione, in modo casuale, senza la possiblità di limitazioni manuali. In generale, la rete neurale, si è dimostrata essere il modello più adatto allo studio di questa tipologia di fenomeni.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]{figure/andamento_modelli.png}
+  \caption{Precisione tra differenti modelli}
+  \label{fig:andamento_modelli}
+\end{figure}
+Come si può vedere in figura \ref{fig:andamento_modelli} la precisione del modello a rete neurale è netto rispetto agli altri due. Tutti e tre i modelli mantengo valori cofrontabili fino a 12 settimane, oltrepassata questa soglia il modello neurale mantiene una discesa quasi costante, gli altri due precipitano notevolmente.
 
 \section{Conclusioni finali}
 Il progetto trattato in questo elaborato prendere in considerazione la previsione di un fenomeno per poter meglio allocare le risorse necessarie allo sviluppo dello stesso, la metodologia utilizzata si basa su algoritmi di intelligenza artificiale e calcolo statistico.\\
